@@ -1,0 +1,679 @@
+fileFormatVersion: 2
+guid: 05e37490fc195014e918df8b82dab652
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5036385228370242777
+    second: rabisco3 (2)_0
+  - first:
+      213: -2582257770698987291
+    second: rabisco3 (2)_1
+  - first:
+      213: -7632375306266213999
+    second: rabisco3 (2)_2
+  - first:
+      213: 269454448589540986
+    second: rabisco3 (2)_3
+  - first:
+      213: 947523402444605711
+    second: rabisco3 (2)_4
+  - first:
+      213: 7782442859769541459
+    second: rabisco3 (2)_5
+  - first:
+      213: -6221952604404520234
+    second: rabisco3 (2)_6
+  - first:
+      213: 826320495634780943
+    second: rabisco3 (2)_7
+  - first:
+      213: -7993705992918931671
+    second: rabisco3 (2)_8
+  - first:
+      213: 3485750970239404042
+    second: rabisco3 (2)_9
+  - first:
+      213: -4751404062740271310
+    second: rabisco3 (2)_10
+  - first:
+      213: 1634206540611954052
+    second: rabisco3 (2)_11
+  - first:
+      213: -6279477462826294496
+    second: rabisco3 (2)_12
+  - first:
+      213: 5188388411879725933
+    second: rabisco3 (2)_13
+  - first:
+      213: 8570025622284095390
+    second: rabisco3 (2)_14
+  - first:
+      213: -2308266349882530308
+    second: rabisco3 (2)_15
+  - first:
+      213: -6179406089983064977
+    second: rabisco3 (2)_16
+  - first:
+      213: -5823632784536709014
+    second: rabisco3 (2)_17
+  - first:
+      213: 3505212300925409768
+    second: rabisco3 (2)_18
+  - first:
+      213: 8132032490663118350
+    second: rabisco3 (2)_19
+  - first:
+      213: -2470364116837332470
+    second: rabisco3 (2)_20
+  - first:
+      213: -7225589458243975392
+    second: rabisco3 (2)_21
+  - first:
+      213: 3131160653154926949
+    second: rabisco3 (2)_22
+  - first:
+      213: -3447311183652720220
+    second: rabisco3 (2)_23
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: rabisco3 (2)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3070
+        width: 2050
+        height: 1026
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 839d49e8196a6eb428bf97af04afdc15
+      internalID: 5036385228370242777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_1
+      rect:
+        serializedVersion: 2
+        x: 2358
+        y: 3318
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201ee72556ddaa2488a496a36c33e44a
+      internalID: -2582257770698987291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_2
+      rect:
+        serializedVersion: 2
+        x: 2406
+        y: 3310
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87cd5227a2230044ca4a4b2e654a240b
+      internalID: -7632375306266213999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_3
+      rect:
+        serializedVersion: 2
+        x: 2446
+        y: 3310
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10e4990724901f846a182159ae41c292
+      internalID: 269454448589540986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_4
+      rect:
+        serializedVersion: 2
+        x: 2486
+        y: 3310
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0295642661930944085459532bb22d0d
+      internalID: 947523402444605711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_5
+      rect:
+        serializedVersion: 2
+        x: 2526
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b0b0ef0db2b72145a62899f59eb2911
+      internalID: 7782442859769541459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_6
+      rect:
+        serializedVersion: 2
+        x: 2566
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 194fe417f43c3a54ea7e2ffc981fb6a3
+      internalID: -6221952604404520234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_7
+      rect:
+        serializedVersion: 2
+        x: 2646
+        y: 3310
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc1fd2c335457e243a13b676272ee516
+      internalID: 826320495634780943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_8
+      rect:
+        serializedVersion: 2
+        x: 2686
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bb4c67ff84a455448e85bece6aea851
+      internalID: -7993705992918931671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_9
+      rect:
+        serializedVersion: 2
+        x: 2734
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c85dcc1754391ad4ba469b56632cf96d
+      internalID: 3485750970239404042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_10
+      rect:
+        serializedVersion: 2
+        x: 2806
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 469a765fc22de0449b1187aa9c5d2f4b
+      internalID: -4751404062740271310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_11
+      rect:
+        serializedVersion: 2
+        x: 2854
+        y: 3310
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20f1551428194744e95b68ce3d225bcf
+      internalID: 1634206540611954052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_12
+      rect:
+        serializedVersion: 2
+        x: 2894
+        y: 3310
+        width: 44
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8ddf66de19de642bdf5af8958c65d1
+      internalID: -6279477462826294496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_13
+      rect:
+        serializedVersion: 2
+        x: 2942
+        y: 3318
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fcf0bb3dd66d8d428b1a97de08c9ae6
+      internalID: 5188388411879725933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_14
+      rect:
+        serializedVersion: 2
+        x: 3246
+        y: 3334
+        width: 260
+        height: 556
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8e1c81780c6874f8c5794e844d3793
+      internalID: 8570025622284095390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_15
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 2430
+        width: 124
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cc1dde2a2da1024aa825f847a4f3727
+      internalID: -2308266349882530308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_16
+      rect:
+        serializedVersion: 2
+        x: 1422
+        y: 2438
+        width: 156
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee982672c0d2c1c418e1be4bbd88b181
+      internalID: -6179406089983064977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_17
+      rect:
+        serializedVersion: 2
+        x: 3230
+        y: 2206
+        width: 612
+        height: 756
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 715a2ad9b10f73e43a5e2bc2e1490d31
+      internalID: -5823632784536709014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_18
+      rect:
+        serializedVersion: 2
+        x: 2278
+        y: 2198
+        width: 668
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de8954328851f3247b6097f7682ff9b3
+      internalID: 3505212300925409768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_19
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 1806
+        width: 164
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 927628ab82b3c604aadbba790b6c4f94
+      internalID: 8132032490663118350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_20
+      rect:
+        serializedVersion: 2
+        x: 3462
+        y: 1294
+        width: 404
+        height: 572
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc77ee49177531745b5a840aa9ff31b5
+      internalID: -2470364116837332470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_21
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 1470
+        width: 132
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: debbea278b9ec0d47ae83e1aa6846332
+      internalID: -7225589458243975392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_22
+      rect:
+        serializedVersion: 2
+        x: 2550
+        y: 1406
+        width: 140
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 699cb5a6aef38134280c56ac70ee0f97
+      internalID: 3131160653154926949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabisco3 (2)_23
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 398
+        width: 156
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6ccd8a909284704993e2c5f365ab00a
+      internalID: -3447311183652720220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
