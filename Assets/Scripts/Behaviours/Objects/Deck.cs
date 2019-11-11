@@ -8,6 +8,8 @@ public class Deck : MonoBehaviour
     public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
+    
+    
 
     public void SetCarta(int id)
     {
@@ -46,10 +48,11 @@ public class Deck : MonoBehaviour
     
         foreach (var x in mao)
         {
-            x.GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(concatenador * mao.Count * 3f, (-Mathf.Abs(concatenador)*3)- 320 );
+            x.GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(concatenador * mao.Count * 3f,-320);//(-Mathf.Abs(concatenador)*3)- 320 )
             if (mao.Count == 1)
                 concatenador = 0;
-            x.transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,-concatenador);
+            //angulação Z retirada
+            //x.transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,-concatenador);
             concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0)
                 concatenador += angulacaoConst;
@@ -69,12 +72,11 @@ public class Deck : MonoBehaviour
     }
     void Start()
     {
-        SetCarta(0);
-        SetCarta(0);
-        SetCarta(0);
+        SetCarta(1); SetCarta(0);
+        SetCarta(2); SetCarta(1);
+        SetCarta(0); SetCarta(2);
+        SetCarta(1); SetCarta(0);
         SetCarta(2);
-        SetCarta(0);
-        SetCarta(0);
-        SetCarta(0);
+
     }
 }
