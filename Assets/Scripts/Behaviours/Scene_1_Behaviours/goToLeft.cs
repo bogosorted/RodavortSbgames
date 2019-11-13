@@ -22,8 +22,8 @@ public class goToLeft : MonoBehaviour
     }
     void Update()
     {
-       RectTransform a = gameObject.GetComponent<RectTransform>();
-       a.position += Vector3.left * velocity  * Time.deltaTime * 100 ;
+        RectTransform a = gameObject.GetComponent<RectTransform>();
+        a.position += Vector3.left * velocity  * Time.deltaTime * 100 ;
         if (a.position.x < -1400)
             a.position = new Vector3(1600, a.position.y);
     }
