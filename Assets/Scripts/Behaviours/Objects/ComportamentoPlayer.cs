@@ -28,15 +28,14 @@ public class ComportamentoPlayer : MonoBehaviour
                     GameObject b = mouse.collider.gameObject;
                     GetComponent<Deck>().mao.Remove(b);
                     GetComponent<Deck>().SetAnguloZ(12);
+                    b.transform.SetSiblingIndex(GetComponent<Deck>().mao.Count + 2);
                     segurando = true;
                 }
                 if (segurando)
                 {               
                     mouse.collider.gameObject.GetComponent<Carta>().Segurando(segurando);
                     segurando = false;
-                }
-              
-                
+                }                           
             }         
         }
         else
