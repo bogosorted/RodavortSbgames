@@ -9,10 +9,10 @@ public class Deck : MonoBehaviour
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
     
-    
-
+   
     public void SetCarta(int id)
     {
+        print("paunocu");
         if (mao.Count != 9)
         {
             GameObject a = Instantiate(carta);
@@ -24,16 +24,16 @@ public class Deck : MonoBehaviour
             switch (id)
             {
                 case -1:
-                    a.GetComponent<Image>().sprite = ImagemCarta[id];
+                    a.transform.GetChild(0).GetComponent<Image>().sprite = ImagemCarta[id];
                     break;
                 case 0:
-                    a.tag = "Trovador";
+                    a.transform.GetChild(0).tag = "Trovador";
                     goto case -1;
                 case 1:
-                    a.tag = "Bardo";
+                    a.transform.GetChild(0).tag = "Bardo";
                     goto case -1;
                 case 2:
-                    a.tag = "Professor";
+                    a.transform.GetChild(0).tag = "Professor";
                     goto case -1;
 
 
@@ -48,14 +48,14 @@ public class Deck : MonoBehaviour
         
         foreach (var x in mao)
         {
-            x.GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(concatenador * mao.Count * 3f, -Mathf.Abs(concatenador)*3 - 300);
+            x.transform.localPosition = new Vector3(concatenador * mao.Count * 3f, -Mathf.Abs(concatenador)*3 - 304);
             if (mao.Count == 1)
                 concatenador = 0;        
             //angulação Z retirada
-            x.transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,-concatenador);
+            x.transform.GetChild(0).eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,-concatenador);
             if (concatenador == 0  || concatenador == zMax || concatenador == -zMax)
             {
-                x.GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(concatenador * mao.Count * 3f, -Mathf.Abs(concatenador) * 3 - 306);
+                x.transform.localPosition = new Vector3(concatenador * mao.Count * 3f, -Mathf.Abs(concatenador) * 3 - 310);
             }
             concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0)
@@ -72,7 +72,7 @@ public class Deck : MonoBehaviour
     {
         foreach (var x in mao)
         {
-            x.GetComponent<Outline>().effectDistance = new Vector2(0, 0);
+            x.transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(0, 0);
         }
     }  
     public void AdicionarCarta(GameObject a)

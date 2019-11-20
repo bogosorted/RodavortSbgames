@@ -41,20 +41,18 @@ public class Carta : MonoBehaviour
     }
     public void SubirCarta()
     {
-       Image a = gameObject.GetComponent<Image>();
-       a.rectTransform.anchoredPosition = new Vector2(a.rectTransform.anchoredPosition.x, a.rectTransform.anchoredPosition.y + 2);
-       
+       transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 2);   
     }
     public void SilhuetaCarta(bool a)
     {
         if (a)
-            gameObject.GetComponent<Outline>().effectDistance = new Vector2(2.5f,2.5f);
+            transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(2.5f,2.5f);
 
     }
     public void Segurando(bool segurando)
     {
        cartaMao = segurando;
-       GetComponent<Image>().rectTransform.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,1));
+       transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,1));
     }
 
     private void Update()
@@ -62,7 +60,7 @@ public class Carta : MonoBehaviour
         
         if (cartaMao)
         {
-            GetComponent<Image>().rectTransform.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 1));
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 1));
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),Vector2.zero,Mathf.Infinity,campoAmigo);
             if(hit.collider != null)
             {
@@ -90,9 +88,9 @@ public class Carta : MonoBehaviour
             }
             cartaMao = false;
         }
-        Image a = gameObject.GetComponent<Image>();
-        if (a.rectTransform.anchoredPosition.y > -270 && !cartaMao)
-            a.rectTransform.anchoredPosition = new Vector2(a.rectTransform.anchoredPosition.x, -270);
+      
+        if (transform.localPosition.y > -270 && !cartaMao)
+           transform.localPosition = new Vector2(transform.localPosition.x, -270);
     }
    
 }
