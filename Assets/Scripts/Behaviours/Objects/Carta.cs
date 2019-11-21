@@ -22,7 +22,7 @@ public class Carta : MonoBehaviour
     private void Start()
     {
         campoAmigo = LayerMask.GetMask("CampoAmigo");
-        switch (tag)
+        switch (transform.GetChild(0).tag)
         {
             case "Trovador":
                 Ataque = 15;
@@ -33,11 +33,13 @@ public class Carta : MonoBehaviour
                 Vida = 6;
                 break;
             case "Professor":
-                Ataque = 0;
-                Vida = 0;
+                Ataque =100;
+                Vida = 100;
                 break;
         }
-       
+        transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = Ataque.ToString();
+        transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = Vida.ToString();
+
     }
     public void SubirCarta()
     {

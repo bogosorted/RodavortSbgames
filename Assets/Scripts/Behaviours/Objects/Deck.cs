@@ -80,11 +80,14 @@ public class Deck : MonoBehaviour
     }
     void Start()
     {
-        SetCarta(1); SetCarta(0);
-        SetCarta(2); SetCarta(1);
-        SetCarta(0); SetCarta(2);
-        SetCarta(1); SetCarta(0);
-        SetCarta(2);
-
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
+        SetCarta(Random.Range(0, 3));
     }
 }
