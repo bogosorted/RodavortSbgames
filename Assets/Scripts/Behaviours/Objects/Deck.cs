@@ -12,7 +12,6 @@ public class Deck : MonoBehaviour
    
     public void SetCarta(int id)
     {
-        print("paunocu");
         if (mao.Count != 9)
         {
             GameObject a = Instantiate(carta);

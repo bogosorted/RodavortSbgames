@@ -46,7 +46,7 @@ public class Carta : MonoBehaviour
     public void SilhuetaCarta(bool a)
     {
         if (a)
-            transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(2.5f,2.5f);
+            transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(4.5f,4.5f);
 
     }
     public void Segurando(bool segurando)
