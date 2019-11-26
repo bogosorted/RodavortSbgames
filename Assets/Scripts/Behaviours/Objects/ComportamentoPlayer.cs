@@ -7,6 +7,7 @@ public class ComportamentoPlayer : MonoBehaviour
 {
     public List<GameObject> maoPlayerCampo = new List<GameObject>();
     RaycastHit2D mouse;
+    GameObject c;
     bool segurando;
     public void AdicionarCartasPlayer(GameObject a)
     {
@@ -17,8 +18,12 @@ public class ComportamentoPlayer : MonoBehaviour
         mouse = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),Vector3.forward);
         if(mouse.collider != null)
         {
+            if(c != mouse.collider.gameObject)
+                GetComponent<Deck>().SetAnguloZ(12);
+
             if (mouse.collider.gameObject.name == "Image(Clone)")
             {
+                c = mouse.collider.gameObject;
                 var a = mouse.collider.gameObject.GetComponent<Carta>();
                 GetComponent<Deck>().DesfazerSilhuetas();
                 a.SilhuetaCarta(true);
@@ -31,6 +36,7 @@ public class ComportamentoPlayer : MonoBehaviour
                     b.transform.SetSiblingIndex(GetComponent<Deck>().mao.Count + 2);
                     segurando = true;
                 }
+                
                 if (segurando)
                 {               
                     mouse.collider.gameObject.GetComponent<Carta>().Segurando(segurando);
