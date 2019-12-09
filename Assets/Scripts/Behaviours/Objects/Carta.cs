@@ -2,97 +2,77 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine;
 public class Carta : MonoBehaviour
 {
-    LayerMask campoAmigo;
-    GameObject campo;
-    RaycastHit2D hit;
-    Deck dono;
-    private int Ataque, Vida;
-    float suavidade = 0;
-    float alturaY;
-    bool cartaMao;
+    private Sprite _cartaImagem;
+    private Vector2 _posicaoInicial,_posicaoFinal;
+    private Vector3 _angulacaoInicial,_angulacaoFinal;
+    private string _nome, _descricao;
+    private int _ataque, _defesa;
 
-    public void SetDono(Deck a)
+    #region Propiedades
+    public Vector2 PosicaoInicial
     {
-        dono = a;
+        get;set;        
+    }
+    public Vector2 PosicaoFinal
+    {
+        get;set;        
+    }
+    public Vector3 AngulacaoInicial
+    {
+        get;set;        
     }
 
-    private void Start()
+    public Vector3 AngulacaoFinal
     {
-        campoAmigo = LayerMask.GetMask("CampoAmigo");
-        switch (transform.GetChild(0).tag)
+        get;set;        
+    }
+
+    public Sprite Imagem
+    {
+        get { return _cartaImagem; }
+        set
         {
-            case "Trovador":
-                Ataque = 15;
-                Vida = 13;
-                break;
-            case "Bardo":
-                Ataque = 5;
-                Vida = 6;
-                break;
-            case "Professor":
-                Ataque =100;
-                Vida = 100;
-                break;
+            _cartaImagem = value;
+            gameObject.GetComponent<SpriteRenderer>().sprite = _cartaImagem;
         }
-        transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = Ataque.ToString();
-        transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = Vida.ToString();
-
-    }
-    public void SubirCarta()
-    {
-       transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 2);   
-    }
-    public void SilhuetaCarta(bool a)
-    {
-        if (a)
-            transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(4.5f,4.5f);
-
-    }
-    public void Segurando(bool segurando)
-    {
-       cartaMao = segurando;
-       transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,1));
     }
 
-    private void Update()
+    public string Nome
     {
-        
-        if (cartaMao)
+        get { return _nome; }
+        set { _nome = value; }
+    }
+    public string Descricao
+    {
+        get { return _descricao; }
+        set { _descricao = value; }
+    }
+    public int Ataque
+    {
+        get { return _ataque; }
+        set { _ataque = value; }
+    }
+    public int Defesa
+    {
+        get { return _defesa; }
+        set { _defesa = value; }
+    }
+    public void Constructor(int id)
+    {
+        switch (id)
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 1));
-            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),Vector2.zero,Mathf.Infinity,campoAmigo);
-            if(hit.collider != null)
-            {
-                if (hit.collider.gameObject.tag == "CampoAmigo")
-                {
-                    campo = hit.collider.gameObject;
-                    campo.GetComponent<Outline>().effectDistance = new Vector2(4, 4);
-                }   
-            }
-            else if (campo != null)
-                campo.GetComponent<Outline>().effectDistance = new Vector2(0, 0);
+            case 0:
+                Nome = "Trovador";
+                Descricao = "Personificação da humanidade artistica";
+                Ataque = 6;
+                Defesa = 5;
+                break;             
         }
-        if (Input.GetMouseButtonUp(0) && cartaMao)
-        {
-            if (hit.collider != null && hit)
-            {
-                GetComponentInParent<ComportamentoPlayer>().AdicionarCartasPlayer(gameObject);
-                Destroy(gameObject);
-                campo.GetComponent<Outline>().effectDistance = new Vector2(0, 0);
-            }
-            else
-            {
-                dono.mao.Add(gameObject);
-                dono.GetComponent<Deck>().SetAnguloZ(12);
-            }
-            cartaMao = false;
-        }
-      
-        if (transform.localPosition.y > -270 && !cartaMao)
-           transform.localPosition = new Vector2(transform.localPosition.x, -270);
     }
-   
+    #endregion
 }
+
+

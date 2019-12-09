@@ -3,54 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Deck : MonoBehaviour
+public class Mao : MonoBehaviour
 {
     public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
     
-   
+    
     public void SetCarta(int id)
     {
-        if (mao.Count != 9)
-        {
-            GameObject a = Instantiate(carta);
-            a.transform.SetParent(transform, false);
-            a.AddComponent<Carta>();
-            mao.Add(a);
-            a.GetComponent<Carta>().SetDono(this);
-
-            switch (id)
-            {
-                case -1:
-                    a.transform.GetChild(0).GetComponent<Image>().sprite = ImagemCarta[id];
-                    break;
-                case 0:
-                    a.transform.GetChild(0).tag = "Trovador";
-                    goto case -1;
-                case 1:
-                    a.transform.GetChild(0).tag = "Bardo";
-                    goto case -1;
-                case 2:
-                    a.transform.GetChild(0).tag = "Professor";
-                    goto case -1;
-
-
-            }
-            SetAnguloZ(12);
+     GameObject objCarta = Instantiate(carta);
+     objCarta.GetComponent<Carta>().Constructor(id);
+     objCarta.transform.SetParent(transform,false);
+     mao.Add(objCarta);
+    }
+    /*     public void SetAnguloTeste(float x,float step)
+    {
+        step = 0f; x = 0f;
+        float angulacaoConst = mao.Count % 2 == 0f ? 12 / (float)(mao.Count / 2) : 12 / (float)((mao.Count - 1) / 2);
+        float concatenador = -12;
+         if (mao.Count == 1)
+             concatenador = 0;  
+        
+       
+         foreach(var y in mao)
+        {                      
+            y.GetComponent<Carta>().AngulacaoInicial = y.transform.position;         
+            y.GetComponent<Carta>().AngulacaoFinal = new Vector2(concatenador,y.transform.position.y);
+            concatenador += angulacaoConst;
+            y.transform.SetSiblingIndex(-1);
         }
     }
+    */
+
     public void SetAnguloZ(int zMax)
     {
+             
+    
         float angulacaoConst = mao.Count % 2 == 0f ? zMax / (float)(mao.Count / 2) : zMax / (float)((mao.Count - 1) / 2);
         float concatenador = -zMax;
-        
         foreach (var x in mao)
         {
+            
             x.transform.localPosition = new Vector3(concatenador * mao.Count * 3f, -Mathf.Abs(concatenador)*3 - 304);
             if (mao.Count == 1)
                 concatenador = 0;        
-            //angulação Z retirada
             x.transform.GetChild(0).eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,-concatenador);
             if (concatenador == 0  || concatenador == zMax || concatenador == -zMax)
             {
@@ -63,31 +60,18 @@ public class Deck : MonoBehaviour
                 concatenador += angulacaoConst;
             }
             x.transform.SetSiblingIndex(-1);
-
-
         }
     }
-    public void DesfazerSilhuetas()
-    {
-        foreach (var x in mao)
-        {
-            x.transform.GetChild(0).GetComponent<Outline>().effectDistance = new Vector2(0, 0);
-        }
-    }  
     public void AdicionarCarta(GameObject a)
     {
         mao.Add(a);
     }
     void Start()
     {
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
-        SetCarta(Random.Range(0, 3));
+        SetCarta(0);
+        SetCarta(0);
+        SetCarta(0);
+        SetCarta(0);
+        SetAnguloZ(12);
     }
 }
