@@ -11,7 +11,6 @@ public class Mao : MonoBehaviour
     float step;
     float x;
     
-    
     public void SetCarta(int id)
     {
      GameObject objCarta = Instantiate(carta);
@@ -27,9 +26,9 @@ public class Mao : MonoBehaviour
          if (mao.Count == 1)
              concatenador = 0;            
          foreach(var y in mao)
-        {                      
-            y.GetComponent<Carta>().AngulacaoInicial = y.transform.position;
-            y.GetComponent<Carta>().AngulacaoFinal = new Vector2(concatenador,y.transform.position.y);
+        {
+            y.GetComponent<Carta>().AngulacaoInicial = y.transform.localPosition - Vector3.up*450;
+            y.GetComponent<Carta>().AngulacaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -250);
 
             concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0) 
