@@ -20,7 +20,6 @@ public class Mao : MonoBehaviour
      mao.Add(objCarta);
     }
 
-/*
          public void SetAnguloTeste(float max)
     {
         float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
@@ -29,26 +28,33 @@ public class Mao : MonoBehaviour
              concatenador = 0;            
          foreach(var y in mao)
         {                      
-            y.GetComponent<Carta>().AngulacaoInicial = y.transform.position;         
+            y.GetComponent<Carta>().AngulacaoInicial = y.transform.position;
             y.GetComponent<Carta>().AngulacaoFinal = new Vector2(concatenador,y.transform.position.y);
+
             concatenador += angulacaoConst;
-            y.transform.SetSiblingIndex(3);
+            if (mao.Count % 2 == 0 && concatenador == 0) 
+            {
+                concatenador += angulacaoConst;
+            }
+                y.transform.SetSiblingIndex(3);
         }
-        InvokeRepeating("Angular",0,0);
+        InvokeRepeating("Angular",0,Time.deltaTime);
     }
     private void Angular() 
     {
-        step = (Mathf.Pow(-x,2) + 2*x);       
-        if (step>=1)
+        step =  -x*x + 2*x;
+        x += (0.4f * Time.deltaTime);
+        if (x >= 1)
+        {
             CancelInvoke("Angular");
-        x += 0.2f * Time.deltaTime;
+            return;
+        }
         foreach(var p in mao)
         {
-            p.transform.position = Vector2.Lerp(p.GetComponent<Carta>().AngulacaoInicial, p.GetComponent<Carta>().AngulacaoFinal, step);
+            p.transform.localPosition = Vector2.Lerp(p.GetComponent<Carta>().AngulacaoInicial, p.GetComponent<Carta>().AngulacaoFinal, step);
         }
 
     }
-*/
     //public void SetAnguloZ(int zMax)
     //{
              
@@ -85,6 +91,6 @@ public class Mao : MonoBehaviour
         SetCarta(0);
         SetCarta(0);
         SetCarta(0);
-        SetAnguloTeste(12);
+        SetAnguloTeste(160);
     }
 }
