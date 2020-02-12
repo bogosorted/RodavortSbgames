@@ -10,6 +10,7 @@ public class Mao : MonoBehaviour
     [SerializeField] Sprite[] ImagemCarta;
     float step;
     float x;
+    float max;
     
     public void SetCarta(int id)
     {
@@ -17,9 +18,15 @@ public class Mao : MonoBehaviour
      objCarta.GetComponent<Carta>().Constructor(id);
      objCarta.transform.SetParent(transform,false);
      mao.Add(objCarta);
+     max += 20;
+     foreach(var x in mao)
+        {
+            x.GetComponent<Carta>().AngulacaoInicial = x.transform.eulerAngles;
+        }
+     SetAngulo(max);
     }
-
-         public void SetAnguloTeste(float max)
+  
+    public void SetAnguloTeste(float max)
     {
         float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
         float concatenador = -max;
@@ -27,8 +34,9 @@ public class Mao : MonoBehaviour
              concatenador = 0;            
          foreach(var y in mao)
         {
-            y.GetComponent<Carta>().AngulacaoInicial = y.transform.localPosition - Vector3.up*450;
-            y.GetComponent<Carta>().AngulacaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -250);
+            y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition - Vector3.up*450;
+            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -250);
+            y.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/10));
 
             concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0) 
@@ -38,7 +46,31 @@ public class Mao : MonoBehaviour
                 y.transform.SetSiblingIndex(3);
         }
         InvokeRepeating("Angular",0,Time.deltaTime);
+        x = 0;     
     }
+    public void SetAngulo(float max) 
+    {
+        float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
+        float concatenador = -max;
+        if (mao.Count == 1)
+            concatenador = 0;
+        foreach (var y in mao)
+        {
+            y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition;
+            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 3 - 250);
+       //     y.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, max < 0 ? concatenador / 10 : Mathf.Abs(concatenador / 10));
+
+            concatenador += angulacaoConst;
+            if (mao.Count % 2 == 0 && concatenador == 0)
+            {
+                concatenador += angulacaoConst;
+            }
+            y.transform.SetSiblingIndex(3);
+        }
+        InvokeRepeating("Angular", 0, Time.deltaTime);
+        x = 0;
+    }
+
     private void Angular() 
     {
         step =  -x*x + 2*x;
@@ -50,7 +82,8 @@ public class Mao : MonoBehaviour
         }
         foreach(var p in mao)
         {
-            p.transform.localPosition = Vector2.Lerp(p.GetComponent<Carta>().AngulacaoInicial, p.GetComponent<Carta>().AngulacaoFinal, step);
+            p.transform.localPosition = Vector2.Lerp(p.GetComponent<Carta>().PosicaoInicial, p.GetComponent<Carta>().PosicaoFinal, step);
+            p.transform.eulerAngles = Vector3.Lerp(p.GetComponent<Carta>().AngulacaoInicial, p.GetComponent<Carta>().AngulacaoFinal, step);
         }
 
     }
@@ -86,10 +119,10 @@ public class Mao : MonoBehaviour
     }
     void Start()
     {
+        InvokeRepeating("aa", 0, 2);
+    }
+    void aa() 
+    {
         SetCarta(0);
-        SetCarta(0);
-        SetCarta(0);
-        SetCarta(0);
-        SetAnguloTeste(160);
     }
 }
