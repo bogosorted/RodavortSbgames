@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 public class Mao : MonoBehaviour
 {
     public List<GameObject> mao = new List<GameObject>();
@@ -11,7 +11,19 @@ public class Mao : MonoBehaviour
     float step;
     float x;
     float max;
-    
+    GraphicRaycaster raycast;
+    PointerEventData cursor;
+    EventSystem input;
+    List<RaycastResult> resultados;
+
+
+    void update() 
+    {
+        //cursor = new PointerEventData(input);
+        //cursor.position = Input.mousePosition;
+        //raycast.Raycast(cursor, resultados);
+        //resultados[0].gameObject.tag;
+    }
     public void SetCarta(int id)
     {
      GameObject objCarta = Instantiate(carta);
@@ -62,14 +74,14 @@ public class Mao : MonoBehaviour
         foreach (var y in mao)
         {
             y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition;
-            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 220);
+            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 280);
             y.GetComponent<Carta>().AngulacaoInicial = y.GetComponent<Carta>().AngulacaoFinal;
             y.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
 
             // if cosmético
             if (concatenador == 0 || concatenador == max || concatenador == -max)
             {
-                y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -227);
+                y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -280);
             }
                 concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0)
@@ -100,13 +112,16 @@ public class Mao : MonoBehaviour
     public void AdicionarCarta(GameObject a) => mao.Add(a);
     void Start()
     {
-
+        resultados = new List<RaycastResult>();
+        raycast = GetComponent<GraphicRaycaster>();
+        input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
         InvokeRepeating("aa", 1, 2);
     }
     void aa() 
     {
+
         SetCarta(0);
     }
 }
