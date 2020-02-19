@@ -64,13 +64,15 @@ public class Carta : MonoBehaviour
     {
         switch (id)
         {
+            case -1:
+                transform.GetChild(2).gameObject.name = Nome;
+                break;
             case 0:
                 Nome = "Trovador";
-               // transform.SetSimblingIndex(0).name = "Trovador";
                 Descricao = "Personificação da humanidade artistica";
                 Ataque = 6; 
                 Defesa = 5;
-                break;             
+                goto case -1;      
         }
     }
     #endregion
