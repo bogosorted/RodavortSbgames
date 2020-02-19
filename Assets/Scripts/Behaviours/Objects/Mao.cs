@@ -12,17 +12,19 @@ public class Mao : MonoBehaviour
     float x;
     float max;
     GraphicRaycaster raycast;
-    PointerEventData cursor;
     EventSystem input;
     List<RaycastResult> resultados;
+    PointerEventData cursor;
 
-
-    void update() 
+    void Update() 
     {
-        //cursor = new PointerEventData(input);
-        //cursor.position = Input.mousePosition;
-        //raycast.Raycast(cursor, resultados);
-        //resultados[0].gameObject.tag;
+            cursor.position = Input.mousePosition;
+            resultados = new List<RaycastResult>();     
+            raycast.Raycast(cursor, resultados);
+        if (resultados.Count > 0)
+        {
+            print(resultados[0].gameObject.name /*resultados[0].gameObject.GetComponent<Carta>().Nome*/);       
+        }
     }
     public void SetCarta(int id)
     {
@@ -112,6 +114,7 @@ public class Mao : MonoBehaviour
     public void AdicionarCarta(GameObject a) => mao.Add(a);
     void Start()
     {
+        cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();

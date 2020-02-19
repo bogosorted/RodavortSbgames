@@ -66,8 +66,9 @@ public class Carta : MonoBehaviour
         {
             case 0:
                 Nome = "Trovador";
+               // transform.SetSimblingIndex(0).name = "Trovador";
                 Descricao = "Personificação da humanidade artistica";
-                Ataque = 6;
+                Ataque = 6; 
                 Defesa = 5;
                 break;             
         }
