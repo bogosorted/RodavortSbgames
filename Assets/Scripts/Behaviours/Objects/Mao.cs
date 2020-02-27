@@ -28,13 +28,14 @@ public class Mao : MonoBehaviour
     }
     public void SetCarta(int id)
     {
-     GameObject objCarta = Instantiate(carta);
-     objCarta.GetComponent<Carta>().Constructor(id);
-     objCarta.transform.SetParent(transform,false);
-     objCarta.transform.localPosition += new Vector3(600, -250);
-     mao.Add(objCarta);
-     max += 20;
-     SetAngulo(max);
+        GameObject objCarta = Instantiate(carta);
+        objCarta.GetComponent<Carta>().Constructor(id);
+        objCarta.transform.SetParent(transform,false);
+        objCarta.transform.localPosition += new Vector3(600, -250);  
+        mao.Add(objCarta);
+        max += 20;
+        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -180);
+        SetAngulo(max);
     }
     public void SetCartaTeste(int id)
     {
@@ -44,6 +45,7 @@ public class Mao : MonoBehaviour
         mao.Add(objCarta);
         max += 20;
         SetAnguloTeste(max);
+        
     }  
     public void SetAnguloTeste(float max)
     {
@@ -95,6 +97,7 @@ public class Mao : MonoBehaviour
         InvokeRepeating("Angular", 0, Time.deltaTime);
         x = 0;
     }
+
     private void Angular() 
     {
         step =  -x*x + 2*x;
