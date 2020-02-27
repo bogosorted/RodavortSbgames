@@ -65,7 +65,6 @@ public class Carta : MonoBehaviour
         switch (id)
         {
             case -1:
-                transform.GetChild(2).gameObject.name = Nome;
                 break;
             case 0:
                 Nome = "Trovador";

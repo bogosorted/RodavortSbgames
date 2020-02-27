@@ -21,9 +21,9 @@ public class Mao : MonoBehaviour
             cursor.position = Input.mousePosition;
             resultados = new List<RaycastResult>();     
             raycast.Raycast(cursor, resultados);
-        if (resultados.Count > 0)
+        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
         {
-            print(resultados[0].gameObject.name /*resultados[0].gameObject.GetComponent<Carta>().Nome*/);       
+            print("alo");       
         }
     }
     public void SetCarta(int id)
@@ -31,10 +31,10 @@ public class Mao : MonoBehaviour
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<Carta>().Constructor(id);
         objCarta.transform.SetParent(transform,false);
-        objCarta.transform.localPosition += new Vector3(600, -250);  
+        objCarta.transform.localPosition += new Vector3(600, -290);  
         mao.Add(objCarta);
         max += 20;
-        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -180);
+        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90);
         SetAngulo(max);
     }
     public void SetCartaTeste(int id)
@@ -56,7 +56,7 @@ public class Mao : MonoBehaviour
          foreach(var y in mao)
         {
             y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition - Vector3.up*450;
-            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -220);
+            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -290);
             y.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/10));
 
             concatenador += angulacaoConst;
@@ -78,14 +78,14 @@ public class Mao : MonoBehaviour
         foreach (var y in mao)
         {
             y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition;
-            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 280);
+            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 290);
             y.GetComponent<Carta>().AngulacaoInicial = y.GetComponent<Carta>().AngulacaoFinal;
             y.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
 
             // if cosmético
             if (concatenador == 0 || concatenador == max || concatenador == -max)
             {
-                y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -280);
+                y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -290);
             }
                 concatenador += angulacaoConst;
             if (mao.Count % 2 == 0 && concatenador == 0)
@@ -123,7 +123,7 @@ public class Mao : MonoBehaviour
         input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
-        InvokeRepeating("aa", 1, 2);
+        InvokeRepeating("aa", 2, 2);
     }
     void aa() 
     {
