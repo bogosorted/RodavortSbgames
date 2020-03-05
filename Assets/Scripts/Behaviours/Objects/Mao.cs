@@ -13,18 +13,13 @@ public class Mao : MonoBehaviour
     float max;
     GraphicRaycaster raycast;
     EventSystem input;
+    GameObject CartaAtual;
     List<RaycastResult> resultados;
     PointerEventData cursor;
 
     void Update() 
     {
-            cursor.position = Input.mousePosition;
-            resultados = new List<RaycastResult>();     
-            raycast.Raycast(cursor, resultados);
-        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
-        {
-            print("alo");       
-        }
+        Mouse();
     }
     public void SetCarta(int id)
     {
@@ -34,7 +29,7 @@ public class Mao : MonoBehaviour
         objCarta.transform.localPosition += new Vector3(600, -290);  
         mao.Add(objCarta);
         max += 20;
-        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90);
+        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90,-55);
         SetAngulo(max);
     }
     public void SetCartaTeste(int id)
@@ -98,6 +93,28 @@ public class Mao : MonoBehaviour
         x = 0;
     }
 
+    public void Mouse()
+    {
+        cursor.position = Input.mousePosition;
+        resultados = new List<RaycastResult>();     
+            raycast.Raycast(cursor, resultados);
+        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
+        {
+            if(CartaAtual == null || resultados[0].gameObject != CartaAtual)
+            {
+                SetAngulo(max);
+            }
+            CartaAtual = resultados[0].gameObject;
+            resultados[0].gameObject.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(CartaAtual.GetComponentInParent<Carta>().PosicaoFinal.x, CartaAtual.GetComponentInParent<Carta>().PosicaoFinal.y + 0.25f);
+            Angular();
+            print("alo");
+        }
+        else
+        {
+            SetAngulo(max);
+        }
+    }
+
     private void Angular() 
     {
         step =  -x*x + 2*x;
@@ -123,7 +140,7 @@ public class Mao : MonoBehaviour
         input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
-        InvokeRepeating("aa", 2, 2);
+       // InvokeRepeating("aa", 2, 2);
     }
     void aa() 
     {
