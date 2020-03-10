@@ -8,8 +8,8 @@ public class Mao : MonoBehaviour
     public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
-    float step;
-    float x;
+    float step,stepCarta;
+    float x,xCarta;
     float max;
     GraphicRaycaster raycast;
     EventSystem input;
@@ -20,6 +20,30 @@ public class Mao : MonoBehaviour
     void Update() 
     {
         Mouse();
+    }
+    public void Mouse()
+    {
+        cursor.position = Input.mousePosition;
+        resultados = new List<RaycastResult>();
+        raycast.Raycast(cursor, resultados);
+        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
+        {
+            if (resultados[0].gameObject != CartaAtual || CartaAtual == null  )
+            {
+                SetAngulo(max);
+                print("diferente");
+                SetPosicao(resultados[0].gameObject);
+            }
+            CartaAtual = resultados[0].gameObject;
+            
+        }
+    }
+    private void SetPosicao(GameObject Carta)
+    {
+        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 200);
+       // Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
+        InvokeRepeating("AngularCarta",0,Time.deltaTime);
+
     }
     public void SetCarta(int id)
     {
@@ -42,6 +66,7 @@ public class Mao : MonoBehaviour
         SetAnguloTeste(max);
         
     }  
+
     public void SetAnguloTeste(float max)
     {
         float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
@@ -93,28 +118,7 @@ public class Mao : MonoBehaviour
         x = 0;
     }
 
-    public void Mouse()
-    {
-        cursor.position = Input.mousePosition;
-        resultados = new List<RaycastResult>();     
-            raycast.Raycast(cursor, resultados);
-        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
-        {
-            if(CartaAtual == null || resultados[0].gameObject != CartaAtual)
-            {
-                SetAngulo(max);
-            }
-            CartaAtual = resultados[0].gameObject;
-            resultados[0].gameObject.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(CartaAtual.GetComponentInParent<Carta>().PosicaoFinal.x, CartaAtual.GetComponentInParent<Carta>().PosicaoFinal.y + 0.25f);
-            Angular();
-            print("alo");
-        }
-        else
-        {
-            SetAngulo(max);
-        }
-    }
-
+    
     private void Angular() 
     {
         step =  -x*x + 2*x;
@@ -131,6 +135,17 @@ public class Mao : MonoBehaviour
         }
 
     }
+    private void AngularCarta()
+    {
+        stepCarta = -xCarta*xCarta + 2*xCarta;
+        xCarta += (0.4f * Time.deltaTime);
+        if (xCarta >= 1) 
+        {
+            CancelInvoke("AngularCarta");
+            return;
+        }
+        CartaAtual.transform.localPosition = Vector2.Lerp(CartaAtual.GetComponentInParent<Carta>().PosicaoInicial, CartaAtual.GetComponentInParent<Carta>().PosicaoFinal, stepCarta);
+    }
     public void AdicionarCarta(GameObject a) => mao.Add(a);
     void Start()
     {
@@ -140,11 +155,10 @@ public class Mao : MonoBehaviour
         input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
-       // InvokeRepeating("aa", 2, 2);
+        //InvokeRepeating("aa", 2, 2);
     }
     void aa() 
     {
-
         SetCarta(0);
     }
 }
