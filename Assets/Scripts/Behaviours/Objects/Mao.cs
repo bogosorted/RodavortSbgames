@@ -40,8 +40,7 @@ public class Mao : MonoBehaviour
     }
     private void SetPosicao(GameObject Carta)
     {
-        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 200);
-       // Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
+        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 75);
         InvokeRepeating("AngularCarta",0,Time.deltaTime);
 
     }
@@ -144,7 +143,6 @@ public class Mao : MonoBehaviour
             CancelInvoke("AngularCarta");
             return;
         }
-        CartaAtual.transform.localPosition = Vector2.Lerp(CartaAtual.GetComponentInParent<Carta>().PosicaoInicial, CartaAtual.GetComponentInParent<Carta>().PosicaoFinal, stepCarta);
     }
     public void AdicionarCarta(GameObject a) => mao.Add(a);
     void Start()
@@ -155,7 +153,7 @@ public class Mao : MonoBehaviour
         input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
-        //InvokeRepeating("aa", 2, 2);
+        InvokeRepeating("aa", 2, 2);
     }
     void aa() 
     {
