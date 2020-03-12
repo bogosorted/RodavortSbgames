@@ -8,18 +8,23 @@ public class Mao : MonoBehaviour
     public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
-    float step,stepCarta;
-    float x,xCarta;
+    float step;
+    float x;
     float max;
     GraphicRaycaster raycast;
     EventSystem input;
     GameObject CartaAtual;
     List<RaycastResult> resultados;
     PointerEventData cursor;
+    bool animarBaralho;
 
     void Update() 
     {
         Mouse();
+        if(animarBaralho)
+        {
+            Angular();
+        }
     }
     public void Mouse()
     {
@@ -41,8 +46,7 @@ public class Mao : MonoBehaviour
     private void SetPosicao(GameObject Carta)
     {
         Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 75);
-        InvokeRepeating("AngularCarta",0,Time.deltaTime);
-
+        Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
     }
     public void SetCarta(int id)
     {
@@ -85,7 +89,7 @@ public class Mao : MonoBehaviour
             }
                 y.transform.SetSiblingIndex(-1);
         }
-        InvokeRepeating("Angular",0,Time.deltaTime);
+       animarBaralho = true;
         x = 0;     
     }
     public void SetAngulo(float max) 
@@ -113,7 +117,7 @@ public class Mao : MonoBehaviour
             }
             y.transform.SetSiblingIndex(-1);
         }
-        InvokeRepeating("Angular", 0, Time.deltaTime);
+        animarBaralho = true;
         x = 0;
     }
 
@@ -121,10 +125,10 @@ public class Mao : MonoBehaviour
     private void Angular() 
     {
         step =  -x*x + 2*x;
-        x += (0.3f * Time.deltaTime);
+        x += (1f * Time.deltaTime);
         if (x >= 1)
         {
-            CancelInvoke("Angular");
+            animarBaralho = false;
             return;
         }
         foreach(var p in mao)
@@ -134,17 +138,7 @@ public class Mao : MonoBehaviour
         }
 
     }
-    private void AngularCarta()
-    {
-        stepCarta = -xCarta*xCarta + 2*xCarta;
-        xCarta += (0.4f * Time.deltaTime);
-        if (xCarta >= 1) 
-        {
-            CancelInvoke("AngularCarta");
-            return;
-        }
-    }
-    public void AdicionarCarta(GameObject a) => mao.Add(a);
+
     void Start()
     {
         cursor = new PointerEventData(input);
@@ -153,7 +147,8 @@ public class Mao : MonoBehaviour
         input = GetComponent<EventSystem>();
         SetCartaTeste(0);
         SetCartaTeste(0);
-        InvokeRepeating("aa", 2, 2);
+        SetCartaTeste(0);
+        //InvokeRepeating("aa",3,3);
     }
     void aa() 
     {
