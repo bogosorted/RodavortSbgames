@@ -33,14 +33,12 @@ public class Mao : MonoBehaviour
         raycast.Raycast(cursor, resultados);
         if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
         {
-            if (resultados[0].gameObject != CartaAtual || CartaAtual == null  )
+            if (resultados[0].gameObject != CartaAtual)
             {
                 SetAngulo(max);
-                print("diferente");
                 SetPosicao(resultados[0].gameObject);
             }
             CartaAtual = resultados[0].gameObject;
-            
         }
     }
     private void SetPosicao(GameObject Carta)
@@ -104,17 +102,10 @@ public class Mao : MonoBehaviour
             y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 290);
             y.GetComponent<Carta>().AngulacaoInicial = y.GetComponent<Carta>().AngulacaoFinal;
             y.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
-
             // if cosmético
             if (concatenador == 0 || concatenador == max || concatenador == -max)
-            {
                 y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -290);
-            }
-                concatenador += angulacaoConst;
-            if (mao.Count % 2 == 0 && concatenador == 0)
-            {
-                concatenador += angulacaoConst;
-            }
+            concatenador += angulacaoConst;
             y.transform.SetSiblingIndex(-1);
         }
         animarBaralho = true;
@@ -145,10 +136,8 @@ public class Mao : MonoBehaviour
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        //InvokeRepeating("aa",3,3);
+    
+        InvokeRepeating("aa",3,3);
     }
     void aa() 
     {
