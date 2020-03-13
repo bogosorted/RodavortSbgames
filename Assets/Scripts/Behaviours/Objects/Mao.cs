@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class Mao : MonoBehaviour
+public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    [SerializeField]private Canvas canvas;
     public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
@@ -25,6 +26,26 @@ public class Mao : MonoBehaviour
         {
             Angular();
         }
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+       if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta")
+       {
+            //eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor;
+       }
+       
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
     }
     public void Mouse()
     {
