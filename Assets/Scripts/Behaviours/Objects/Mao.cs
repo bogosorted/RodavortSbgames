@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [SerializeField]private Canvas canvas;
     public List<GameObject> mao = new List<GameObject>();
@@ -18,7 +18,7 @@ public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
     List<RaycastResult> resultados;
     PointerEventData cursor;
     bool animarBaralho;
-
+    bool entrar;
     void Update() 
     {
         Mouse();
@@ -27,10 +27,7 @@ public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
             Angular();
         }
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
 
-    }
     public void OnBeginDrag(PointerEventData eventData)
     {
 
@@ -40,9 +37,22 @@ public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
        if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta")
        {
             //eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor;
-       }
-       
+       }      
     }
+    public void OnPointerExit(PointerEventData eventData) 
+    {
+        SetAngulo(max);
+    }
+    public void OnPointerEnter(PointerEventData eventData) 
+    {
+        entrar = true;
+        if (eventData.pointerCurrentRaycast.gameObject.name == "Carta")
+        {
+            CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+            SetAngulo(max);
+            SetPosicao(eventData.pointerCurrentRaycast.gameObject);
+        }
+    } 
     public void OnEndDrag(PointerEventData eventData)
     {
 
@@ -52,14 +62,28 @@ public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
-        if (resultados.Count != 0 && resultados[0].gameObject.name == "Carta")
+        if (resultados.Count != 0)
         {
-            if (resultados[0].gameObject != CartaAtual)
+            if (resultados[0].gameObject.name == "Carta")
+            {
+                if (!(resultados[0].gameObject == CartaAtual) && entrar)
+                {
+                    SetAngulo(max);
+                    entrar = false;
+                }
+                else if (resultados[0].gameObject != CartaAtual)
+                {
+                    entrar = true;
+                    CartaAtual = resultados[0].gameObject;
+                    SetAngulo(max);
+                    SetPosicao(resultados[0].gameObject);
+                }
+            }
+            else if (entrar)
             {
                 SetAngulo(max);
-                SetPosicao(resultados[0].gameObject);
+                entrar = false;
             }
-            CartaAtual = resultados[0].gameObject;
         }
     }
     private void SetPosicao(GameObject Carta)
@@ -157,8 +181,15 @@ public class Mao : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDr
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-    
-        InvokeRepeating("aa",3,3);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        SetCartaTeste(0);
+        //InvokeRepeating("aa",3,3);
     }
     void aa() 
     {
