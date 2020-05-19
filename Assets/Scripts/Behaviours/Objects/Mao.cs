@@ -5,13 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
+    [Header("Animações do Baralho")]
+    public float velocidadeAnimacao = 1f;
+    //lembrar de colocar tudo
+
     [SerializeField]private Canvas canvas;
-    public List<GameObject> mao = new List<GameObject>();
     [SerializeField] private GameObject carta;
     [SerializeField] Sprite[] ImagemCarta;
-    float step;
-    float x;
-    float max;
+    public List<GameObject> mao = new List<GameObject>();
+    float x,y;   
+    float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
     GameObject CartaAtual;
@@ -41,7 +44,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
-        SetAngulo(max);
+        SetAnimacao(distanciamentoCartasMaximo);
     }
     public void OnPointerEnter(PointerEventData eventData) 
     {
@@ -49,7 +52,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         if (eventData.pointerCurrentRaycast.gameObject.name == "Carta")
         {
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-            SetAngulo(max);
+            SetAnimacao(distanciamentoCartasMaximo);
             SetPosicao(eventData.pointerCurrentRaycast.gameObject);
         }
     } 
@@ -68,20 +71,20 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             {
                 if (!(resultados[0].gameObject == CartaAtual) && entrar)
                 {
-                    SetAngulo(max);
+                    SetAnimacao(distanciamentoCartasMaximo);
                     entrar = false;
                 }
                 else if (resultados[0].gameObject != CartaAtual)
                 {
                     entrar = true;
                     CartaAtual = resultados[0].gameObject;
-                    SetAngulo(max);
+                    SetAnimacao(distanciamentoCartasMaximo);
                     SetPosicao(resultados[0].gameObject);
                 }
             }
             else if (entrar)
             {
-                SetAngulo(max);
+                SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
             }
         }
@@ -91,86 +94,71 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 75);
         Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
     }
-    public void SetCarta(int id)
+    public void CriarCarta(int id)
     {
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<Carta>().Constructor(id);
         objCarta.transform.SetParent(transform,false);
         objCarta.transform.localPosition += new Vector3(600, -290);  
         mao.Add(objCarta);
-        max += 20;
+        distanciamentoCartasMaximo += 20;
         objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90,-55);
-        SetAngulo(max);
+        SetAnimacao(distanciamentoCartasMaximo);
     }
-    public void SetCartaTeste(int id)
-    {
-        GameObject objCarta = Instantiate(carta);
-        objCarta.GetComponent<Carta>().Constructor(id);
-        objCarta.transform.SetParent(transform, false);
-        mao.Add(objCarta);
-        max += 20;
-        SetAnguloTeste(max);
-        
-    }  
 
-    public void SetAnguloTeste(float max)
+    //Seta atributos da carta para realização da animação posteriormente
+    //atributos simulam o distanciamento e angulação de um baralho em mãos 
+    public void SetAnimacao(float distanciamentoCartasMaximo) 
     {
-        float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
-        float concatenador = -max;
-         if (mao.Count == 1)
-             concatenador = 0;            
-         foreach(var y in mao)
-        {
-            y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition - Vector3.up*450;
-            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -290);
-            y.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/10));
+        // formula que leva em conta um valor de distancia do ponto 0 qualquer (distanciamentoDeCartaMaximo), e a quantidade de vezes
+        // em que essa distancia é dividida igualmente (Quantidade de cartas). Devolvendo a constante de distanciamento (Levando em conta 
+        // a imparidade ou paridade da divisão.
 
-            concatenador += angulacaoConst;
-            if (mao.Count % 2 == 0 && concatenador == 0) 
-            {
-                concatenador += angulacaoConst;
-            }
-                y.transform.SetSiblingIndex(-1);
-        }
-       animarBaralho = true;
-        x = 0;     
-    }
-    public void SetAngulo(float max) 
-    {
-        float angulacaoConst = mao.Count % 2 == 0f ? max / (float)(mao.Count / 2) : max / (float)((mao.Count - 1) / 2);
-        float concatenador = -max;
+        //constante de distanciamento
+        float angulacaoConst = mao.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(mao.Count / 2) : distanciamentoCartasMaximo / (float)((mao.Count - 1) / 2);
+        //distancia inicial
+        float concatenador = -distanciamentoCartasMaximo;
         if (mao.Count == 1)
             concatenador = 0;
-        foreach (var y in mao)
+        foreach (var obj in mao)
         {
-            y.GetComponent<Carta>().PosicaoInicial = y.transform.localPosition;
-            y.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 290);
-            y.GetComponent<Carta>().AngulacaoInicial = y.GetComponent<Carta>().AngulacaoFinal;
-            y.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
+            // Setando posição da carta final e inicial 
+            obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition;
+            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 290);
+            // Setando a Angulação final e inicial
+            obj.GetComponent<Carta>().AngulacaoInicial = obj.GetComponent<Carta>().AngulacaoFinal;
+            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
             // if cosmético
-            if (concatenador == 0 || concatenador == max || concatenador == -max)
-                y.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -290);
+            if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
+                obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -290);
             concatenador += angulacaoConst;
-            y.transform.SetSiblingIndex(-1);
+            obj.transform.SetSiblingIndex(-1);
         }
         animarBaralho = true;
         x = 0;
     }
 
-    
+
+    // executa a animação de movimentação do baralho do ponto inicial ao final ja setado com a suavização
+    // dada pela função final ja setado com a suavização dada pela função "f(x)= -x² + 2x" 
     private void Angular() 
     {
-        step =  -x*x + 2*x;
-        x += (1f * Time.deltaTime);
+        //função
+        y = -x*x + 2*x;
+        //velocidade da animação
+        x += (velocidadeAnimacao * Time.deltaTime);
+        //dado o fim da animação
         if (x >= 1)
         {
             animarBaralho = false;
             return;
         }
-        foreach(var p in mao)
+        //animando todas as cartas da mão
+        //por meio do metodo vector.lerp
+        foreach(var obj in mao)
         {
-            p.transform.localPosition = Vector2.Lerp(p.GetComponent<Carta>().PosicaoInicial, p.GetComponent<Carta>().PosicaoFinal, step);
-            p.transform.eulerAngles = Vector3.Lerp(p.GetComponent<Carta>().AngulacaoInicial, p.GetComponent<Carta>().AngulacaoFinal, step);
+            obj.transform.localPosition = Vector2.Lerp(obj.GetComponent<Carta>().PosicaoInicial, obj.GetComponent<Carta>().PosicaoFinal, y);
+            obj.transform.eulerAngles = Vector3.Lerp(obj.GetComponent<Carta>().AngulacaoInicial, obj.GetComponent<Carta>().AngulacaoFinal,y);
         }
 
     }
@@ -181,18 +169,55 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
-        SetCartaTeste(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
+        CriarCartaInicio(0);
         //InvokeRepeating("aa",3,3);
     }
     void aa() 
     {
-        SetCarta(0);
+        CriarCarta(0);
     }
+    #region Repeticoes    
+    public void CriarCartaInicio(int id)
+    {
+        GameObject objCarta = Instantiate(carta);
+        objCarta.GetComponent<Carta>().Constructor(id);
+        objCarta.transform.SetParent(transform, false);
+        mao.Add(objCarta);
+        distanciamentoCartasMaximo += 20;
+        SetAnimacaoInicial(distanciamentoCartasMaximo);
+        
+    }  
+    
+    //Faz o mesmo que o SetAnimacao, porem tem uma animação diferenciada.
+    //Feita com o unico intuito de ser rodada apenas no inicio (animação de receber as cartas iniciais).
+    public void SetAnimacaoInicial(float distanciamentoCartasMaximo)
+    {
+        float angulacaoConst = mao.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(mao.Count / 2) : distanciamentoCartasMaximo / (float)((mao.Count - 1) / 2);
+        float concatenador = -distanciamentoCartasMaximo;
+         if (mao.Count == 1)
+             concatenador = 0;            
+         foreach(var obj in mao)
+        {
+            obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition - Vector3.up*450;
+            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -290);
+            obj.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/10));
+
+            concatenador += angulacaoConst;
+            if (mao.Count % 2 == 0 && concatenador == 0) 
+            {
+                concatenador += angulacaoConst;
+            }
+                obj.transform.SetSiblingIndex(-1);
+        }
+       animarBaralho = true;
+        x = 0;     
+    }
+#endregion
 }
