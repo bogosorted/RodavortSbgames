@@ -9,8 +9,15 @@ public class Carta : MonoBehaviour
     private Vector2 _posicaoInicial,_posicaoFinal;
     private Vector3 _angulacaoInicial,_angulacaoFinal;
     private string _nome, _descricao;
-    private int _ataque, _defesa;
+    private float _ataque, _defesa, _valor;
 
+    void definirComeco(float ataq,float def,float val,string numero)
+    {
+        Ataque = ataq; 
+        Defesa = def;
+        Valor = val;
+        Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
+    }
     #region Propiedades
     public Vector2 PosicaoInicial
     {
@@ -36,29 +43,51 @@ public class Carta : MonoBehaviour
         set
         {
             _cartaImagem = value;
-            gameObject.GetComponent<SpriteRenderer>().sprite = _cartaImagem;
+             transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _cartaImagem;
+
         }
     }
 
     public string Nome
     {
         get { return _nome; }
-        set { _nome = value; }
+        set
+         {
+             _nome = value;
+            transform.GetChild(0).GetChild(4).GetComponent<Text>().text = _nome;
+         }
     }
     public string Descricao
     {
         get { return _descricao; }
         set { _descricao = value; }
     }
-    public int Ataque
+    public float Ataque
     {
         get { return _ataque; }
-        set { _ataque = value; }
+        set 
+        {
+            _ataque = value;
+            transform.GetChild(0).GetChild(3).GetComponent<Text>().text = _ataque.ToString();
+        }
     }
-    public int Defesa
+    public float Defesa
     {
         get { return _defesa; }
-        set { _defesa = value; }
+        set
+        { 
+            _defesa = value; 
+            transform.GetChild(0).GetChild(2).GetComponent<Text>().text = _defesa.ToString();
+        }
+    }
+    public float Valor
+    {
+        get{ return _valor;}
+        set
+        { 
+          _valor = value;         
+           transform.GetChild(0).GetChild(5).GetComponent<Text>().text = _valor.ToString();
+        }
     }
     public void Constructor(int id)
     {
@@ -66,12 +95,84 @@ public class Carta : MonoBehaviour
         {
             case -1:
                 break;
+
             case 0:
-                Nome = "Trovador";
+                Nome = "TROVADOR";
                 Descricao = "Personificação da humanidade artistica";
-                Ataque = 6; 
-                Defesa = 5;
-                goto case -1;      
+                definirComeco(6f,6f,6f,"00");    
+             goto case -1; 
+
+            case 1:
+                Nome = "BOTICÁRIO";
+                Descricao = "";
+                definirComeco(6f,6f,6f,"01");
+             goto case -1;
+
+            case 2:
+                Nome = "GOBLIN";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"02");
+            goto case -1;
+
+            case 3:
+                Nome = "CATAPULTA";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"03");
+            goto case -1;
+
+            case 4:
+                Nome = "MINOTAURO";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"04");
+            goto case -1;
+
+            case 5:
+                Nome = "CLÍNICO";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"05");
+            goto case -1;
+
+            case 6:
+                Nome = "ESPADACHIM";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"06");
+            goto case -1;
+
+            case 7:
+                Nome = "TRÓPIA";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"07");
+            goto case -1;
+
+            case 8:
+                Nome = "HIPER NOVA";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"08");
+            goto case -1;
+
+            case 9:
+                Nome = "HIDRA";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"09");
+            goto case -1;
+
+            case 10:
+                Nome = "PELEJADOR   ";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"10");
+            goto case -1;
+
+            case 11:
+                Nome = "";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"11");
+            goto case -1;
+            
+            case 12:
+                Nome = "";
+                Descricao = "";
+                definirComeco(5f,3f,4f,"12");
+            goto case -1;
         }
     }
     #endregion

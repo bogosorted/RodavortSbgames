@@ -54,7 +54,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     public void OnPointerEnter(PointerEventData eventData) 
     {
         entrar = true;
-        if (eventData.pointerCurrentRaycast.gameObject.name == "Carta")
+        
+        if (eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
         {
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
             SetAnimacao(distanciamentoCartasMaximo);
@@ -72,7 +73,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         raycast.Raycast(cursor, resultados);
         if (resultados.Count != 0)
         {
-            if (resultados[0].gameObject.name == "Carta")
+            if (resultados[0].gameObject.name == "Carta(Clone)")
             {
                 if (resultados[0].gameObject != CartaAtual && entrar)
                 {
@@ -131,7 +132,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition;
             obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
             // Setando a Angulação final e inicial
-            obj.GetComponent<Carta>().AngulacaoInicial = obj.transform.eulerAngles;
+            obj.GetComponent<Carta>().AngulacaoInicial = obj.transform.GetChild(0).eulerAngles;
             obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
             if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
                 obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
@@ -164,7 +165,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             obj.GetComponent<Carta>().AngulacaoInicial = (obj.GetComponent<Carta>().AngulacaoInicial.z > 180) ? obj.GetComponent<Carta>().AngulacaoInicial - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoInicial;
             obj.GetComponent<Carta>().AngulacaoFinal = (obj.GetComponent<Carta>().AngulacaoFinal.z > 180) ? obj.GetComponent<Carta>().AngulacaoFinal - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoFinal;
             obj.transform.localPosition = Vector2.Lerp(obj.GetComponent<Carta>().PosicaoInicial, obj.GetComponent<Carta>().PosicaoFinal, y);
-            obj.transform.eulerAngles = Vector3.Lerp(obj.GetComponent<Carta>().AngulacaoInicial, obj.GetComponent<Carta>().AngulacaoFinal,y);
+            obj.transform.GetChild(0).eulerAngles = Vector3.Lerp(obj.GetComponent<Carta>().AngulacaoInicial, obj.GetComponent<Carta>().AngulacaoFinal,y);
         }
 
     }
@@ -176,13 +177,13 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
         CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
-        CriarCartaInicio(0);
+        CriarCartaInicio(1);
+        CriarCartaInicio(2);
+        CriarCartaInicio(3);
+        CriarCartaInicio(4);
+        CriarCartaInicio(5);
+        CriarCartaInicio(6);
+        CriarCartaInicio(7);
         //InvokeRepeating("aa",3,3);
     }
     void aa() 

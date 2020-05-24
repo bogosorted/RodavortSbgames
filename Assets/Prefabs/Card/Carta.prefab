@@ -1,80 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &378813712262894395
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2180335658495811398}
-  - component: {fileID: 3747013577765039759}
-  - component: {fileID: 1860400159956069573}
-  m_Layer: 5
-  m_Name: Carta
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2180335658495811398
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378813712262894395}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2343011941951948738}
-  m_Father: {fileID: 5897842347720904573}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000076293945, y: -1.2886009}
-  m_SizeDelta: {x: 110.73257, y: 177.09}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3747013577765039759
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378813712262894395}
-  m_CullTransparentMesh: 0
---- !u!114 &1860400159956069573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378813712262894395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2236303603709189781
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 00
 --- !u!114 &1316392983722632441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +105,7 @@ GameObject:
   - component: {fileID: 5897842347720904573}
   - component: {fileID: 5332441208030113159}
   - component: {fileID: 3494334637965581121}
+  - component: {fileID: 169070328818070169}
   m_Layer: 5
   m_Name: Carta
   m_TagString: Untagged
@@ -198,14 +124,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
-  - {fileID: 2180335658495811398}
+  - {fileID: 2343011941951948738}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15.4, y: -28.8}
-  m_SizeDelta: {x: 97.531586, y: 174.51273}
+  m_AnchoredPosition: {x: -19.506, y: -335}
+  m_SizeDelta: {x: 97.531586, y: 325.2023}
   m_Pivot: {x: 0.3, y: 0.3}
 --- !u!222 &5332441208030113159
 CanvasRenderer:
@@ -227,6 +153,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e69f78353be014bb55738b25fac6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &169070328818070169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557178968703050958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2846670575480174543
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +217,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.649994, y: -42.30002}
+  m_AnchoredPosition: {x: 38.5, y: -43.7}
   m_SizeDelta: {x: 45.76, y: 15.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5017280900457841169
@@ -385,7 +340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ffafdfb892d90e4cb32e0096b8f1fdb, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -430,12 +385,12 @@ RectTransform:
   - {fileID: 6989103246989906917}
   - {fileID: 6641872226421896588}
   - {fileID: 2016527775126736093}
-  m_Father: {fileID: 2180335658495811398}
+  m_Father: {fileID: 5897842347720904573}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.75, y: 0.0025053024}
+  m_AnchoredPosition: {x: 0.51486015, y: 74.056}
   m_SizeDelta: {x: 96.50183, y: 177.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4074408235752130547
@@ -553,7 +508,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TROVADOR
+  m_Text: NOME
 --- !u!114 &7698447135707217514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -35.72001, y: -42.30002}
+  m_AnchoredPosition: {x: -34.184975, y: -43.7}
   m_SizeDelta: {x: 35.9, y: 33.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2090347608465616743

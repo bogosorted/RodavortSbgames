@@ -482,7 +482,7 @@ MonoBehaviour:
   velocidadeAnimacao: 1.4
   distancia: 1.2
   indiceAngulacao: 12
-  altitude: -300
+  altitude: -400
   latitude: 6
   canvas: {fileID: 0}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
