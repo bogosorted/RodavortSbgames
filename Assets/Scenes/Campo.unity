@@ -171,7 +171,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 1
   orthographic size: 1
@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.09660911, g: 0.12264149, b: 0.122641504, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -329,6 +330,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -477,9 +479,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90a957d87902504c89c04df7d8d8947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mao: []
+  velocidadeAnimacao: 1.4
+  distancia: 1.2
+  indiceAngulacao: 12
+  altitude: -300
+  latitude: 6
+  canvas: {fileID: 0}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   ImagemCarta: []
+  mao: []
 --- !u!1 &1378392571
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +540,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.09411766, g: 0.11764707, b: 0.11764707, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

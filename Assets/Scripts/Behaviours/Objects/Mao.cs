@@ -7,6 +7,11 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 {
     [Header("Animações do Baralho")]
     public float velocidadeAnimacao = 1f;
+    public float distancia = 1;
+    public float indiceAngulacao = 12;
+    public float altitude = -290 ;
+    public float latitude = 0; 
+    [Header("Configurações padrões")]
     //lembrar de colocar tudo
 
     [SerializeField]private Canvas canvas;
@@ -69,7 +74,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
             if (resultados[0].gameObject.name == "Carta")
             {
-                if (!(resultados[0].gameObject == CartaAtual) && entrar)
+                if (resultados[0].gameObject != CartaAtual && entrar)
                 {
                     SetAnimacao(distanciamentoCartasMaximo);
                     entrar = false;
@@ -124,13 +129,12 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
             // Setando posição da carta final e inicial 
             obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition;
-            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador) / 5 - 290);
+            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
             // Setando a Angulação final e inicial
-            obj.GetComponent<Carta>().AngulacaoInicial = obj.GetComponent<Carta>().AngulacaoFinal;
-            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / 10) );
-            // if cosmético
+            obj.GetComponent<Carta>().AngulacaoInicial = obj.transform.eulerAngles;
+            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
             if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
-                obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador, -Mathf.Abs(concatenador) /5 -290);
+                obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
             concatenador += angulacaoConst;
             obj.transform.SetSiblingIndex(-1);
         }
@@ -157,6 +161,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         //por meio do metodo vector.lerp
         foreach(var obj in mao)
         {
+            obj.GetComponent<Carta>().AngulacaoInicial = (obj.GetComponent<Carta>().AngulacaoInicial.z > 180) ? obj.GetComponent<Carta>().AngulacaoInicial - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoInicial;
+            obj.GetComponent<Carta>().AngulacaoFinal = (obj.GetComponent<Carta>().AngulacaoFinal.z > 180) ? obj.GetComponent<Carta>().AngulacaoFinal - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoFinal;
             obj.transform.localPosition = Vector2.Lerp(obj.GetComponent<Carta>().PosicaoInicial, obj.GetComponent<Carta>().PosicaoFinal, y);
             obj.transform.eulerAngles = Vector3.Lerp(obj.GetComponent<Carta>().AngulacaoInicial, obj.GetComponent<Carta>().AngulacaoFinal,y);
         }
@@ -205,16 +211,12 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
              concatenador = 0;            
          foreach(var obj in mao)
         {
-            obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition - Vector3.up*450;
-            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador, -Mathf.Abs(concatenador)/3 -290);
-            obj.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/10));
+            obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition - Vector3.up * 450;
+            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude , -Mathf.Abs(concatenador)/5 + altitude);
+            obj.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/indiceAngulacao));
 
             concatenador += angulacaoConst;
-            if (mao.Count % 2 == 0 && concatenador == 0) 
-            {
-                concatenador += angulacaoConst;
-            }
-                obj.transform.SetSiblingIndex(-1);
+            obj.transform.SetSiblingIndex(-1);
         }
        animarBaralho = true;
         x = 0;     
