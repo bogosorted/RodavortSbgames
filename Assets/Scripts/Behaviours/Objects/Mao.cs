@@ -30,6 +30,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     void Update() 
     {
         Mouse();
+        
         if(animarBaralho)
         {
             Angular();
@@ -42,11 +43,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     public void OnDrag(PointerEventData eventData)
     {
-      // if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
-     // {
-    //     eventData.pointerCurrentRaycast.gameObject.GetComponent<RectTransform>().transform.position = Camera.main.ScreenToWorldPoint(eventData.position);
-         
-    //  }      
+       if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
+        {
+          eventData.pointerCurrentRaycast.gameObject.transform.position = Input.mousePosition - new Vector3 (20,100);
+        }      
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
@@ -66,7 +66,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
-
+        SetAnimacao(distanciamentoCartasMaximo);
     }
     public void Mouse()
     {
@@ -94,8 +94,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             {
                 SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
-            }
+            }               
+
         }
+        
     }
     private void SetPosicao(GameObject Carta, float longitude , float latitude)
     {
