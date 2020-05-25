@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine;
 public class Carta : MonoBehaviour
 {
     private Sprite _cartaImagem;
@@ -157,19 +156,19 @@ public class Carta : MonoBehaviour
             goto case -1;
 
             case 10:
-                Nome = "PELEJADOR   ";
+                Nome = "PELEJADOR";
                 Descricao = "";
                 definirComeco(5f,3f,4f,"10");
             goto case -1;
 
             case 11:
-                Nome = "";
+                Nome = "MINA DE OURO";
                 Descricao = "";
                 definirComeco(5f,3f,4f,"11");
             goto case -1;
             
             case 12:
-                Nome = "";
+                Nome = "TORRE";
                 Descricao = "";
                 definirComeco(5f,3f,4f,"12");
             goto case -1;

@@ -365,7 +365,6 @@ GameObject:
   - component: {fileID: 923204122}
   - component: {fileID: 923204121}
   - component: {fileID: 923204120}
-  - component: {fileID: 923204124}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas
@@ -455,18 +454,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &923204124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923204119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc7c554bd2c450b44a4dae747591f34b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &923204125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90a957d87902504c89c04df7d8d8947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadeAnimacao: 1.4
+  velocidadeAnimacao: 1.8
   distancia: 1.2
   indiceAngulacao: 12
   altitude: -400

@@ -38,14 +38,15 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
+      
     }
     public void OnDrag(PointerEventData eventData)
     {
-       if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta")
-       {
-            //eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor;
-       }      
+      // if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
+     // {
+    //     eventData.pointerCurrentRaycast.gameObject.GetComponent<RectTransform>().transform.position = Camera.main.ScreenToWorldPoint(eventData.position);
+         
+    //  }      
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
@@ -53,13 +54,14 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     public void OnPointerEnter(PointerEventData eventData) 
     {
+        
         entrar = true;
         
-        if (eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
+        if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
         {
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
             SetAnimacao(distanciamentoCartasMaximo);
-            SetPosicao(eventData.pointerCurrentRaycast.gameObject);
+            SetPosicao(eventData.pointerCurrentRaycast.gameObject,75,0);
         }
     } 
     public void OnEndDrag(PointerEventData eventData)
@@ -85,7 +87,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     entrar = true;
                     CartaAtual = resultados[0].gameObject;
                     SetAnimacao(distanciamentoCartasMaximo);
-                    SetPosicao(resultados[0].gameObject);
+                    SetPosicao(resultados[0].gameObject,75,0);
                 }
             }
             else if (entrar)
@@ -95,9 +97,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             }
         }
     }
-    private void SetPosicao(GameObject Carta)
+    private void SetPosicao(GameObject Carta, float longitude , float latitude)
     {
-        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + 75);
+        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x + latitude, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + longitude);
         Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
     }
     public void CriarCarta(int id)
@@ -176,19 +178,16 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-        CriarCartaInicio(0);
-        CriarCartaInicio(1);
-        CriarCartaInicio(2);
-        CriarCartaInicio(3);
-        CriarCartaInicio(4);
-        CriarCartaInicio(5);
-        CriarCartaInicio(6);
-        CriarCartaInicio(7);
-        //InvokeRepeating("aa",3,3);
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        //InvokeRepeating("aa",0,3);
     }
     void aa() 
     {
-        CriarCarta(0);
+        CriarCarta(Random.Range(0,13));
     }
     #region Repeticoes    
     public void CriarCartaInicio(int id)
