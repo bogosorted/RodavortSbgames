@@ -9,6 +9,7 @@ public class Carta : MonoBehaviour
     private Vector3 _angulacaoInicial,_angulacaoFinal;
     private string _nome, _descricao;
     private float _ataque, _defesa, _valor;
+    private int _posicaoBaralho;
 
     void definirComeco(float ataq,float def,float val,string numero)
     {
@@ -36,6 +37,10 @@ public class Carta : MonoBehaviour
         get;set;        
     }
 
+    public int PosicaoBaralho
+    {
+        get;set;
+    }
     public Sprite Imagem
     {
         get { return _cartaImagem; }

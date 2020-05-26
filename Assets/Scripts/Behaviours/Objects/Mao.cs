@@ -41,28 +41,42 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+       if(CartaAtual != null && CartaAtual.name == "Carta(Clone)")
+        {
+        x=1;
+        OutPut.SetBool("MouseNaCarta",false);
+        mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+        distanciamentoCartasMaximo -=20;
+        CartaAtual.name = "segurado";
+        }      
       
     }
     public void OnDrag(PointerEventData eventData)
     {
-       if(eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
+      CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+       if(CartaAtual != null && CartaAtual.name == "segurado" )
         {
-          eventData.pointerCurrentRaycast.gameObject.transform.position = Input.mousePosition - new Vector3 (20,100);
+        CartaAtual.transform.position = Input.mousePosition - new Vector3 (20,100);
+        CartaAtual.transform.parent.SetSiblingIndex(9);
         }      
+
+        
+        
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
+      
         SetAnimacao(distanciamentoCartasMaximo);
          OutPut.SetBool("MouseNaCarta",false);
     }
     public void OnPointerEnter(PointerEventData eventData) 
     {
+        CartaAtual = eventData.pointerCurrentRaycast.gameObject;
         OutPut.SetBool("MouseNaCarta",true);
-        entrar = true;
-        
-        if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
+        entrar = true;      
+        if (CartaAtual != null && CartaAtual.name == "Carta(Clone)")
         {
-            CartaAtual = eventData.pointerCurrentRaycast.gameObject;
             exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
             SetAnimacao(distanciamentoCartasMaximo);
             SetPosicao(eventData.pointerCurrentRaycast.gameObject,75,0);
@@ -89,6 +103,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 else if (resultados[0].gameObject != CartaAtual)
                 {
                     entrar = true;
+                    OutPut.SetBool("MouseNaCarta",true);
                     CartaAtual = resultados[0].gameObject;
                     exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
                     SetAnimacao(distanciamentoCartasMaximo);
@@ -134,10 +149,13 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         float angulacaoConst = mao.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(mao.Count / 2) : distanciamentoCartasMaximo / (float)((mao.Count - 1) / 2);
         //distancia inicial
         float concatenador = -distanciamentoCartasMaximo;
+        int index = 0;
         if (mao.Count == 1)
             concatenador = 0;
         foreach (var obj in mao)
         {
+            //setando ID da carta em relação ao baralho
+            obj.GetComponent<Carta>().PosicaoBaralho = index;
             // Setando posição da carta final e inicial 
             obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition;
             obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
@@ -147,7 +165,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
                 obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
             concatenador += angulacaoConst;
-            obj.transform.SetSiblingIndex(-1);
+            obj.transform.SetSiblingIndex(index +3);
+            index++;
         }
         animarBaralho = true;
         x = 0;
@@ -193,6 +212,11 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+
         //InvokeRepeating("aa",0,3);
     }
     void aa() 
