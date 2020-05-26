@@ -103,37 +103,37 @@ public class Carta : MonoBehaviour
 
             case 1:
                 Nome = "BOTICÁRIO";
-                Descricao = "";
+                Descricao = "ele é bom de cura hein";
                 definirComeco(6f,6f,6f,"01");
              goto case -1;
 
             case 2:
                 Nome = "GOBLIN";
-                Descricao = "";
+                Descricao = "eta esse é brabo";
                 definirComeco(5f,3f,4f,"02");
             goto case -1;
 
             case 3:
                 Nome = "CATAPULTA";
-                Descricao = "";
+                Descricao = "ovo taca pedra";
                 definirComeco(5f,3f,4f,"03");
             goto case -1;
 
             case 4:
                 Nome = "MINOTAURO";
-                Descricao = "";
+                Descricao = "ela é diferente mano";
                 definirComeco(5f,3f,4f,"04");
             goto case -1;
 
             case 5:
                 Nome = "CLÍNICO";
-                Descricao = "";
+                Descricao = "corona";
                 definirComeco(5f,3f,4f,"05");
             goto case -1;
 
             case 6:
                 Nome = "ESPADACHIM";
-                Descricao = "";
+                Descricao = "vo te chifra";
                 definirComeco(5f,3f,4f,"06");
             goto case -1;
 

@@ -22,6 +22,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
+    Exibicao exibir;
+    Animator OutPut;
     GameObject CartaAtual;
     List<RaycastResult> resultados;
     PointerEventData cursor;
@@ -51,15 +53,17 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     public void OnPointerExit(PointerEventData eventData) 
     {
         SetAnimacao(distanciamentoCartasMaximo);
+         OutPut.SetBool("MouseNaCarta",false);
     }
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        
+        OutPut.SetBool("MouseNaCarta",true);
         entrar = true;
         
         if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.name == "Carta(Clone)")
         {
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+            exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
             SetAnimacao(distanciamentoCartasMaximo);
             SetPosicao(eventData.pointerCurrentRaycast.gameObject,75,0);
         }
@@ -86,12 +90,14 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 {
                     entrar = true;
                     CartaAtual = resultados[0].gameObject;
+                    exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
                     SetAnimacao(distanciamentoCartasMaximo);
                     SetPosicao(resultados[0].gameObject,75,0);
                 }
             }
             else if (entrar)
             {
+                OutPut.SetBool("MouseNaCarta",false);
                 SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
             }               
@@ -176,6 +182,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     void Start()
     {
+        OutPut = transform.GetChild(3).GetComponent<Animator>();
+        exibir = transform.GetChild(3).GetComponent<Exibicao>();   
         cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
