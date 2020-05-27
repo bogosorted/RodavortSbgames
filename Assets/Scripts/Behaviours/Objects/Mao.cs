@@ -70,9 +70,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
          distanciamentoCartasMaximo +=20;
          CartaAtual.name = "Carta(Clone)";
-         SetAnimacao(distanciamentoCartasMaximo);
+         
          
         }
+         SetAnimacao(distanciamentoCartasMaximo);
          OutPut.SetBool("MouseNaCarta",false);
     }
     public void OnPointerEnter(PointerEventData eventData) 
@@ -89,15 +90,19 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //colocar if pra só salvar quando for carta
+        cursor.position = Input.mousePosition;
+        resultados = new List<RaycastResult>();
+        raycast.Raycast(cursor, resultados);
         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-        if (CartaAtual != null && CartaAtual.name == "segurado")
+
+        if( resultados.Count > 1 && resultados[1].gameObject.name == "CampoAmigo")
+             print("Carta colocada no coiso");
+        else if (CartaAtual != null && CartaAtual.name == "segurado")
         {
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
          distanciamentoCartasMaximo +=20;
          CartaAtual.name = "Carta(Clone)";
-         SetAnimacao(distanciamentoCartasMaximo);
-         
+         SetAnimacao(distanciamentoCartasMaximo);         
         }
         
     }
@@ -130,7 +135,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 OutPut.SetBool("MouseNaCarta",false);
                 SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
-            }               
+            }    
         }
         
     }

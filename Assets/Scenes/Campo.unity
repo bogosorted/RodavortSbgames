@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 110073703}
   - component: {fileID: 110073705}
   - component: {fileID: 110073704}
+  - component: {fileID: 110073708}
   m_Layer: 11
   m_Name: CampoAmigo
   m_TagString: CampoAmigo
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.09660911, g: 0.12264149, b: 0.122641504, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -278,6 +279,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110073702}
   m_CullTransparentMesh: 0
+--- !u!114 &110073708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110073702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0415ecda370ada489bbefd6b91f4e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cartas: []
 --- !u!1 &356928946
 GameObject:
   m_ObjectHideFlags: 0

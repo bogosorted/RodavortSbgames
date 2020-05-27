@@ -11,6 +11,7 @@ public class Carta : MonoBehaviour
     private float _ataque, _defesa, _valor;
     private int _posicaoBaralho;
 
+
     void definirComeco(float ataq,float def,float val,string numero)
     {
         Ataque = ataq; 
