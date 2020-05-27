@@ -239,8 +239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -87.2}
-  m_SizeDelta: {x: 434, y: 136.4}
+  m_AnchoredPosition: {x: 0, y: -87}
+  m_SizeDelta: {x: 434, y: 101.56702}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110073704
 MonoBehaviour:
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.09660911, g: 0.12264149, b: 0.122641504, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -594,7 +594,7 @@ MonoBehaviour:
   velocidadeAnimacao: 2
   distancia: 1.2
   indiceAngulacao: 12
-  altitude: -400
+  altitude: -300
   latitude: 6
   canvas: {fileID: 0}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}

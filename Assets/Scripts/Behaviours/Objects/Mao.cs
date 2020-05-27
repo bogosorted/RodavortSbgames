@@ -56,12 +56,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     {
        if(CartaAtual != null && CartaAtual.name == "segurado" )
         {
-        CartaAtual.transform.position = Input.mousePosition - new Vector3 (20,100);
+        CartaAtual.transform.position = Input.mousePosition ;
         CartaAtual.transform.parent.SetSiblingIndex(9);
         }      
-
-        
-        
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
@@ -69,9 +66,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
          distanciamentoCartasMaximo +=20;
-         CartaAtual.name = "Carta(Clone)";
-         
-         
+         CartaAtual.name = "Carta(Clone)";  
         }
          SetAnimacao(distanciamentoCartasMaximo);
          OutPut.SetBool("MouseNaCarta",false);
@@ -85,7 +80,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
             exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
             SetAnimacao(distanciamentoCartasMaximo);
-            SetPosicao(eventData.pointerCurrentRaycast.gameObject,75,0);
+            SetPosicao(eventData.pointerCurrentRaycast.gameObject,30,0);
         }
     } 
     public void OnEndDrag(PointerEventData eventData)
@@ -95,8 +90,14 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         raycast.Raycast(cursor, resultados);
         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
 
-        if( resultados.Count > 1 && resultados[1].gameObject.name == "CampoAmigo")
-             print("Carta colocada no coiso");
+        if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+        {
+            for(int i=0;i < resultados.Count - 1 ;i++)
+            {
+             resultados[i].gameObject.name = "Destruido";
+             resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
+            }
+        }
         else if (CartaAtual != null && CartaAtual.name == "segurado")
         {
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
@@ -127,7 +128,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     CartaAtual = resultados[0].gameObject;
                     exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
                     SetAnimacao(distanciamentoCartasMaximo);
-                    SetPosicao(resultados[0].gameObject,75,0);
+                    SetPosicao(resultados[0].gameObject,30,0);
                 }
             }
             else if (entrar)
