@@ -84,7 +84,17 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
-        SetAnimacao(distanciamentoCartasMaximo);
+        //colocar if pra só salvar quando for carta
+        CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+        if (CartaAtual != null && CartaAtual.name == "segurado")
+        {
+         mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
+         distanciamentoCartasMaximo +=20;
+         CartaAtual.name = "Carta(Clone)";
+         SetAnimacao(distanciamentoCartasMaximo);
+         
+        }
+        
     }
     public void Mouse()
     {
