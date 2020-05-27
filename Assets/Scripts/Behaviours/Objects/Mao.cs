@@ -66,7 +66,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
-      
         SetAnimacao(distanciamentoCartasMaximo);
          OutPut.SetBool("MouseNaCarta",false);
     }
@@ -91,8 +90,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
          distanciamentoCartasMaximo +=20;
          CartaAtual.name = "Carta(Clone)";
-         SetAnimacao(distanciamentoCartasMaximo);
-         
+         SetAnimacao(distanciamentoCartasMaximo);   
         }
         
     }
@@ -118,6 +116,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
                     SetAnimacao(distanciamentoCartasMaximo);
                     SetPosicao(resultados[0].gameObject,75,0);
+                    
                 }
             }
             else if (entrar)
@@ -126,7 +125,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
             }               
-
         }
         
     }
