@@ -31,8 +31,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     bool entrar;
     void Update() 
     {
-        Mouse();
-        
+        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
+        //Mouse();
+        #endif
         if(animarBaralho)
         {
             Angular();
@@ -66,7 +67,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
          mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
          distanciamentoCartasMaximo +=20;
-         CartaAtual.name = "Carta(Clone)";  
+         CartaAtual.name = "Carta(Clone)";
         }
          SetAnimacao(distanciamentoCartasMaximo);
          OutPut.SetBool("MouseNaCarta",false);
@@ -74,10 +75,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     public void OnPointerEnter(PointerEventData eventData) 
     {
         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-        OutPut.SetBool("MouseNaCarta",true);
         entrar = true;      
         if (CartaAtual != null && CartaAtual.name == "Carta(Clone)")
         {
+            OutPut.SetBool("MouseNaCarta",true);
             exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
             SetAnimacao(distanciamentoCartasMaximo);
             SetPosicao(eventData.pointerCurrentRaycast.gameObject,30,0);
@@ -92,7 +93,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
         if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
         {
-            for(int i=0;i < resultados.Count - 1 ;i++)
+            for(int i=0;i < resultados.Count - 1     ;i++)
             {
              resultados[i].gameObject.name = "Destruido";
              resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
