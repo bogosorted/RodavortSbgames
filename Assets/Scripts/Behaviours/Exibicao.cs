@@ -8,13 +8,14 @@ public class Exibicao : MonoBehaviour
 
    public void SetAtributos(string titulo,string descricao, string valor, string ataque,string vida, Sprite imagem)
    {
+        Transform carta =transform.GetChild(0);
         transform.GetChild(1).GetComponent<Text>().text = titulo;
         transform.GetChild(2).GetComponent<Text>().text = descricao;
-        transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = imagem;
-        transform.GetChild(0).GetChild(2).GetComponent<Text>().text = vida;
-        transform.GetChild(0).GetChild(3).GetComponent<Text>().text = ataque;
-        transform.GetChild(0).GetChild(4).GetComponent<Text>().text = titulo;
-        transform.GetChild(0).GetChild(5).GetComponent<Text>().text = valor;
+        carta.GetChild(0).GetComponent<Image>().sprite = imagem;
+        carta.GetChild(2).GetComponent<Text>().text = vida;
+        carta.GetChild(3).GetComponent<Text>().text = ataque;
+        carta.GetChild(4).GetComponent<Text>().text = titulo;
+        carta.GetChild(5).GetComponent<Text>().text = valor;
 
    }
 

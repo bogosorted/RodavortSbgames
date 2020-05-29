@@ -7,9 +7,9 @@
  {
     float x,y;
     [Header("Animações do Baralho")]
-    public float velocidadeAnimacao = 1f;
-    public float altitude = 0 ;
-    public float latitude = 0; 
+    [SerializeField] float velocidadeAnimacao = 1f;
+    [SerializeField] float altitude = 0 ;
+    [SerializeField] float latitude = 0; 
     [Header("Configurações padrões")]
     float distanciamentoCartasMaximo;
     [SerializeField] private GameObject carta;
@@ -20,7 +20,7 @@
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(angularBaralho)
             Angular();
@@ -48,11 +48,12 @@
             concatenador = 0;
         foreach (var obj in cartas)
         {
+            CartaNaMesa atributos = obj.GetComponent<CartaNaMesa>();
             //setando ID da carta em relação ao baralho
-            obj.GetComponent<CartaNaMesa>().PosicaoBaralho = index;
+            atributos.PosicaoBaralho = index;
             // Setando posição da carta final e inicial 
-            obj.GetComponent<CartaNaMesa>().PosicaoInicial = obj.transform.localPosition;
-            obj.GetComponent<CartaNaMesa>().PosicaoFinal = new Vector2(concatenador * latitude,altitude);
+            atributos.PosicaoInicial = obj.transform.localPosition;
+            atributos.PosicaoFinal = new Vector2(concatenador * latitude,altitude);
             concatenador += angulacaoConst;
             index++;
         }
@@ -86,7 +87,8 @@
         //por meio do metodo vector.lerp
         foreach(var obj in cartas)
         {
-            obj.transform.localPosition = Vector2.Lerp(obj.GetComponent<CartaNaMesa>().PosicaoInicial, obj.GetComponent<CartaNaMesa>().PosicaoFinal, y);
+            CartaNaMesa atributos = obj.GetComponent<CartaNaMesa>();
+            obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial, atributos.PosicaoFinal, y);
         }
     }
  }

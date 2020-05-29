@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [Header("Animações do Baralho")]
-    public float velocidadeAnimacao = 1f;
-    public float distancia = 1;
-    public float indiceAngulacao = 12;
-    public float altitude = -290 ;
-    public float latitude = 0; 
+     [SerializeField] float velocidadeAnimacao = 1f;
+     [SerializeField]float distancia = 1;
+     [SerializeField] float indiceAngulacao = 12;
+     [SerializeField] float altitude = -290 ;
+     [SerializeField] float latitude = 0; 
     [Header("Configurações padrões")]
     //lembrar de colocar tudo
 
@@ -28,7 +28,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     PointerEventData cursor;
     bool animarBaralho;
     bool entrar;
-    void Update() 
+
+    void FixedUpdate() 
     {
         #if UNITY_STANDALONE || UNITY_EDITOR_WIN
          Mouse();
@@ -97,7 +98,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             {
                 if(resultados[i].gameObject.name != "Carta(Clone)" && resultados[i].gameObject.name != "CartaNaMesa")
                  {          
-                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehavior>().CriarCartaInicio(resultados[i].gameObject.GetComponent<Carta>().Ataque,resultados[i].gameObject.GetComponent<Carta>().Defesa,resultados[i].gameObject.GetComponent<Carta>().Imagem);
+                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehavior>().CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
                      resultados[i].gameObject.name = "Destruido";
                      resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
                  }
@@ -131,7 +133,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     entrar = true;
                     OutPut.SetBool("MouseNaCarta",true);
                     CartaAtual = resultados[0].gameObject;
-                    exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
+                    Carta atributos = CartaAtual.GetComponent<Carta>();
+                    exibir.SetAtributos(atributos.Nome,atributos.Descricao,atributos.Valor.ToString(),atributos.Ataque.ToString(),atributos.Defesa.ToString(),atributos.Imagem);
                     SetAnimacao(distanciamentoCartasMaximo);
                     SetPosicao(resultados[0].gameObject,30,0);
                 }
@@ -146,8 +149,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     private void SetPosicao(GameObject Carta, float longitude , float latitude)
     {
-        Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x + latitude, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + longitude);
-        Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
+        Carta atributos =  Carta.GetComponentInParent<Carta>();
+        atributos.PosicaoFinal = new Vector2(atributos.PosicaoFinal.x + latitude, atributos.PosicaoFinal.y + longitude);
+        atributos.AngulacaoFinal = Vector3.zero;
     }
     public void SetRaycast(bool result)
     {
@@ -222,10 +226,11 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         //por meio do metodo vector.lerp
         foreach(var obj in mao)
         {
-            obj.GetComponent<Carta>().AngulacaoInicial = (obj.GetComponent<Carta>().AngulacaoInicial.z > 180) ? obj.GetComponent<Carta>().AngulacaoInicial - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoInicial;
-            obj.GetComponent<Carta>().AngulacaoFinal = (obj.GetComponent<Carta>().AngulacaoFinal.z > 180) ? obj.GetComponent<Carta>().AngulacaoFinal - Vector3.forward *360 : obj.GetComponent<Carta>().AngulacaoFinal;
-            obj.transform.localPosition = Vector2.Lerp(obj.GetComponent<Carta>().PosicaoInicial, obj.GetComponent<Carta>().PosicaoFinal, y);
-            obj.transform.GetChild(0).eulerAngles = Vector3.Lerp(obj.GetComponent<Carta>().AngulacaoInicial, obj.GetComponent<Carta>().AngulacaoFinal,y);
+            Carta atributos =  obj.GetComponent<Carta>();
+            atributos.AngulacaoInicial = (atributos.AngulacaoInicial.z > 180) ? atributos.AngulacaoInicial - Vector3.forward *360 : atributos.AngulacaoInicial;
+            atributos.AngulacaoFinal = (atributos.AngulacaoFinal.z > 180) ? atributos.AngulacaoFinal - Vector3.forward *360 : atributos.AngulacaoFinal;
+            obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial,atributos.PosicaoFinal, y);
+            obj.transform.GetChild(0).eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial, atributos.AngulacaoFinal,y);
         }
 
     }
@@ -278,9 +283,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
              return;           
          foreach(var obj in mao)
         {
-            obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition - Vector3.up * 450;
-            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);     
-            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
+            Carta atributos = obj.GetComponent<Carta>();
+            atributos.PosicaoInicial = obj.transform.localPosition - Vector3.up * 450;
+            atributos.PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);     
+            atributos.AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
             concatenador += angulacaoConst;
             obj.transform.SetSiblingIndex(-1);
         }
