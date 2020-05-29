@@ -106,7 +106,7 @@ public class Carta : MonoBehaviour
 
             case 0:
                 Nome = "TROVADOR";
-                Descricao = "Personificação da humanidade artistica\n Possui <color=green>" +Defesa+ "</color> de vida ";
+                Descricao = "Personificação da humanidade artistica\nPossui  " +Defesa+ " de vida ";
                 definirComeco(6f,6f,6f,"00");    
              goto case -1; 
 

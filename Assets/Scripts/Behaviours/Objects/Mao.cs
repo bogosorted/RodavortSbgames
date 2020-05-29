@@ -32,7 +32,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     void Update() 
     {
         #if UNITY_STANDALONE || UNITY_EDITOR_WIN
-        //Mouse();
+        Mouse();
         #endif
         if(animarBaralho)
         {
@@ -50,6 +50,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
         distanciamentoCartasMaximo -=20;
         CartaAtual.name = "segurado";
+         SetAnimacao(distanciamentoCartasMaximo);
         }      
       
     }
@@ -89,15 +90,18 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
-        CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+        //CartaAtual = eventData.pointerCurrentRaycast.gameObject;
 
         if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
         {
-            for(int i=0;i < resultados.Count - 1     ;i++)
+            for(int i=0;i < resultados.Count - 1;i++)
             {
-             resultados[i].gameObject.name = "Destruido";
-             resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
-            }
+                if(resultados[i].gameObject.name != "Carta(Clone)")
+                 {           
+                     resultados[i].gameObject.name = "Destruido";
+                     resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
+                 }
+             }
         }
         else if (CartaAtual != null && CartaAtual.name == "segurado")
         {
@@ -135,7 +139,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             else if (entrar)
             {
                 OutPut.SetBool("MouseNaCarta",false);
-                SetAnimacao(distanciamentoCartasMaximo);
                 entrar = false;
             }    
         }
@@ -228,6 +231,11 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
