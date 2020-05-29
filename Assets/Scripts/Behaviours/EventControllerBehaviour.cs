@@ -20,16 +20,18 @@ public class EventControllerBehaviour : MonoBehaviour
         Derrota
     }
     private void Start() {
-        turno = Turnos.TurnoAtaqueP1;
+        turno = Turnos.TurnoEscolhaP1;
         preparado = true;
     }
      public void OnCick()
     {
         if(preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length)
-        {
-          turno = turno + 1;
-          Invoke(turno.ToString(),0f);
-        }
+            turno = turno + 1;
+          //else só p testar dps tem q tirar isso aq e colocar a derrota k
+        else
+           turno = Turnos.TurnoEscolhaP1;
+
+        Invoke(turno.ToString(),0f);
     }
     private void DecidirIniciante(){
         print("decidirIniciante");
@@ -38,10 +40,15 @@ public class EventControllerBehaviour : MonoBehaviour
     private void DecidirCartaInicial(){}
     private void TurnoEscolhaP1()
     {
-        print("TurnoEscolha");
+        GetComponent<Mao>().SetRaycast(true);
+        print("TurnoEscolhaP1");
         preparado = true;
     }
-    private void TurnoAtaqueP1(){}
+    private void TurnoAtaqueP1()
+    {
+         print("TurnoAtaqueP1");
+         GetComponent<Mao>().SetRaycast(false);
+    }
     private void TurnoEscolhaP2()
     {
         print("TurnoAtaque");
