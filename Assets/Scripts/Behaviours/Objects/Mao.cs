@@ -149,6 +149,13 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         Carta.GetComponentInParent<Carta>().PosicaoFinal = new Vector2(Carta.GetComponentInParent<Carta>().PosicaoFinal.x + latitude, Carta.GetComponentInParent<Carta>().PosicaoFinal.y + longitude);
         Carta.GetComponentInParent<Carta>().AngulacaoFinal = Vector3.zero;
     }
+    public void SetRaycast(bool result)
+    {
+        foreach(var obj in mao)
+        {
+            obj.GetComponent<Image>().raycastTarget = result;
+        }
+    }
     public void CriarCarta(int id)
     {
         GameObject objCarta = Instantiate(carta);

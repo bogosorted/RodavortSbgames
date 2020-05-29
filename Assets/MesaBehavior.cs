@@ -26,7 +26,13 @@
             Angular();
     }
 
- 
+    public void SetRaycast(bool result)
+    {
+        foreach(var obj in cartas)
+        {
+            obj.GetComponent<Image>().raycastTarget = result;
+        }
+    }
     public void SetAnimacao(float distanciamentoCartasMaximo) 
     {
         // formula que leva em conta um valor de distancia do ponto 0 qualquer (distanciamentoDeCartaMaximo), e a quantidade de vezes
