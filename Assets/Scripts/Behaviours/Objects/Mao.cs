@@ -16,7 +16,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     [SerializeField]private Canvas canvas;
     [SerializeField] private GameObject carta;
-    [SerializeField] Sprite[] ImagemCarta;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;   
     float distanciamentoCartasMaximo;
@@ -32,11 +31,11 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     void Update() 
     {
         #if UNITY_STANDALONE || UNITY_EDITOR_WIN
-        Mouse();
+         Mouse();
         #endif
         if(animarBaralho)
         {
-            Angular();
+         Angular();
         }
     }
 
@@ -96,8 +95,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
             for(int i=0;i < resultados.Count - 1;i++)
             {
-                if(resultados[i].gameObject.name != "Carta(Clone)")
-                 {           
+                if(resultados[i].gameObject.name != "Carta(Clone)" && resultados[i].gameObject.name != "CartaNaMesa")
+                 {          
+                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehavior>().CriarCartaInicio(resultados[i].gameObject.GetComponent<Carta>().Ataque,resultados[i].gameObject.GetComponent<Carta>().Defesa,resultados[i].gameObject.GetComponent<Carta>().Imagem);
                      resultados[i].gameObject.name = "Destruido";
                      resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
                  }
@@ -243,9 +243,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-
         //InvokeRepeating("aa",0,3);
     }
     void aa() 
@@ -268,16 +265,15 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     //Feita com o unico intuito de ser rodada apenas no inicio (animação de receber as cartas iniciais).
     public void SetAnimacaoInicial(float distanciamentoCartasMaximo)
     {
-        float angulacaoConst = mao.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(mao.Count / 2) : distanciamentoCartasMaximo / (float)((mao.Count - 1) / 2);
+        float angulacaoConst = mao.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(mao.Count / 2) : distanciamentoCartasMaximo / (float)((mao.Count - 1) / 2);     
         float concatenador = -distanciamentoCartasMaximo;
          if (mao.Count == 1)
-             concatenador = 0;            
+             return;           
          foreach(var obj in mao)
         {
             obj.GetComponent<Carta>().PosicaoInicial = obj.transform.localPosition - Vector3.up * 450;
-            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude , -Mathf.Abs(concatenador)/5 + altitude);
-            obj.GetComponent<Carta>().AngulacaoFinal = (new Vector3(0, 0,-concatenador/indiceAngulacao));
-
+            obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);     
+            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
             concatenador += angulacaoConst;
             obj.transform.SetSiblingIndex(-1);
         }

@@ -157,7 +157,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0.07325468, b: 0.23584908, a: 0}
+  m_BackGroundColor: {r: 0.25490198, g: 0.098039225, b: 0.03529412, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 110073703}
   - component: {fileID: 110073705}
   - component: {fileID: 110073704}
-  - component: {fileID: 110073708}
+  - component: {fileID: 110073706}
   m_Layer: 11
   m_Name: CampoAmigo
   m_TagString: CampoAmigo
@@ -279,7 +279,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110073702}
   m_CullTransparentMesh: 0
---- !u!114 &110073708
+--- !u!114 &110073706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,6 +291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0415ecda370ada489bbefd6b91f4e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocidadeAnimacao: 2
+  altitude: 1
+  latitude: 1
+  carta: {fileID: 1789923327080410604, guid: 6c49d85f8d848304780ba4779b860207, type: 3}
   cartas: []
 --- !u!1 &356928946
 GameObject:
@@ -591,14 +595,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90a957d87902504c89c04df7d8d8947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadeAnimacao: 3
+  velocidadeAnimacao: 2.2
   distancia: 1
   indiceAngulacao: 10
   altitude: -290
   latitude: 0
   canvas: {fileID: 0}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
-  ImagemCarta: []
   mao: []
 --- !u!1 &1341445031
 GameObject:

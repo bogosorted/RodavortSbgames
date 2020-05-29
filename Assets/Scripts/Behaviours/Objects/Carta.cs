@@ -15,7 +15,7 @@ public class Carta : MonoBehaviour
     {   
         Destroy(this.gameObject);
     }
-    void definirComeco(float ataq,float def,float val,string numero)
+    public void definirComeco(float ataq,float def,float val,string numero)
     {
         Ataque = ataq; 
         Defesa = def;
