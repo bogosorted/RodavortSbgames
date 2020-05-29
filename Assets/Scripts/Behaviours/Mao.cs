@@ -98,11 +98,13 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         {
             for(int i=0;i < resultados.Count - 1;i++)
             {
+                
                 if(resultados[i].gameObject.name != "Carta(Clone)" && resultados[i].gameObject.name != "CartaNaMesa")
                  {          
                      Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                      resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehavior>().CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
                      resultados[i].gameObject.name = "Destruido";
+                     resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
                      resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
                  }
              }
