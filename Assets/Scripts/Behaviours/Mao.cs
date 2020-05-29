@@ -42,17 +42,19 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-       if(CartaAtual != null && CartaAtual.name == "Carta(Clone)")
+        if(Input.touchCount < 1)
         {
-        x=1;
-        OutPut.SetBool("MouseNaCarta",false);
-        mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
-        distanciamentoCartasMaximo -=20;
-        CartaAtual.name = "segurado";
-         SetAnimacao(distanciamentoCartasMaximo);
-        }      
-      
+           CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+           if(CartaAtual != null && CartaAtual.name == "Carta(Clone)")
+           {
+             x=1;
+             OutPut.SetBool("MouseNaCarta",false);
+             mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+             distanciamentoCartasMaximo -=20;
+             CartaAtual.name = "segurado";
+             SetAnimacao(distanciamentoCartasMaximo);
+            }      
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {
