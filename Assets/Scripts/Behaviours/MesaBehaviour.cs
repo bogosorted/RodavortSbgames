@@ -3,7 +3,7 @@
  using UnityEngine;
  using UnityEngine.UI;
 
- public class MesaBehavior : MonoBehaviour
+ public class MesaBehaviour : MonoBehaviour
  {
     float x,y;
     [Header("Animações do Baralho")]

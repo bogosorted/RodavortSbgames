@@ -4,7 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - carta: {fileID: 5388212634332516702, guid: f54ef03b1931cc748aee4001fae344f7, type: 3}
+  - canvas: {instanceID: 0}
+  - carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
