@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 923204121}
   - component: {fileID: 923204120}
   - component: {fileID: 923204124}
+  - component: {fileID: 923204126}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas
@@ -824,6 +825,25 @@ MonoBehaviour:
   latitude: 0
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   mao: []
+--- !u!114 &923204126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923204119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8dac75dd3d7db4a94ecba5d5e11bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carta: {fileID: 1183550828312272119, guid: 7586f2f9207d0454b8d5937df68850a3, type: 3}
+  velocidadeAnimacao: 1
+  distancia: 1
+  indiceAngulacao: 10
+  altitude: 280
+  latitude: 0
+  maoAdversaria: []
 --- !u!1 &1341445031
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +949,7 @@ RectTransform:
   m_GameObject: {fileID: 1378392571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0002, y: 1.0002, z: 1.0002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 923204123}
   m_RootOrder: 2

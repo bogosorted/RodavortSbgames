@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class EventControllerBehaviour : MonoBehaviour
 {  
-    private Turnos turno;
+    public static Turnos turno;
     bool preparado;
     
-    private enum Turnos
+    public enum Turnos
     {
         DecidirIniciante = 1,
         DecidirCartaInicial,

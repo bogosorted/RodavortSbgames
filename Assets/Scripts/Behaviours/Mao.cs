@@ -77,7 +77,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
          OutPut.SetBool("MouseNaCarta",false);
     }
     public void OnPointerEnter(PointerEventData eventData) 
-    {
+    {   
         CartaAtual = eventData.pointerCurrentRaycast.gameObject;
         entrar = true;      
         if (CartaAtual != null && CartaAtual.name == "Carta(Clone)")
@@ -147,7 +147,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     SetPosicao(resultados[0].gameObject,30,0);
                 }
             }
-            else if (entrar)
+            else if (entrar && resultados[0].gameObject)
             {
                 OutPut.SetBool("MouseNaCarta",false);
                 entrar = false;
