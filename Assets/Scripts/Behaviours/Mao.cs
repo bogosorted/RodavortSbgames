@@ -41,7 +41,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(Input.touchCount < 1)
+        if(Input.touchCount < 2)
         {
            CartaAtual = eventData.pointerCurrentRaycast.gameObject;
            if(CartaAtual != null && CartaAtual.name == "Carta(Clone)")
