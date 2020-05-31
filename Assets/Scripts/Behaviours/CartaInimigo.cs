@@ -12,6 +12,10 @@ public class CartaInimigo : MonoBehaviour
         Defesa = def;
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero); 
     }
+    public void autoDestruir()
+    {   
+        Destroy(this.gameObject);
+    }
    public Sprite Imagem
     {
         get { return _cartaImagem; }

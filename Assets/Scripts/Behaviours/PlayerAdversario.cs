@@ -18,20 +18,20 @@ public class PlayerAdversario : MonoBehaviour
     bool animarBaralho;
     void Start()
     {
-      CriarCarta(0);
-      CriarCarta(1);
-      CriarCarta(2);
+      CriarCarta(Random.Range(0,13));
+      CriarCarta(Random.Range(0,13));
+      CriarCarta(Random.Range(0,13));
     }
 
     public void ColocarCartaBaralho(GameObject cartaColocada)
     {
         CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
         MesaBehaviour mesa = transform.GetChild(2).GetComponent<MesaBehaviour>();
-        maoAdversaria.RemoveAt(atributos.PosicaoBaralho);
-        //SetAnimacao(distanciamentoCartasMaximo);     
+        maoAdversaria.RemoveAt(atributos.PosicaoBaralho);  
         distanciamentoCartasMaximo -= 10;
+        SetAnimacao(distanciamentoCartasMaximo);   
         mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
-        Destroy(cartaColocada);
+        cartaColocada.GetComponent<Animator>().SetBool("autoDestruir",true);
     }
     // Update is called once per frame
     void FixedUpdate()

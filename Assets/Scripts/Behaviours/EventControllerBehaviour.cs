@@ -63,8 +63,11 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoEscolhaP2()
     {
+        //inimigo bot
         Inimigo.CriarCarta(Random.Range(0,13));
-        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[0]);
+        //colocar um tempinho aq pra enganar
+        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)]);
+        
         print("TurnoEscolhaP2");
         preparado = true;
     }
