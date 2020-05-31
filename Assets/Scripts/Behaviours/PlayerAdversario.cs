@@ -18,9 +18,21 @@ public class PlayerAdversario : MonoBehaviour
     bool animarBaralho;
     void Start()
     {
-        CriarCarta(0);
+      CriarCarta(0);
+      CriarCarta(1);
+      CriarCarta(2);
     }
 
+    public void ColocarCartaBaralho(GameObject cartaColocada)
+    {
+        CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
+        MesaBehaviour mesa = transform.GetChild(2).GetComponent<MesaBehaviour>();
+        maoAdversaria.RemoveAt(atributos.PosicaoBaralho);
+        SetAnimacao(distanciamentoCartasMaximo);     
+        distanciamentoCartasMaximo -= 10;
+        mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
+        Destroy(cartaColocada);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -33,12 +45,13 @@ public class PlayerAdversario : MonoBehaviour
     {
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<CartaInimigo>().Constructor(id);
-        objCarta.transform.SetParent(transform,false);
+        objCarta.transform.SetParent(transform.GetChild(3), false);
         objCarta.transform.localPosition += new Vector3(600, 100);  
         maoAdversaria.Add(objCarta);
-        distanciamentoCartasMaximo += 20;
+        distanciamentoCartasMaximo += 10;
         SetAnimacao(distanciamentoCartasMaximo);
     }
+
       public void SetAnimacao(float distanciamentoCartasMaximo) 
     {
         // formula que leva em conta um valor de distancia do ponto 0 qualquer (distanciamentoDeCartaMaximo), e a quantidade de vezes
@@ -58,14 +71,12 @@ public class PlayerAdversario : MonoBehaviour
             obj.GetComponent<CartaInimigo>().PosicaoBaralho = index;
             // Setando posição da carta final e inicial 
             obj.GetComponent<CartaInimigo>().PosicaoInicial = obj.transform.localPosition;
-            obj.GetComponent<CartaInimigo>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
+            obj.GetComponent<CartaInimigo>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, Mathf.Abs(concatenador) / 5 + altitude);
             // Setando a Angulação final e inicial
             obj.GetComponent<CartaInimigo>().AngulacaoInicial = obj.transform.eulerAngles;
-            obj.GetComponent<CartaInimigo>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
-            if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
-                obj.GetComponent<CartaInimigo>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
+            obj.GetComponent<CartaInimigo>().AngulacaoFinal = new Vector3(0, 0, (concatenador  / indiceAngulacao) );
             concatenador += angulacaoConst;
-            obj.transform.SetSiblingIndex(index + 4);
+            obj.transform.SetSiblingIndex(index);
             index++;
         }
         animarBaralho = true;

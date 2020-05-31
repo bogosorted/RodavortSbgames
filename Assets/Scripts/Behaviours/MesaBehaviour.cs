@@ -11,7 +11,8 @@
     [SerializeField] float altitude = 0 ;
     [SerializeField] float latitude = 0; 
     [Header("Configurações padrões")]
-    float distanciamentoCartasMaximo;
+    [HideInInspector]
+    public float distanciamentoCartasMaximo;
     [SerializeField] private GameObject carta;
     public List<GameObject> cartas = new List<GameObject>();
     bool angularBaralho;

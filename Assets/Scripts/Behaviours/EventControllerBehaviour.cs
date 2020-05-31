@@ -7,6 +7,8 @@ public class EventControllerBehaviour : MonoBehaviour
 {  
     public static Turnos turno;
     bool preparado;
+    PlayerAdversario Inimigo;
+    Mao Player;
     
     public enum Turnos
     {
@@ -21,7 +23,8 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void Start() {
         turno = Turnos.TurnoEscolhaP1;
-        //preparado diz se ele ja pode ir ou não ao proximo estado
+        Inimigo = GetComponent<PlayerAdversario>();
+        Player =  GetComponent<Mao>();
         preparado = true;
     }
      public void OnCick()
@@ -45,7 +48,8 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoEscolhaP1()
     {
-        GetComponent<Mao>().SetRaycast(true);
+        Player.SetRaycast(true);
+        Player.CriarCarta(Random.Range(0,13));
         transform.GetChild(1).GetComponent<MesaBehaviour>().SetRaycast(false);
         print("TurnoEscolhaP1");
         preparado = true;
@@ -53,12 +57,14 @@ public class EventControllerBehaviour : MonoBehaviour
     private void TurnoAtaqueP1()
     {
          print("TurnoAtaqueP1");
-         GetComponent<Mao>().SetRaycast(false);
+         Player.SetRaycast(false);
          transform.GetChild(1).GetComponent<MesaBehaviour>().SetRaycast(true);
          preparado = true;
     }
     private void TurnoEscolhaP2()
     {
+        Inimigo.CriarCarta(Random.Range(0,13));
+        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[0]);
         print("TurnoEscolhaP2");
         preparado = true;
     }

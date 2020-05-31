@@ -172,7 +172,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     {
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<Carta>().Constructor(id);
-        objCarta.transform.SetParent(transform,false);
+        objCarta.transform.SetParent(transform.GetChild(4),false);
         objCarta.transform.localPosition += new Vector3(600, -290);  
         mao.Add(objCarta);
         distanciamentoCartasMaximo += 20;
@@ -245,21 +245,12 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     void Start()
     {
-        OutPut = transform.GetChild(3).GetComponent<Animator>();
-        exibir = transform.GetChild(3).GetComponent<Exibicao>();   
+        OutPut = transform.GetChild(5).GetComponent<Animator>();
+        exibir = transform.GetChild(5).GetComponent<Exibicao>();   
         cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
@@ -274,7 +265,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     {
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<Carta>().Constructor(id);
-        objCarta.transform.SetParent(transform, false);
+        objCarta.transform.SetParent(transform.GetChild(4), false);
         mao.Add(objCarta);
         distanciamentoCartasMaximo += 20;
         SetAnimacaoInicial(distanciamentoCartasMaximo);
