@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.048, y: -27.905}
-  m_SizeDelta: {x: 35.520683, y: 16.978914}
+  m_AnchoredPosition: {x: -16.048, y: -27.49}
+  m_SizeDelta: {x: 35.520683, y: 20.041399}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1789923325892155775
 CanvasRenderer:
@@ -72,7 +72,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -130,8 +130,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000014186, y: -0.0000042915}
-  m_SizeDelta: {x: 98.51169, y: 116.55853}
+  m_AnchoredPosition: {x: 0.0000010728, y: 1.2}
+  m_SizeDelta: {x: 98.51169, y: 110.55426}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1789923326702728671
 CanvasRenderer:
@@ -217,8 +217,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.95, y: 16.04}
-  m_SizeDelta: {x: 67.97017, y: 64.33964}
+  m_AnchoredPosition: {x: 0.0000054836, y: 15.45}
+  m_SizeDelta: {x: 74.15582, y: 68.24563}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1789923326758534542
 CanvasRenderer:
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f59d4999269a5e428c6b9d2a8f57895, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0c970264a62fb84596cfc21f7af15cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -402,8 +402,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17.43, y: -27.64}
-  m_SizeDelta: {x: 31.434433, y: 16.449621}
+  m_AnchoredPosition: {x: 17.43, y: -27.489983}
+  m_SizeDelta: {x: 31.434433, y: 20.041464}
   m_Pivot: {x: 0.50000036, y: 0.49999902}
 --- !u!222 &1789923327083917652
 CanvasRenderer:
@@ -439,7 +439,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

@@ -28,7 +28,7 @@ public class PlayerAdversario : MonoBehaviour
         CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
         MesaBehaviour mesa = transform.GetChild(2).GetComponent<MesaBehaviour>();
         maoAdversaria.RemoveAt(atributos.PosicaoBaralho);
-        SetAnimacao(distanciamentoCartasMaximo);     
+        //SetAnimacao(distanciamentoCartasMaximo);     
         distanciamentoCartasMaximo -= 10;
         mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
         Destroy(cartaColocada);
@@ -104,7 +104,7 @@ public class PlayerAdversario : MonoBehaviour
             atributos.AngulacaoInicial = (atributos.AngulacaoInicial.z > 180) ? atributos.AngulacaoInicial - Vector3.forward *360 : atributos.AngulacaoInicial;
             atributos.AngulacaoFinal = (atributos.AngulacaoFinal.z > 180) ? atributos.AngulacaoFinal - Vector3.forward *360 : atributos.AngulacaoFinal;
             obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial,atributos.PosicaoFinal, y);
-            obj.transform.eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial +Vector3.forward *180, atributos.AngulacaoFinal+ Vector3.forward *180,y);
+            obj.transform.eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial , atributos.AngulacaoFinal,y);
         }
 
     }

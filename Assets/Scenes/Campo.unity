@@ -913,7 +913,7 @@ MonoBehaviour:
   carta: {fileID: 1183550828312272119, guid: 7586f2f9207d0454b8d5937df68850a3, type: 3}
   velocidadeAnimacao: 1
   distancia: 1
-  indiceAngulacao: 6
+  indiceAngulacao: 10
   altitude: 280
   latitude: 0
   maoAdversaria: []

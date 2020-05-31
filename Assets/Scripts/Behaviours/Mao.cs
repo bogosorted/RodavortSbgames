@@ -61,7 +61,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
        if(CartaAtual != null && CartaAtual.name == "segurado" )
         {
         CartaAtual.transform.position = Input.mousePosition ;
-        CartaAtual.transform.parent.SetSiblingIndex(9);
+        //CartaAtual.transform.parent.SetSiblingIndex(9);
         }      
     }
     public void OnPointerExit(PointerEventData eventData) 
@@ -208,7 +208,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
                 obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
             concatenador += angulacaoConst;
-            obj.transform.SetSiblingIndex(index +3);
+            obj.transform.SetSiblingIndex(index);
             index++;
         }
         animarBaralho = true;
