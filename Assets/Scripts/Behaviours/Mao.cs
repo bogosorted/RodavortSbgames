@@ -14,7 +14,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     [Header("Configurações padrões")]
     //lembrar de colocar tudo
 
-    [SerializeField] private GameObject carta;
+    [SerializeField] private GameObject carta,Seta;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;   
     float distanciamentoCartasMaximo;
@@ -22,7 +22,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     EventSystem input;
     Exibicao exibir;
     Animator OutPut;
-    GameObject CartaAtual;
+    GameObject CartaAtual,seta;
     List<RaycastResult> resultados;
     PointerEventData cursor;
     bool animarBaralho;
@@ -44,16 +44,32 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         if(Input.touchCount < 2)
         {
            CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-           if(CartaAtual != null && CartaAtual.name == "Carta(Clone)")
+           if(CartaAtual != null)
            {
-             x=1;
-             OutPut.SetBool("MouseNaCarta",false);
-             mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
-             distanciamentoCartasMaximo -=20;
-             CartaAtual.name = "segurado";
-             SetAnimacao(distanciamentoCartasMaximo);
-             SetRaycast(false);
-            }      
+             switch(EventControllerBehaviour.turno)
+                {
+                case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
+                  if(CartaAtual.name == "Carta(Clone)")
+                        {
+                            x=1;
+                            OutPut.SetBool("MouseNaCarta",false);
+                             mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+                            distanciamentoCartasMaximo -=20;
+                            CartaAtual.name = "segurado";
+                            SetAnimacao(distanciamentoCartasMaximo);           
+                        }
+                    break;
+                case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
+                    if(CartaAtual.name == "CartaNaMesa(Clone)")
+                    {
+                        seta = Instantiate(Seta);
+                        seta.transform.SetParent(transform.GetChild(4),false);
+                        seta.transform.localPosition = CartaAtual.transform.localPosition - new Vector3(10,80);
+                    }
+                    
+                    break;
+                }
+           }      
         }
     }
     public void OnDrag(PointerEventData eventData)
@@ -94,31 +110,41 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
         //CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-
-        if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+        switch(EventControllerBehaviour.turno)
         {
-            for(int i=0;i < resultados.Count - 1;i++)
-            {
-                switch(resultados[i].gameObject.name)
+            case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
+                if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
                 {
-                     case "segurado":
-                        Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                        resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
-                        resultados[i].gameObject.name = "Destruido";
-                        resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
-                        resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
-                        SetRaycast(true);
-                    break;
+                    for(int i=0;i < resultados.Count - 1;i++)
+                    {
+                        switch(resultados[i].gameObject.name)
+                        {
+                            case "segurado":
+                                Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                                resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
+                                resultados[i].gameObject.name = "Destruido";
+                                resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
+                                resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
+                                SetRaycast(true);
+                            break;
+                        }
+                    }
                 }
-             }
-        }
-        else if (CartaAtual != null && CartaAtual.name == "segurado")
-        {
-         mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
-         distanciamentoCartasMaximo +=20;
-         CartaAtual.name = "Carta(Clone)";
-         SetRaycast(true);
-         SetAnimacao(distanciamentoCartasMaximo);         
+                else if (CartaAtual != null && CartaAtual.name == "segurado")
+                {
+                mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
+                distanciamentoCartasMaximo +=20;
+                CartaAtual.name = "Carta(Clone)";
+                SetRaycast(true);
+                SetAnimacao(distanciamentoCartasMaximo);         
+                }
+                break;
+            case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
+                if(seta != null)
+                    seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
+                break;
+
+
         }
         
     }

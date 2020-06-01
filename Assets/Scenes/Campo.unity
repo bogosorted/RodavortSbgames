@@ -897,6 +897,7 @@ MonoBehaviour:
   altitude: -290
   latitude: 0
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
+  Seta: {fileID: 2810661596254874059, guid: 6cff6afbf44dda14f94df93d87e89098, type: 3}
   mao: []
 --- !u!114 &923204126
 MonoBehaviour:
