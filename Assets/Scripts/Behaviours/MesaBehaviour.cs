@@ -18,7 +18,7 @@
     bool angularBaralho;
     void Start()
     {
-        
+        distanciamentoCartasMaximo = 40;
     }
 
     void FixedUpdate()
@@ -70,7 +70,7 @@
          objCarta.transform.SetParent(transform, false);
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
-         SetAnimacao(distanciamentoCartasMaximo);
+         SetAnimacao((cartas.Count < 7) ? distanciamentoCartasMaximo : 175);
         
     }  
     private void Angular() 

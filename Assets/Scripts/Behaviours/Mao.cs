@@ -22,7 +22,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     EventSystem input;
     Exibicao exibir;
     Animator OutPut;
-    GameObject CartaAtual,seta;
+    GameObject CartaAtual,seta,ponteiro;
     List<RaycastResult> resultados;
     PointerEventData cursor;
     bool animarBaralho;
