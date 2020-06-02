@@ -13,11 +13,13 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField] float latitude = 0; 
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
+    private float vida;
     float x,y;   
     float distanciamentoCartasMaximo;
     bool animarBaralho;
     void Start()
     {
+      vida = 30f;
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));

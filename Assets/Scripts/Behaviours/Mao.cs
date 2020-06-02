@@ -16,13 +16,14 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     [SerializeField] private GameObject carta,Seta;
     public List<GameObject> mao = new List<GameObject>();
+    private float _defesa;
     float x,y;   
     float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
     Exibicao exibir;
     Animator OutPut;
-    GameObject CartaAtual,seta,ponteiro;
+    GameObject CartaAtual,AtaqueNoInimigo,seta,ponteiro;
     List<RaycastResult> resultados;
     PointerEventData cursor;
     bool animarBaralho;
@@ -60,11 +61,12 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                         }
                     break;
                 case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
-                    if(CartaAtual.name == "CartaNaMesa(Clone)")
+                    if(CartaAtual.name == "CartaNaMesa")
                     {
+                        AtaqueNoInimigo = CartaAtual;
                         seta = Instantiate(Seta);
                         seta.transform.SetParent(transform.GetChild(4),false);
-                        seta.transform.localPosition = CartaAtual.transform.localPosition - new Vector3(10,80);
+                        seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
                     }
                     
                     break;
@@ -141,7 +143,24 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 break;
             case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
                 if(seta != null)
+                {              
                     seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
+                
+                }
+                if(resultados.Count > 0 )
+                    {
+                        foreach(var obj in resultados)
+                        {
+                            // colocar pra verificar se o estado de ataque da carta esta pronto, se sim ele desmarca
+                            if(obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo != null)
+                            {
+                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                StartCoroutine(DarDano(obj.gameObject));
+                                break;
+                            }
+                        } 
+                    }
+
                 break;
 
 
@@ -319,4 +338,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         x = 0;     
     }
 #endregion
+ IEnumerator DarDano(GameObject obj)
+ {
+     yield return new WaitForSeconds(0.45f);
+     obj.gameObject.GetComponent<CartaNaMesa>().Defesa-= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
+ }
 }

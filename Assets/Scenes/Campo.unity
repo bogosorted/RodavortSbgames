@@ -769,11 +769,11 @@ GameObject:
   m_Component:
   - component: {fileID: 923204123}
   - component: {fileID: 923204125}
+  - component: {fileID: 923204126}
+  - component: {fileID: 923204124}
   - component: {fileID: 923204122}
   - component: {fileID: 923204121}
   - component: {fileID: 923204120}
-  - component: {fileID: 923204124}
-  - component: {fileID: 923204126}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas

@@ -31,7 +31,7 @@
     {
         foreach(var obj in cartas)
         {
-            obj.GetComponent<Image>().raycastTarget = result;
+            obj.transform.GetChild(0).GetComponent<Image>().raycastTarget = result;
         }
     }
     public void SetAnimacao(float distanciamentoCartasMaximo) 
@@ -49,7 +49,7 @@
             concatenador = 0;
         foreach (var obj in cartas)
         {
-            CartaNaMesa atributos = obj.GetComponent<CartaNaMesa>();
+            CartaNaMesa atributos = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
             //setando ID da carta em relação ao baralho
             atributos.PosicaoBaralho = index;
             // Setando posição da carta final e inicial 
@@ -66,7 +66,7 @@
          GameObject objCarta = Instantiate(carta);
          objCarta.transform.localPosition = new Vector2(0,-20);
          objCarta.GetComponent<Image>().raycastTarget = false;
-         objCarta.GetComponent<CartaNaMesa>().definirComeco(ataq,def,img);
+         objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().definirComeco(ataq,def,img);
          objCarta.transform.SetParent(transform, false);
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
@@ -88,7 +88,7 @@
         //por meio do metodo vector.lerp
         foreach(var obj in cartas)
         {
-            CartaNaMesa atributos = obj.GetComponent<CartaNaMesa>();
+            CartaNaMesa atributos = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
             obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial, atributos.PosicaoFinal, y);
         }
     }
