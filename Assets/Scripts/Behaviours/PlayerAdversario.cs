@@ -24,7 +24,20 @@ public class PlayerAdversario : MonoBehaviour
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));
     }
-
+    //posicao atacar é o index do atacador na mesa do baralho inimigo e posicao inimigo 
+    //é a posicao da carta do player que sera atacada
+    public void AtacarCarta(int posicaoAtacar, int posicaoInimigo)
+    {
+        MesaBehaviour atacante =  transform.GetChild(2).GetComponent<MesaBehaviour>();
+        MesaBehaviour defensor =  transform.GetChild(1).GetComponent<MesaBehaviour>();
+        if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
+        {
+           atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
+           print(posicaoInimigo);
+           print(posicaoAtacar);
+           StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
+        }
+    }
     public void ColocarCartaBaralho(GameObject cartaColocada)
     {
         CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
@@ -109,5 +122,10 @@ public class PlayerAdversario : MonoBehaviour
             obj.transform.eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial , atributos.AngulacaoFinal,y);
         }
 
+    }
+    IEnumerator DarDano(GameObject obj, GameObject atacante)
+    {
+     yield return new WaitForSeconds(0.45f);
+     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
     }
 }

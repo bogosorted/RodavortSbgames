@@ -341,6 +341,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
  IEnumerator DarDano(GameObject obj)
  {
      yield return new WaitForSeconds(0.45f);
-     obj.gameObject.GetComponent<CartaNaMesa>().Defesa-= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
+     obj.GetComponent<CartaNaMesa>().Defesa-= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
  }
 }

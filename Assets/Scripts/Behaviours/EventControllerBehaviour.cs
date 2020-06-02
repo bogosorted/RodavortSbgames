@@ -9,6 +9,8 @@ public class EventControllerBehaviour : MonoBehaviour
     bool preparado;
     PlayerAdversario Inimigo;
     Mao Player;
+    MesaBehaviour CartasPlayer;
+    MesaBehaviour CartasInimigo;
     
     public enum Turnos
     {
@@ -25,6 +27,8 @@ public class EventControllerBehaviour : MonoBehaviour
         turno = Turnos.TurnoEscolhaP1;
         Inimigo = GetComponent<PlayerAdversario>();
         Player =  GetComponent<Mao>();
+        CartasInimigo = transform.GetChild(2).GetComponent<MesaBehaviour>();
+        CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
         preparado = true;
     }
      public void OnCick()
@@ -50,7 +54,7 @@ public class EventControllerBehaviour : MonoBehaviour
     {
         Player.SetRaycast(true);
         Player.CriarCarta(Random.Range(0,13));
-        transform.GetChild(1).GetComponent<MesaBehaviour>().SetRaycast(false);
+        CartasPlayer.SetRaycast(false);
         print("TurnoEscolhaP1");
         preparado = true;
     }
@@ -58,7 +62,7 @@ public class EventControllerBehaviour : MonoBehaviour
     {
          print("TurnoAtaqueP1");
          Player.SetRaycast(false);
-         transform.GetChild(1).GetComponent<MesaBehaviour>().SetRaycast(true);
+         CartasPlayer.SetRaycast(true);
          preparado = true;
     }
     private void TurnoEscolhaP2()
@@ -72,6 +76,10 @@ public class EventControllerBehaviour : MonoBehaviour
         preparado = true;
     }
     private void TurnoAtaqueP2(){
+        //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
+        //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
+        if(CartasPlayer.cartas.Count > 0 && CartasInimigo.cartas.Count > 0)
+        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
         print("TurnoAtaqueP2");
         preparado = true;
     }
