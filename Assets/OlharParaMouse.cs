@@ -21,7 +21,7 @@ public class OlharParaMouse : MonoBehaviour
         mousePos.y -= objectPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle -80));
-        rect.sizeDelta = new Vector2( Mathf.Abs(mousePos.x)+ 300,Mathf.Abs(mousePos.x *2f) + mousePos.y ).normalized *400;
+        rect.sizeDelta = new Vector2( Mathf.Abs(mousePos.x)+ 300 * 1.5f,Mathf.Abs(mousePos.x) + mousePos.y).normalized *350;
         
     }
 }
