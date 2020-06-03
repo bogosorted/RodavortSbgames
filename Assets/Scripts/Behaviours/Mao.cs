@@ -11,7 +11,10 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
      [SerializeField] float indiceAngulacao = 12;
      [SerializeField] float altitude = -290 ;
      [SerializeField] float latitude = 0; 
-    [Header("Configurações padrões")]
+    [Header("Configurações De Audio")]
+     [SerializeField] AudioSource som;
+     [SerializeField] AudioClip[] audios;
+    [Header("Configurações Padrão")]
     //lembrar de colocar tudo
 
     [SerializeField] private GameObject carta,Seta;
@@ -101,6 +104,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         entrar = true;      
         if (CartaAtual != null && CartaAtual.name == "Carta(Clone)")
         {
+            som.PlayOneShot(audios[0]);
             OutPut.SetBool("MouseNaCarta",true);
             exibir.SetAtributos(CartaAtual.GetComponent<Carta>().Nome,CartaAtual.GetComponent<Carta>().Descricao,CartaAtual.GetComponent<Carta>().Valor.ToString(),CartaAtual.GetComponent<Carta>().Ataque.ToString(),CartaAtual.GetComponent<Carta>().Defesa.ToString(),CartaAtual.GetComponent<Carta>().Imagem);
             SetAnimacao(distanciamentoCartasMaximo);
@@ -128,6 +132,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                                 resultados[i].gameObject.name = "Destruido";
                                 resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
                                 resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
+                                som.PlayOneShot(audios[1]);
                                 SetRaycast(true);
                             break;
                         }
@@ -184,6 +189,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 }
                 else if (resultados[0].gameObject != CartaAtual)
                 {
+                    som.PlayOneShot(audios[0]);
                     entrar = true;
                     OutPut.SetBool("MouseNaCarta",true);
                     CartaAtual = resultados[0].gameObject;
