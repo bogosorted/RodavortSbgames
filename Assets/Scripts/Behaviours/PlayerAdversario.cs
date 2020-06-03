@@ -33,8 +33,6 @@ public class PlayerAdversario : MonoBehaviour
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
            atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
-           print(posicaoInimigo);
-           print(posicaoAtacar);
            StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
         }
     }
@@ -48,7 +46,6 @@ public class PlayerAdversario : MonoBehaviour
         mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
         cartaColocada.GetComponent<Animator>().SetBool("autoDestruir",true);
     }
-    // Update is called once per frame
     void FixedUpdate()
     {
         if(animarBaralho)

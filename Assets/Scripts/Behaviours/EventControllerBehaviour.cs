@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class EventControllerBehaviour : MonoBehaviour
@@ -11,14 +12,15 @@ public class EventControllerBehaviour : MonoBehaviour
     Mao Player;
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
+    [SerializeField] private Selectable botao;
     
     public enum Turnos
     {
         DecidirIniciante = 1,
         DecidirCartaInicial,
         TurnoEscolhaP1,
-        TurnoAtaqueP1,
         TurnoEscolhaP2,
+        TurnoAtaqueP1,
         TurnoAtaqueP2,
         Vitoria,
         Derrota
@@ -31,10 +33,11 @@ public class EventControllerBehaviour : MonoBehaviour
         CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
         preparado = true;
     }
-     public void OnCick()
+     public void OnClick()
     {
         if(preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length)
             turno = turno + 1;
+            
           //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else
            turno = Turnos.TurnoEscolhaP1;
@@ -52,6 +55,7 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoEscolhaP1()
     {
+        botao.interactable = true;
         Player.SetRaycast(true);
         Player.CriarCarta(Random.Range(0,13));
         CartasPlayer.SetRaycast(false);
@@ -60,6 +64,7 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoAtaqueP1()
     {
+         botao.interactable = true;
          print("TurnoAtaqueP1");
          Player.SetRaycast(false);
          CartasPlayer.SetRaycast(true);
@@ -67,21 +72,13 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoEscolhaP2()
     {
+        botao.interactable = false;
         //inimigo bot
-        Inimigo.CriarCarta(Random.Range(0,13));
-        //colocar um tempinho aq pra enganar
-        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)]);
-        
-        print("TurnoEscolhaP2");
-        preparado = true;
+        StartCoroutine(BotEscolha());
     }
     private void TurnoAtaqueP2(){
-        //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
-        //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
-        if(CartasPlayer.cartas.Count > 0 && CartasInimigo.cartas.Count > 0)
-        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
-        print("TurnoAtaqueP2");
-        preparado = true;
+       botao.interactable = false;
+       StartCoroutine(AtaqueBot());
     }
     private void Vitoria(){
         print("Voce Ganhou");
@@ -90,5 +87,35 @@ public class EventControllerBehaviour : MonoBehaviour
     private void Derrota(){
          print("Voce perdeu");
         preparado = true;
+    }
+ 
+    IEnumerator BotEscolha()
+    {
+        yield return new WaitForSeconds(1f);
+        Inimigo.CriarCarta(Random.Range(0,13));   
+        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)]);
+        print("TurnoEscolhaP2");
+        yield return new WaitForSeconds(1f);
+        preparado = true;
+        OnClick();
+    }
+    IEnumerator AtaqueBot()
+    {
+        //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
+        //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
+        if(CartasPlayer.cartas.Count > 0 && CartasInimigo.cartas.Count > 0)
+        {
+            // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
+            // só pra testar.
+        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+        }
+        print("TurnoAtaqueP2");
+        yield return new WaitForSeconds(1.5f);
+        botao.interactable = true;
+        preparado = true;    
+        OnClick();   
     }
 }

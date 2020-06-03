@@ -44,7 +44,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     {
         if(Input.touchCount < 2)
         {
-           CartaAtual = eventData.pointerCurrentRaycast.gameObject;
+            CartaAtual = eventData.pointerCurrentRaycast.gameObject;
            if(CartaAtual != null)
            {
              switch(EventControllerBehaviour.turno)
@@ -54,7 +54,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                         {
                             x=1;
                             OutPut.SetBool("MouseNaCarta",false);
-                             mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+                            mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+                            SetRaycast(false);
                             distanciamentoCartasMaximo -=20;
                             CartaAtual.name = "segurado";
                             SetAnimacao(distanciamentoCartasMaximo);           
