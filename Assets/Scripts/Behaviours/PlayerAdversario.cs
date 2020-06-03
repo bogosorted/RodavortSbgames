@@ -122,7 +122,8 @@ public class PlayerAdversario : MonoBehaviour
     }
     IEnumerator DarDano(GameObject obj, GameObject atacante)
     {
-     yield return new WaitForSeconds(0.45f);
+     yield return new WaitForSeconds(0.4f);
+     transform.GetComponent<Mao>().Audio(2);
      obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
     }
 }

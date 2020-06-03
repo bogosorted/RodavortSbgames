@@ -91,11 +91,12 @@ public class EventControllerBehaviour : MonoBehaviour
  
     IEnumerator BotEscolha()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0f);
         Inimigo.CriarCarta(Random.Range(0,13));   
         Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)]);
+        Player.Audio(1);
         print("TurnoEscolhaP2");
-        yield return new WaitForSeconds(1f);
+
         preparado = true;
         OnClick();
     }
@@ -108,12 +109,9 @@ public class EventControllerBehaviour : MonoBehaviour
             // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
             // só pra testar.
         Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
-        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
-        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
-        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
         }
         print("TurnoAtaqueP2");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0);
         botao.interactable = true;
         preparado = true;    
         OnClick();   

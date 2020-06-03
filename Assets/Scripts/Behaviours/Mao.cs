@@ -162,6 +162,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                             {
                                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
                                 StartCoroutine(DarDano(obj.gameObject));
+
                                 break;
                             }
                         } 
@@ -347,7 +348,12 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 #endregion
  IEnumerator DarDano(GameObject obj)
  {
-     yield return new WaitForSeconds(0.45f);
+     yield return new WaitForSeconds(0.40f);
+     som.PlayOneShot(audios[2]);
      obj.GetComponent<CartaNaMesa>().Defesa-= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
  }
+ public void Audio(int numero)
+    {
+        som.PlayOneShot(audios[numero]);
+    }
 }
