@@ -906,6 +906,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e27d186233591204f8270e41b104cc36, type: 3}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   Seta: {fileID: 2810661596254874059, guid: 6cff6afbf44dda14f94df93d87e89098, type: 3}
+  Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   mao: []
 --- !u!114 &923204126
 MonoBehaviour:
@@ -920,6 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carta: {fileID: 1183550828312272119, guid: 7586f2f9207d0454b8d5937df68850a3, type: 3}
+  dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   velocidadeAnimacao: 1
   distancia: 1
   indiceAngulacao: 10

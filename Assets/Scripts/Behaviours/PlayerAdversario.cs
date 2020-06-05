@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAdversario : MonoBehaviour
 {
-     [SerializeField] private GameObject carta;
+     [SerializeField] private GameObject carta,dano;
      [Header("Animações do Baralho")]
      [SerializeField] float velocidadeAnimacao = 1f;
      [SerializeField]float distancia = 1;
@@ -14,6 +15,7 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField] float latitude = 0; 
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
+    GameObject Dano;
     private float vida;
     float x,y;   
     float distanciamentoCartasMaximo;
@@ -123,14 +125,19 @@ public class PlayerAdversario : MonoBehaviour
     }
     IEnumerator DarDano(GameObject obj, GameObject atacante)
     {
+     Mao player = transform.GetComponent<Mao>();
      yield return new WaitForSeconds(0.4f);
-     transform.GetComponent<Mao>().Audio(2);	
+     Dano = Instantiate(dano);
+     Dano.transform.SetParent(transform, false);
+     Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * -70;
+     Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
+        player.Audio(2);	
      obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
-        if(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa <0)
-	    {
-         obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
-    	 obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
-	     obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
-	    }
+         if(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f)
+         {
+             obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+    	     obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
+	         obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+	     }
     }
 }
