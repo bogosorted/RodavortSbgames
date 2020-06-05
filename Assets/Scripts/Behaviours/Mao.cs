@@ -202,6 +202,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             }
             else if (entrar && resultados[0].gameObject)
             {
+		SetAnimacao(distanciamentoCartasMaximo);
                 OutPut.SetBool("MouseNaCarta",false);
                 entrar = false;
             }    

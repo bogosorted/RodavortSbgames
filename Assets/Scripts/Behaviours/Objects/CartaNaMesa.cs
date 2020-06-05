@@ -10,6 +10,12 @@ public class CartaNaMesa : MonoBehaviour
     private Sprite _cartaImagem;
     private int _posicaoBaralho;
 
+
+    public void Destruir()
+    {
+	transform.parent.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(_posicaoBaralho);
+        Destroy(this.transform.parent.gameObject);
+    }
     public void definirComeco(float ataq,float def,Sprite img)
     {
         Ataque = ataq; 

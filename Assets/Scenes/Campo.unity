@@ -274,8 +274,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -68.892}
-  m_SizeDelta: {x: 434, y: 137.7835}
+  m_AnchoredPosition: {x: 0, y: -105.9}
+  m_SizeDelta: {x: 434, y: 111.815445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110073704
 MonoBehaviour:
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09660911, g: 0.12264149, b: 0.122641504, a: 1}
+  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.10745447, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -902,7 +902,8 @@ MonoBehaviour:
   som: {fileID: 923204128}
   audios:
   - {fileID: 8300000, guid: 4beaffcca89ccd341a0d7747e3b6e3a2, type: 3}
-  - {fileID: 8300000, guid: a3001ca7beb13d848916db7f131e4185, type: 3}
+  - {fileID: 8300000, guid: 33a8e15530308e847bcfe681ff8cebea, type: 3}
+  - {fileID: 8300000, guid: e27d186233591204f8270e41b104cc36, type: 3}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   Seta: {fileID: 2810661596254874059, guid: 6cff6afbf44dda14f94df93d87e89098, type: 3}
   mao: []
@@ -937,7 +938,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6def145cdcedc2a4ab7d8f8391e628b6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.076
+  m_Volume: 0.4
   m_Pitch: 1.01
   Loop: 0
   Mute: 0
@@ -946,7 +947,7 @@ AudioSource:
   Priority: 150
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 256.67328
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1033,7 +1034,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.301
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1042,7 +1043,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 258.0979
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
