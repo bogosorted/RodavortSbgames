@@ -13,7 +13,8 @@ public class CartaNaMesa : MonoBehaviour
 
     public void Destruir()
     {
-	transform.parent.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(_posicaoBaralho);
+        MesaBehaviour mesa = transform.parent.transform.parent.GetComponent<MesaBehaviour>();
+        mesa.SetAnimacao(mesa.distanciamentoCartasMaximo);
         Destroy(this.transform.parent.gameObject);
     }
     public void definirComeco(float ataq,float def,Sprite img)

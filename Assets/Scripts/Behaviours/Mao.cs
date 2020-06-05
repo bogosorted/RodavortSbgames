@@ -352,6 +352,13 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
      yield return new WaitForSeconds(0.40f);
      som.PlayOneShot(audios[2]);
      obj.GetComponent<CartaNaMesa>().Defesa-= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
+        if (obj.GetComponent<CartaNaMesa>().Defesa < 0 && obj.name == "CartaNaMesaInimigo")
+        {
+            obj.name = "morto";
+            obj.transform.parent.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.GetComponent<CartaNaMesa>().PosicaoBaralho);
+            obj.transform.parent.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+            obj.GetComponent<Animator>().SetTrigger("Destruido");
+        }
  }
  public void Audio(int numero)
     {

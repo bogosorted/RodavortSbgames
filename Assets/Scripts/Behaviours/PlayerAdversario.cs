@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime;
 using UnityEngine;
 
 public class PlayerAdversario : MonoBehaviour
@@ -58,7 +59,7 @@ public class PlayerAdversario : MonoBehaviour
         GameObject objCarta = Instantiate(carta);
         objCarta.GetComponent<CartaInimigo>().Constructor(id);
         objCarta.transform.SetParent(transform.GetChild(3), false);
-        objCarta.transform.localPosition += new Vector3(600, 100);  
+        objCarta.transform.localPosition += new Vector3(0, 400);  
         maoAdversaria.Add(objCarta);
         distanciamentoCartasMaximo += 10;
         SetAnimacao(distanciamentoCartasMaximo);
@@ -123,7 +124,13 @@ public class PlayerAdversario : MonoBehaviour
     IEnumerator DarDano(GameObject obj, GameObject atacante)
     {
      yield return new WaitForSeconds(0.4f);
-     transform.GetComponent<Mao>().Audio(2);
+     transform.GetComponent<Mao>().Audio(2);	
      obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
+        if(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa <0)
+	    {
+         obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+    	 obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
+	     obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+	    }
     }
 }

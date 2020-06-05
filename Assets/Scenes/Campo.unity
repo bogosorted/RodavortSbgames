@@ -923,7 +923,7 @@ MonoBehaviour:
   velocidadeAnimacao: 1
   distancia: 1
   indiceAngulacao: 10
-  altitude: 280
+  altitude: 270
   latitude: 0
   maoAdversaria: []
 --- !u!82 &923204127
@@ -1306,8 +1306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: 97}
-  m_SizeDelta: {x: 434, y: 126.3}
+  m_AnchoredPosition: {x: 0.003076, y: 76.99998}
+  m_SizeDelta: {x: 434, y: 111.808}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378392573
 MonoBehaviour:
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09411766, g: 0.11764707, b: 0.11764707, a: 1}
+  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.105882354, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
