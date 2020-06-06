@@ -574,7 +574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -165.84, y: -43.609985}
+  m_AnchoredPosition: {x: -165.75, y: -43.5}
   m_SizeDelta: {x: 111.80322, y: 58.348022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308263888
@@ -1180,6 +1180,7 @@ MonoBehaviour:
   vidaInimigo: {fileID: 872334448}
   goldInimigo: {fileID: 1420204526}
   maoAdversaria: []
+  vida: 300
 --- !u!82 &923204127
 AudioSource:
   m_ObjectHideFlags: 0

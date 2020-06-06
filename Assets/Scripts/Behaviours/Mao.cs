@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Runtime;
+
 public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [Header("Animações do Baralho")]
@@ -21,7 +23,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     [SerializeField] private GameObject carta,Seta,Dano;
     public List<GameObject> mao = new List<GameObject>();
-    float x,y;   
+    float x,y;
+    [Header("VIDA")]
+    public float vida;
     float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
@@ -43,6 +47,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
          Angular();
         }
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -158,13 +163,18 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     {
                         foreach(var obj in resultados)
                         {
-                            // colocar pra verificar se o estado de ataque da carta esta pronto, se sim ele desmarca
-                            if(obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo != null)
+                        // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
+                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo != null)
                             {
-                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                                StartCoroutine(DarDano(obj.gameObject));
-
-                                break;
+                             AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                             StartCoroutine(DarDano(obj.gameObject));
+                            break;
+                            }
+                        //esse else if vai servir pra atacar o player inimigo
+                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0)
+                            {
+                             AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                            StartCoroutine(DarDanoInimigo(obj.gameObject));
                             }
                         } 
                     }
@@ -301,19 +311,21 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     void Start()
     {
         OutPut = transform.GetChild(5).GetComponent<Animator>();
-        exibir = transform.GetChild(5).GetComponent<Exibicao>();   
+        exibir = transform.GetChild(5).GetComponent<Exibicao>();
+
+        vidaPlayer.text = vida + "/" + vida;
+
+        // se bugar a versão android de alguma forma tirar esse if (não testei)
+        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
         cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
+        #endif
+
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
         CriarCartaInicio(Random.Range(0,13));
-        //InvokeRepeating("aa",0,3);
-    }
-    void aa() 
-    {
-        CriarCarta(Random.Range(0,13));
     }
     #region Repeticoes    
     public void CriarCartaInicio(int id)
@@ -324,7 +336,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         mao.Add(objCarta);
         distanciamentoCartasMaximo += 20;
         SetAnimacaoInicial(distanciamentoCartasMaximo);
-        
     }  
     
     //Faz o mesmo que o SetAnimacao, porem tem uma animação diferenciada.
@@ -366,8 +377,25 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         }
         som.PlayOneShot(audios[2]);
     }
+    IEnumerator DarDanoInimigo(GameObject obj) 
+    {
+
+        yield return new WaitForSeconds(0.40f);
+        dano = Instantiate(Dano);
+        dano.transform.SetParent(transform.GetChild(4), false);
+        dano.transform.localPosition = obj.transform.localPosition + Vector3.up * 50 + Vector3.left * 30;
+        dano.transform.localScale = new Vector3(3, 3);
+        dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
+        GetComponent<PlayerAdversario>().PerderVida(AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque);
+        som.PlayOneShot(audios[2]);
+    }
  public void Audio(int numero)
     {
         som.PlayOneShot(audios[numero]);
+    }
+    public void TirarVidaPlayer(float dano) 
+    {
+        vida -= dano;
+        vidaPlayer.text = vida + "/300";
     }
 }

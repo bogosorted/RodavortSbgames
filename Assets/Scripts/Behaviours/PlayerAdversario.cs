@@ -13,17 +13,20 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField] float indiceAngulacao = 12;
      [SerializeField] float altitude = -290 ;
      [SerializeField] float latitude = 0;
-    [Header("Objetos")]
-    [SerializeField] private Text vidaInimigo;
-    [SerializeField] private Text goldInimigo;
+     [Header("Objetos")]
+     [SerializeField] public Text vidaInimigo;
+     [SerializeField] private Text goldInimigo;
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
     GameObject Dano;
-    float x,y;   
+    float x,y;
+    [Header("Vida")]
+    public float vida;
     float distanciamentoCartasMaximo;
     bool animarBaralho;
     void Start()
     {
+      vidaInimigo.text = vida + "/" + vida;
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));
@@ -140,5 +143,10 @@ public class PlayerAdversario : MonoBehaviour
     	     obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
 	         obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
 	     }
+    }
+    public void PerderVida(float dano) 
+    {
+        vida -= dano;
+        vidaInimigo.text = vida + "/300";
     }
 }
