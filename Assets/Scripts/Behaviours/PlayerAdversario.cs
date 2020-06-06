@@ -12,17 +12,18 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField]float distancia = 1;
      [SerializeField] float indiceAngulacao = 12;
      [SerializeField] float altitude = -290 ;
-     [SerializeField] float latitude = 0; 
+     [SerializeField] float latitude = 0;
+    [Header("Objetos")]
+    [SerializeField] private Text vidaInimigo;
+    [SerializeField] private Text goldInimigo;
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
     GameObject Dano;
-    private float vida;
     float x,y;   
     float distanciamentoCartasMaximo;
     bool animarBaralho;
     void Start()
     {
-      vida = 30f;
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));
       CriarCarta(Random.Range(0,13));

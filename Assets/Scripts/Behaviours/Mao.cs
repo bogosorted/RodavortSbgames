@@ -11,15 +11,16 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
      [SerializeField] float indiceAngulacao = 12;
      [SerializeField] float altitude = -290 ;
      [SerializeField] float latitude = 0; 
-    [Header("Configurações De Audio")]
+    [Header("Configurações de Audio")]
      [SerializeField] AudioSource som;
      [SerializeField] AudioClip[] audios;
-    [Header("Configurações Padrão")]
+    [Header("Objetos")]
+    [SerializeField] private Text vidaPlayer;
+    [SerializeField] private Text goldPlayer;
     //lembrar de colocar tudo
 
     [SerializeField] private GameObject carta,Seta,Dano;
     public List<GameObject> mao = new List<GameObject>();
-    private float _defesa;
     float x,y;   
     float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
