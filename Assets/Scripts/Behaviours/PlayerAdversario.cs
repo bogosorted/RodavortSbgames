@@ -155,7 +155,7 @@ public class PlayerAdversario : MonoBehaviour
         yield return new WaitForSeconds(0.40f);
         Dano = Instantiate(dano);
         Dano.transform.SetParent(transform.GetChild(4), false);
-        Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * 50 + Vector3.left * 30;
+        Dano.transform.localPosition = obj.transform.localPosition + Vector3.down * 50 + Vector3.left * 30;
         Dano.transform.localScale = new Vector3(3, 3);
         Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
         GetComponent<Mao>().TirarVidaPlayer(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque);
