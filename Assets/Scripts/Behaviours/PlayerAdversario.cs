@@ -43,6 +43,12 @@ public class PlayerAdversario : MonoBehaviour
            StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
         }
     }
+    public void AtacarPlayer(int posicaoAtacador) 
+    {
+        MesaBehaviour defensor = transform.GetChild(2).GetComponent<MesaBehaviour>();
+        defensor.cartas[posicaoAtacador].transform.GetComponent<Animator>().SetTrigger("Atacar");
+        StartCoroutine(DarDanoInimigo(defensor.cartas[posicaoAtacador]));
+    }
     public void ColocarCartaBaralho(GameObject cartaColocada)
     {
         CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
@@ -144,9 +150,20 @@ public class PlayerAdversario : MonoBehaviour
 	         obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
 	     }
     }
+    IEnumerator DarDanoInimigo(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.40f);
+        Dano = Instantiate(dano);
+        Dano.transform.SetParent(transform.GetChild(4), false);
+        Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * 50 + Vector3.left * 30;
+        Dano.transform.localScale = new Vector3(3, 3);
+        Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
+        GetComponent<Mao>().TirarVidaPlayer(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque);
+        GetComponent<Mao>().Audio(2);
+    }
     public void PerderVida(float dano) 
     {
         vida -= dano;
-        vidaInimigo.text = vida + "/300";
+        vidaInimigo.text = vida + "/40";
     }
 }

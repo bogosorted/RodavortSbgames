@@ -1158,6 +1158,7 @@ MonoBehaviour:
   Seta: {fileID: 2810661596254874059, guid: 6cff6afbf44dda14f94df93d87e89098, type: 3}
   Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   mao: []
+  vida: 40
 --- !u!114 &923204126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,7 +1181,7 @@ MonoBehaviour:
   vidaInimigo: {fileID: 872334448}
   goldInimigo: {fileID: 1420204526}
   maoAdversaria: []
-  vida: 300
+  vida: 40
 --- !u!82 &923204127
 AudioSource:
   m_ObjectHideFlags: 0

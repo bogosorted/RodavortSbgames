@@ -396,6 +396,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     public void TirarVidaPlayer(float dano) 
     {
         vida -= dano;
-        vidaPlayer.text = vida + "/300";
+        vidaPlayer.text = vida + "/40";
     }
 }

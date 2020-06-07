@@ -78,7 +78,7 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoAtaqueP2(){
        botao.interactable = false;
-       StartCoroutine(AtaqueBot());
+       StartCoroutine(AtaqueCartas());
     }
     private void Vitoria(){
         print("Voce Ganhou");
@@ -100,7 +100,7 @@ public class EventControllerBehaviour : MonoBehaviour
         preparado = true;
         OnClick();
     }
-    IEnumerator AtaqueBot()
+    IEnumerator AtaqueCartas()
     {
         //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
         //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
@@ -109,6 +109,10 @@ public class EventControllerBehaviour : MonoBehaviour
             // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
             // só pra testar.
         Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+        }
+        else if(CartasPlayer.cartas.Count == 0)
+        {
+            Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
         }
         print("TurnoAtaqueP2");
         yield return new WaitForSeconds(0);
