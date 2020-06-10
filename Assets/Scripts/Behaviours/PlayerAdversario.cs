@@ -38,6 +38,7 @@ public class PlayerAdversario : MonoBehaviour
     {
         MesaBehaviour atacante =  transform.GetChild(2).GetComponent<MesaBehaviour>();
         MesaBehaviour defensor =  transform.GetChild(1).GetComponent<MesaBehaviour>();
+        //if redundante
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
            
@@ -139,29 +140,27 @@ public class PlayerAdversario : MonoBehaviour
     IEnumerator DarDano(GameObject obj, GameObject atacante)
     {
     //animações dos efeitos
-     Mao player = transform.GetComponent<Mao>();
+     Mao player = transform.GetComponent<Mao>();   
      yield return new WaitForSeconds(0.4f);
-        if (Dano == null)
+        if (obj != null)
         {
             Dano = Instantiate(dano);
             Dano.transform.SetParent(transform, false);
             Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * -70;
-            Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
+            Dano.GetComponent<Text>().text += atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
         }
-     player.Audio(2);	
-     //IA de fato
-     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
-         if(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f)
-         {
-            //aqui tem bug, vou concertar dps
-            obj.transform.parent.GetComponent<MesaBehaviour>().SetAnimacao(obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
+        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
+        if (obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.transform.GetChild(0).name == "CartaNaMesa")
+        {
+            obj.transform.GetChild(0).name = "morto";
+            print(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
             obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
-    	    obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
-            //especificamente e unicamente com esse carinha aqui embaixo
-            // a animação demora 0.4 segundos pra chamar o ataque, e o bot pode escolher a mesma carta nesse interva-lo. assim 
-            // tentando destruir uma carta que ja foi destruida inicia a exeção.
+            obj.transform.parent.GetComponent<MesaBehaviour>().SetAnimacao(obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
             obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+            print(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+            obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
         }
+        player.Audio(2);
     }
     IEnumerator DarDanoInimigo(GameObject obj)
     {

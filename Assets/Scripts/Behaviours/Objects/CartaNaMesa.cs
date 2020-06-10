@@ -53,6 +53,7 @@ public class CartaNaMesa : MonoBehaviour
             transform.GetChild(1).GetComponent<Text>().text = _defesa.ToString();
         }
     }
+    public float Defesa1 { get; set; }
      public Sprite Imagem
     {
         get { return _cartaImagem; }

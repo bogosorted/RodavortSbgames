@@ -378,19 +378,17 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
  {
         yield return new WaitForSeconds(0.40f);
         Transform ObjT = obj.transform.parent.transform;
-        if (dano != null)
-        {
-            dano = Instantiate(Dano);
-            dano.transform.SetParent(transform.GetChild(4), false);
-            dano.transform.localPosition = ObjT.localPosition + Vector3.up * 50;
-            dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
-        }
+        dano = Instantiate(Dano);
+        dano.transform.SetParent(transform.GetChild(4), false);
+        dano.transform.localPosition = ObjT.localPosition + Vector3.up * 50;
+        dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
         obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
         if (obj.GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.name == "CartaNaMesaInimigo")
         {
             obj.name = "morto";
             ObjT.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.GetComponent<CartaNaMesa>().PosicaoBaralho);
             ObjT.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+            ObjT.parent.GetComponent<MesaBehaviour>().SetAnimacao(ObjT.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
             obj.GetComponent<Animator>().SetTrigger("Destruido");
         }
         som.PlayOneShot(audios[2]);
