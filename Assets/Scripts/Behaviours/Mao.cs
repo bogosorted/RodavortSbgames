@@ -8,14 +8,14 @@ using System.Runtime;
 public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [Header("Animações do Baralho")]
-     [SerializeField] float velocidadeAnimacao = 1f;
-     [SerializeField]float distancia = 1;
-     [SerializeField] float indiceAngulacao = 12;
-     [SerializeField] float altitude = -290 ;
-     [SerializeField] float latitude = 0; 
+    [SerializeField] float velocidadeAnimacao = 1f;
+    [SerializeField]float distancia = 1;
+    [SerializeField] float indiceAngulacao = 12;
+    [SerializeField] float altitude = -290 ;
+    [SerializeField] float latitude = 0; 
     [Header("Configurações de Audio")]
-     [SerializeField] AudioSource som;
-     [SerializeField] AudioClip[] audios;
+    [SerializeField] AudioSource som;
+    [SerializeField] AudioClip[] audios;
     [Header("Objetos")]
     [SerializeField] private Text vidaPlayer;
     [SerializeField] private Text goldPlayer;
@@ -26,6 +26,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     float x,y;
     [Header("VIDA")]
     public float vida;
+    private int gold;
     float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
@@ -37,18 +38,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     bool animarBaralho;
     bool entrar;
 
-    void FixedUpdate() 
-    {
-        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
-         Mouse();
-        #endif
-        if(animarBaralho)
-        {
-         Angular();
-        }
-    }
 
-
+    #region ClickInput
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(Input.touchCount < 2)
@@ -218,36 +209,18 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 entrar = false;
             }    
         }
-        
+
     }
+    #endregion
+
+    #region FisicasCarta
     private void SetPosicao(GameObject Carta, float longitude , float latitude)
     {
         Carta atributos =  Carta.GetComponentInParent<Carta>();
         atributos.PosicaoFinal = new Vector2(atributos.PosicaoFinal.x + latitude, atributos.PosicaoFinal.y + longitude);
         atributos.AngulacaoFinal = Vector3.zero;
     }
-    public void SetRaycast(bool result)
-    {
-        foreach(var obj in mao)
-        {
-            obj.GetComponent<Image>().raycastTarget = result;
-        }
-    }
-    public void CriarCarta(int id)
-    {
-        GameObject objCarta = Instantiate(carta);
-        objCarta.GetComponent<Carta>().Constructor(id);
-        objCarta.transform.SetParent(transform.GetChild(4),false);
-        objCarta.transform.localPosition += new Vector3(600, -290);  
-        mao.Add(objCarta);
-        distanciamentoCartasMaximo += 20;
-        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90,-55);
-        SetAnimacao(distanciamentoCartasMaximo);
-    }
-
-    //Seta atributos da carta para realização da animação posteriormente
-    //atributos simulam o distanciamento e angulação de um baralho em mãos 
-    public void SetAnimacao(float distanciamentoCartasMaximo) 
+    public void SetAnimacao(float distanciamentoCartasMaximo)
     {
         // formula que leva em conta um valor de distancia do ponto 0 qualquer (distanciamentoDeCartaMaximo), e a quantidade de vezes
         // em que essa distancia é dividida igualmente (Quantidade de cartas). Devolvendo a constante de distanciamento (Levando em conta 
@@ -269,9 +242,9 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
             obj.GetComponent<Carta>().PosicaoFinal = new Vector2(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
             // Setando a Angulação final e inicial
             obj.GetComponent<Carta>().AngulacaoInicial = obj.transform.GetChild(0).eulerAngles;
-            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador  / indiceAngulacao) );
+            obj.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, 0, (-concatenador / indiceAngulacao));
             if (concatenador == 0 || concatenador == distanciamentoCartasMaximo || concatenador == -distanciamentoCartasMaximo)
-                obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) /5 + altitude);
+                obj.GetComponent<Carta>().PosicaoFinal = new Vector3(concatenador * distancia + latitude, -Mathf.Abs(concatenador) / 5 + altitude);
             concatenador += angulacaoConst;
             obj.transform.SetSiblingIndex(index);
             index++;
@@ -280,13 +253,16 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         x = 0;
     }
 
+    //Seta atributos da carta para realização da animação posteriormente
+    //atributos simulam o distanciamento e angulação de um baralho em mãos 
+
 
     // executa a animação de movimentação do baralho do ponto inicial ao final ja setado com a suavização
     // dada pela função final ja setado com a suavização dada pela função "f(x)= -x² + 2x" 
-    private void Angular() 
+    private void Angular()
     {
         //função
-        y = -x*x + 2*x;
+        y = -x * x + 2 * x;
         //velocidade da animação
         x += (velocidadeAnimacao * Time.deltaTime);
         //dado o fim da animação
@@ -297,35 +273,15 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         }
         //animando todas as cartas da mão
         //por meio do metodo vector.lerp
-        foreach(var obj in mao)
+        foreach (var obj in mao)
         {
-            Carta atributos =  obj.GetComponent<Carta>();
-            atributos.AngulacaoInicial = (atributos.AngulacaoInicial.z > 180) ? atributos.AngulacaoInicial - Vector3.forward *360 : atributos.AngulacaoInicial;
-            atributos.AngulacaoFinal = (atributos.AngulacaoFinal.z > 180) ? atributos.AngulacaoFinal - Vector3.forward *360 : atributos.AngulacaoFinal;
-            obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial,atributos.PosicaoFinal, y);
-            obj.transform.GetChild(0).eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial, atributos.AngulacaoFinal,y);
+            Carta atributos = obj.GetComponent<Carta>();
+            atributos.AngulacaoInicial = (atributos.AngulacaoInicial.z > 180) ? atributos.AngulacaoInicial - Vector3.forward * 360 : atributos.AngulacaoInicial;
+            atributos.AngulacaoFinal = (atributos.AngulacaoFinal.z > 180) ? atributos.AngulacaoFinal - Vector3.forward * 360 : atributos.AngulacaoFinal;
+            obj.transform.localPosition = Vector2.Lerp(atributos.PosicaoInicial, atributos.PosicaoFinal, y);
+            obj.transform.GetChild(0).eulerAngles = Vector3.Lerp(atributos.AngulacaoInicial, atributos.AngulacaoFinal, y);
         }
 
-    }
-
-    void Start()
-    {
-        OutPut = transform.GetChild(5).GetComponent<Animator>();
-        exibir = transform.GetChild(5).GetComponent<Exibicao>();
-
-        vidaPlayer.text = vida + "/" + vida;
-
-        // se bugar a versão android de alguma forma tirar esse if (não testei)
-        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
-        cursor = new PointerEventData(input);
-        resultados = new List<RaycastResult>();
-        raycast = GetComponent<GraphicRaycaster>();
-        input = GetComponent<EventSystem>();
-        #endif
-
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
     }
     #region Repeticoes    
     public void CriarCartaInicio(int id)
@@ -358,15 +314,77 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
        animarBaralho = true;
         x = 0;     
     }
-#endregion
- IEnumerator DarDano(GameObject obj)
+    #endregion
+    #endregion
+
+    #region configuracoes
+    public void Audio(int numero)
+    {
+        som.PlayOneShot(audios[numero]);
+    }
+    #endregion
+
+
+    public void SetRaycast(bool result)
+    {
+        foreach(var obj in mao)
+        {
+            obj.GetComponent<Image>().raycastTarget = result;
+        }
+    }
+    public void CriarCarta(int id)
+    {
+        GameObject objCarta = Instantiate(carta);
+        objCarta.GetComponent<Carta>().Constructor(id);
+        objCarta.transform.SetParent(transform.GetChild(4),false);
+        objCarta.transform.localPosition += new Vector3(600, -290);  
+        mao.Add(objCarta);
+        distanciamentoCartasMaximo += 20;
+        objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90,-55);
+        SetAnimacao(distanciamentoCartasMaximo);
+    }
+  
+    void Start()
+    {
+        OutPut = transform.GetChild(5).GetComponent<Animator>();
+        exibir = transform.GetChild(5).GetComponent<Exibicao>();
+
+        vidaPlayer.text = vida + "/" + vida;
+
+        // se bugar a versão android de alguma forma tirar esse if (não testei)
+        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
+        cursor = new PointerEventData(input);
+        resultados = new List<RaycastResult>();
+        raycast = GetComponent<GraphicRaycaster>();
+        input = GetComponent<EventSystem>();
+        #endif
+
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+        CriarCartaInicio(Random.Range(0,13));
+    }
+    void FixedUpdate()
+    {
+        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
+            Mouse();
+        #endif
+        if (animarBaralho)
+        {
+            Angular();
+        }
+    }
+
+    IEnumerator DarDano(GameObject obj)
  {
         yield return new WaitForSeconds(0.40f);
         Transform ObjT = obj.transform.parent.transform;
-        dano = Instantiate(Dano);
-        dano.transform.SetParent(transform.GetChild(4), false);
-        dano.transform.localPosition = ObjT.localPosition + Vector3.up * 50;
-        dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
+        if (dano != null)
+        {
+            dano = Instantiate(Dano);
+            dano.transform.SetParent(transform.GetChild(4), false);
+            dano.transform.localPosition = ObjT.localPosition + Vector3.up * 50;
+            dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
+        }
         obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
         if (obj.GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.name == "CartaNaMesaInimigo")
         {
@@ -389,13 +407,16 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         GetComponent<PlayerAdversario>().PerderVida(AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque);
         som.PlayOneShot(audios[2]);
     }
- public void Audio(int numero)
-    {
-        som.PlayOneShot(audios[numero]);
-    }
+    
     public void TirarVidaPlayer(float dano) 
     {
         vida -= dano;
         vidaPlayer.text = vida + "/40";
+    }
+    public void SetarGold(int goldMax) 
+    {
+        gold = goldMax;
+        goldPlayer.text = string.Format("{0}/{1}",gold,goldMax);
+       
     }
 }

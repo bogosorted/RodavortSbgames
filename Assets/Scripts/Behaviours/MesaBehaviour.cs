@@ -31,9 +31,11 @@
     {
         foreach(var obj in cartas)
         {
+            if (obj != null)
             obj.transform.GetChild(0).GetComponent<Image>().raycastTarget = result;
         }
     }
+  
     public void SetAnimacao(float distanciamentoCartasMaximo) 
     {
         // formula que leva em conta um valor de distancia do ponto 0 qualquer (distanciamentoDeCartaMaximo), e a quantidade de vezes

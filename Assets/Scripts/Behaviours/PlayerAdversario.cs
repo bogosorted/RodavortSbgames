@@ -22,6 +22,7 @@ public class PlayerAdversario : MonoBehaviour
     float x,y;
     [Header("Vida")]
     public float vida;
+    private int gold;
     float distanciamentoCartasMaximo;
     bool animarBaralho;
     void Start()
@@ -39,10 +40,12 @@ public class PlayerAdversario : MonoBehaviour
         MesaBehaviour defensor =  transform.GetChild(1).GetComponent<MesaBehaviour>();
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
+           
            atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
            StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
         }
     }
+    //player no caso é a vida dele e não os das suas cartas
     public void AtacarPlayer(int posicaoAtacador) 
     {
         MesaBehaviour defensor = transform.GetChild(2).GetComponent<MesaBehaviour>();
@@ -135,35 +138,52 @@ public class PlayerAdversario : MonoBehaviour
     }
     IEnumerator DarDano(GameObject obj, GameObject atacante)
     {
+    //animações dos efeitos
      Mao player = transform.GetComponent<Mao>();
      yield return new WaitForSeconds(0.4f);
-     Dano = Instantiate(dano);
-     Dano.transform.SetParent(transform, false);
-     Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * -70;
-     Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
-        player.Audio(2);	
+        if (Dano == null)
+        {
+            Dano = Instantiate(dano);
+            Dano.transform.SetParent(transform, false);
+            Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * -70;
+            Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
+        }
+     player.Audio(2);	
+     //IA de fato
      obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
          if(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f)
          {
-             obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
-    	     obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
-	         obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
-	     }
+            //aqui tem bug, vou concertar dps
+            obj.transform.parent.GetComponent<MesaBehaviour>().SetAnimacao(obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
+            obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+    	    obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
+            //especificamente e unicamente com esse carinha aqui embaixo
+            // a animação demora 0.4 segundos pra chamar o ataque, e o bot pode escolher a mesma carta nesse interva-lo. assim 
+            // tentando destruir uma carta que ja foi destruida inicia a exeção.
+            obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+        }
     }
     IEnumerator DarDanoInimigo(GameObject obj)
     {
-        yield return new WaitForSeconds(0.40f);
-        Dano = Instantiate(dano);
-        Dano.transform.SetParent(transform.GetChild(4), false);
-        Dano.transform.localPosition = obj.transform.localPosition + Vector3.down * 50 + Vector3.left * 30;
-        Dano.transform.localScale = new Vector3(3, 3);
-        Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
-        GetComponent<Mao>().TirarVidaPlayer(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque);
-        GetComponent<Mao>().Audio(2);
+    //efeitos
+    yield return new WaitForSeconds(0.40f);
+    Dano = Instantiate(dano);
+    Dano.transform.SetParent(transform.GetChild(4), false);
+    Dano.transform.localPosition = obj.transform.localPosition + Vector3.down * 50 + Vector3.left * 30;
+    Dano.transform.localScale = new Vector3(3, 3);
+    // IA de fato
+    Dano.GetComponent<Text>().text += obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
+    GetComponent<Mao>().TirarVidaPlayer(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque);
+    GetComponent<Mao>().Audio(2);
     }
     public void PerderVida(float dano) 
     {
         vida -= dano;
         vidaInimigo.text = vida + "/40";
+    }
+    public void SetarGold(int goldMax)
+    {
+        gold = goldMax;
+        goldInimigo.text = string.Format("{0}/{1}",gold , goldMax);      
     }
 }

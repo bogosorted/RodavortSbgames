@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class EventControllerBehaviour : MonoBehaviour
 {  
     public static Turnos turno;
+    [Header("OuroConfig")]
+    public static int ouroMaximo;
+    private int ouroLimite;
     bool preparado;
     PlayerAdversario Inimigo;
     Mao Player;
@@ -29,21 +32,36 @@ public class EventControllerBehaviour : MonoBehaviour
         turno = Turnos.TurnoEscolhaP1;
         Inimigo = GetComponent<PlayerAdversario>();
         Player =  GetComponent<Mao>();
+        ouroLimite = 10;
+        ouroMaximo = 1;
+        Player.SetarGold(ouroMaximo);
+        Inimigo.SetarGold(ouroMaximo);
         CartasInimigo = transform.GetChild(2).GetComponent<MesaBehaviour>();
         CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
         preparado = true;
     }
      public void OnClick()
     {
-        if(preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length)
-            turno = turno + 1;
-            
-          //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
+        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
+        {
+            turno += 1;
+        }
+
+        //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else
-           turno = Turnos.TurnoEscolhaP1;
+        {
+            ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
+            AtualizarOuro(ouroMaximo);
+            turno = Turnos.TurnoEscolhaP1;
+        }
 
         preparado = false;
         Invoke(turno.ToString(),0f);
+    }
+    private void AtualizarOuro(int ouroMaximo) 
+    {
+        Player.SetarGold(ouroMaximo);
+        Inimigo.SetarGold(ouroMaximo);
     }
     private void DecidirIniciante(){
         print("decidirIniciante");
@@ -78,7 +96,8 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoAtaqueP2(){
        botao.interactable = false;
-       StartCoroutine(AtaqueCartas());
+        print("turnoAtaquep2");
+       AtaqueCartas();
     }
     private void Vitoria(){
         print("Voce Ganhou");
@@ -100,7 +119,7 @@ public class EventControllerBehaviour : MonoBehaviour
         preparado = true;
         OnClick();
     }
-    IEnumerator AtaqueCartas()
+    void AtaqueCartas()
     {
         //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
         //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
@@ -108,14 +127,15 @@ public class EventControllerBehaviour : MonoBehaviour
         {
             // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
             // só pra testar.
+            print(CartasPlayer.cartas.Count + "alo");
         Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
         }
         else if(CartasPlayer.cartas.Count == 0)
         {
+            print("eITA");
             Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
         }
         print("TurnoAtaqueP2");
-        yield return new WaitForSeconds(0);
         botao.interactable = true;
         preparado = true;    
         OnClick();   

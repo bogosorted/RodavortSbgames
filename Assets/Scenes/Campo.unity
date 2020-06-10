@@ -368,8 +368,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 164, y: 45}
-  m_SizeDelta: {x: 111.80322, y: 58.348022}
+  m_AnchoredPosition: {x: 248, y: 50}
+  m_SizeDelta: {x: 233.57895, y: 58.348022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127483681
 MonoBehaviour:
@@ -384,13 +384,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39607847, g: 0.22352943, b: 0.0627451, a: 1}
+  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.105882354, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -574,8 +574,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -165.75, y: -43.5}
-  m_SizeDelta: {x: 111.80322, y: 58.348022}
+  m_AnchoredPosition: {x: -222, y: -47}
+  m_SizeDelta: {x: 230.7142, y: 58.348022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308263888
 MonoBehaviour:
@@ -590,13 +590,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39607847, g: 0.22352943, b: 0.0627451, a: 1}
+  m_Color: {r: 0.121568635, g: 0.098039225, b: 0.10588236, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -996,7 +996,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 300/300
+  m_Text: 'Vida_Inmg
+
+'
 --- !u!222 &872334449
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1196,7 +1198,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.4
   m_Pitch: 1.01
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1444,7 +1446,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 300/300
+  m_Text: Vida_Plyr
 --- !u!222 &978438368
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1799,7 +1801,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00g / 99g
+  m_Text: Ouro_Inmg
 --- !u!222 &1420204527
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2022,7 +2024,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00g / 99g
+  m_Text: Ouro_Plyr
 --- !u!222 &2123019146
 CanvasRenderer:
   m_ObjectHideFlags: 0
