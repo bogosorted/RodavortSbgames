@@ -124,13 +124,28 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                         switch(resultados[i].gameObject.name)
                         {
                             case "segurado":
-                                Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
-                                resultados[i].gameObject.name = "Destruido";
-                                resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
-                                resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir",true);
-                                som.PlayOneShot(audios[1]);
-                                SetRaycast(true);
+                                int barra = goldPlayer.text.IndexOf('/');
+                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
+                                {
+                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem);
+                                    resultados[i].gameObject.name = "Destruido";
+                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
+                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+                                    som.PlayOneShot(audios[1]);
+                                    SetRaycast(true);
+                                }
+                                else
+                                {
+                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
+                                    distanciamentoCartasMaximo += 20;
+                                    SetAnimacao(distanciamentoCartasMaximo);
+                                    //colocar um audio de negação
+                                    Audio(2);
+                                    SetRaycast(true);
+                                    resultados[i].gameObject.name = "Carta(Clone)";
+                                }
                             break;
                         }
                     }

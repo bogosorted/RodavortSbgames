@@ -149,16 +149,17 @@ public class PlayerAdversario : MonoBehaviour
             Dano.transform.localPosition = obj.transform.localPosition + Vector3.up * -70;
             Dano.GetComponent<Text>().text += atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque.ToString();
         }
-        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa-= atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
-        if (obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.transform.GetChild(0).name == "CartaNaMesa")
+        if (obj)
         {
-            obj.transform.GetChild(0).name = "morto";
-            print(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
-            obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
-            obj.transform.parent.GetComponent<MesaBehaviour>().SetAnimacao(obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
-            obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
-            print(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
-            obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
+            obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
+            if (obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.transform.GetChild(0).name == "CartaNaMesa")
+            {
+                obj.transform.GetChild(0).name = "morto";          
+                obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+                obj.transform.parent.GetComponent<MesaBehaviour>().SetAnimacao(obj.transform.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
+                obj.transform.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.transform.GetChild(0).GetComponent<CartaNaMesa>().PosicaoBaralho);
+                obj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destruido");
+            }
         }
         player.Audio(2);
     }
