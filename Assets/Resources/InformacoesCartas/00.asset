@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 00
   m_EditorClassIdentifier: 
   nome: TROVADOR
-  desc: 
+  desc: A carta mais bolada  que tem <color=green>10 de vida</color>
   dano: 0
   vida: 0
   valor: 0
