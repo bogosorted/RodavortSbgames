@@ -6,7 +6,8 @@ public class CartaInimigo : MonoBehaviour
 {
     // carta na mao do player adversario
 
-    private float _ataque, _defesa, _valor;
+    private float _ataque, _defesa;
+    private int _valor;
     private Sprite _cartaImagem;
 
     public void definirComeco(string numero)
@@ -44,7 +45,7 @@ public class CartaInimigo : MonoBehaviour
             _defesa = value; 
         }
     }
-    public float Valor
+    public int Valor
     {
         get { return _valor; }
         set

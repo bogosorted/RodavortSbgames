@@ -112,8 +112,12 @@ public class EventControllerBehaviour : MonoBehaviour
         yield return new WaitForSeconds(0f);
         Inimigo.CriarCarta(Random.Range(0,13));   
         GameObject cartaEscolhida = Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)];
-        //if(cartaEscolhida.GetComponent<CartaInimigo>())
+        if(cartaEscolhida.GetComponent<CartaInimigo>().Valor <= Inimigo.gold)
+        {
             Inimigo.ColocarCartaBaralho(cartaEscolhida);
+            Inimigo.gold -= cartaEscolhida.GetComponent<CartaInimigo>().Valor;
+            Inimigo.goldInimigo.text = string.Format("{0}/{1}",Inimigo.gold, ouroMaximo);
+        }
         Player.Audio(1);
         print("TurnoEscolhaP2");
 

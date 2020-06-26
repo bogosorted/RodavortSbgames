@@ -9,5 +9,5 @@ public class Card : ScriptableObject
     public string desc;
     public float dano;
     public float vida;
-    public float valor;
+    public int valor;
 }

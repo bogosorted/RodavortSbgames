@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: CATAPULTA
   desc: 
-  dano: 0
-  vida: 0
-  valor: 0
+  dano: 4
+  vida: 8
+  valor: 7

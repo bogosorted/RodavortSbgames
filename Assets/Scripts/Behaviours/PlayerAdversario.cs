@@ -15,14 +15,14 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField] float latitude = 0;
      [Header("Objetos")]
      [SerializeField] public Text vidaInimigo;
-     [SerializeField] private Text goldInimigo;
+     [SerializeField] public Text goldInimigo;
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
     GameObject Dano;
     float x,y;
     [Header("Vida")]
     public float vida;
-    private int gold;
+    public int gold;
     float distanciamentoCartasMaximo;
     bool animarBaralho;
     void Start()

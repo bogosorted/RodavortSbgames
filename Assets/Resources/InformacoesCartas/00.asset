@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: TROVADOR
   desc: A carta mais bolada  que tem <color=green>10 de vida</color>
-  dano: 0
-  vida: 0
-  valor: 0
+  dano: 6
+  vida: 6
+  valor: 6
