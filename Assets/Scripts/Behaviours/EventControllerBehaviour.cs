@@ -46,7 +46,6 @@ public class EventControllerBehaviour : MonoBehaviour
         {
             turno += 1;
         }
-
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else
         {
@@ -112,7 +111,9 @@ public class EventControllerBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(0f);
         Inimigo.CriarCarta(Random.Range(0,13));   
-        Inimigo.ColocarCartaBaralho(Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)]);
+        GameObject cartaEscolhida = Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)];
+        //if(cartaEscolhida.GetComponent<CartaInimigo>())
+            Inimigo.ColocarCartaBaralho(cartaEscolhida);
         Player.Audio(1);
         print("TurnoEscolhaP2");
 

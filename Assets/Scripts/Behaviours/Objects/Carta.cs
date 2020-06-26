@@ -15,12 +15,16 @@ public class Carta : MonoBehaviour
     {   
         Destroy(this.gameObject);
     }
-    public void definirComeco(float ataq,float def,float val,string numero)
+    public void definirComeco(string numero)
     {
-        Ataque = ataq; 
-        Defesa = def;
-        Valor = val;
+        Card refCard = Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
+        Nome = refCard.nome;
+        Descricao = refCard.desc;
+        Ataque = refCard.dano; 
+        Defesa =refCard.vida;
+        Valor = refCard.valor;
+        
     }
     #region Propiedades
     public Vector2 PosicaoInicial
@@ -99,8 +103,9 @@ public class Carta : MonoBehaviour
     }
     public void Constructor(int id)
     {
-        switch (id)
-        {
+       definirComeco(id < 10 ? "0" + id.ToString() : id.ToString());
+       // switch (id)
+       /* {
             case -1:
                 break;
 
@@ -181,7 +186,7 @@ public class Carta : MonoBehaviour
                 Descricao = "";
                 definirComeco(5f,3f,4f,"12");
             goto case -1;
-        }
+        }*/
     }
     #endregion
 }

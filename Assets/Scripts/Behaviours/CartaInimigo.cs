@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CartaInimigo : MonoBehaviour
 {
-    private float _ataque, _defesa;
-     private Sprite _cartaImagem;
-    public void definirComeco(float ataq,float def,string numero)
+    // carta na mao do player adversario
+
+    private float _ataque, _defesa, _valor;
+    private Sprite _cartaImagem;
+
+    public void definirComeco(string numero)
     {
-        Ataque = ataq; 
-        Defesa = def;
+        Ataque = Resources.Load<Card>("InformacoesCartas/" + numero).dano; 
+        Defesa = Resources.Load<Card>("InformacoesCartas/" + numero).vida;
+        Valor = Resources.Load<Card>("InformacoesCartas/" + numero).valor;
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero); 
     }
     public void autoDestruir()
@@ -40,6 +44,14 @@ public class CartaInimigo : MonoBehaviour
             _defesa = value; 
         }
     }
+    public float Valor
+    {
+        get { return _valor; }
+        set
+        { 
+            _valor = value; 
+        }
+    }
     public Vector2 PosicaoInicial
     {
         get;set;        
@@ -64,59 +76,6 @@ public class CartaInimigo : MonoBehaviour
     }
     public void Constructor(int id)
     {
-        switch (id)
-        {
-            case -1:
-                break;
-            case 0:
-                definirComeco(6f,6f,"00");    
-             goto case -1; 
-
-            case 1:
-                definirComeco(6f,6f,"01");
-             goto case -1;
-
-            case 2:
-                definirComeco(5f,3f,"02");
-            goto case -1;
-
-            case 3:
-                definirComeco(5f,3f,"03");
-            goto case -1;
-
-            case 4:
-                definirComeco(5f,3f,"04");
-            goto case -1;
-
-            case 5:
-                definirComeco(5f,3f,"05");
-            goto case -1;
-
-            case 6:
-                definirComeco(5f,3f,"06");
-            goto case -1;
-
-            case 7:
-                definirComeco(5f,3f,"07");
-            goto case -1;
-
-            case 8:
-                definirComeco(5f,3f,"08");
-            goto case -1;
-
-            case 9:
-                definirComeco(5f,3f,"09");
-            goto case -1;
-
-            case 10:
-                definirComeco(5f,3f,"10");
-            goto case -1;
-            case 11:
-                definirComeco(5f,3f,"11");
-            goto case -1;
-            case 12:
-                definirComeco(5f,3f,"12");
-            goto case -1;
-        }
+        definirComeco(id < 10 ? "0" + id.ToString() : id.ToString());
     }
 }
