@@ -129,7 +129,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                                 {
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem);
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
                                     resultados[i].gameObject.name = "Destruido";
                                     resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
                                     resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);

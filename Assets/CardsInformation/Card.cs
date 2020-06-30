@@ -2,20 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "atributos da carta")]
-public class Card : ScriptableObject
-{
-    //testando
-    public enum Efeitos
+public enum Efeitos
     {
         //atacar é um efeito comum a todas ascartas
+        Nenhum,
         Atacar,
         Curar,
         Sangrear,
         Executar,
+        
 
     }
-    public Efeitos Passiva;
+    public enum Evento
+    {
+        Nunca,
+        CartaIniciada,
+        NovoRound,
+        CartaAtaque,
+        CartaMorreu,
+    }
+    public enum AlvoPassiva
+    {
+        Nenhum,
+        TodasAsCartas,
+        CartasAliado,
+        CartasInimigo,
+        CartaAtacada,
+    }
+
+[CreateAssetMenu(menuName = "atributos da carta")]
+public class Card : ScriptableObject
+{
+    //testando
+    
+    public Efeitos passiva;
+    public Evento ativarPassivaQuando;
+    public AlvoPassiva alvoDaPassiva; // por enquanto nem é passada
     // fim do teste
     public string nome;
     public string desc;

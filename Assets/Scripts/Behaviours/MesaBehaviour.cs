@@ -63,16 +63,17 @@
         angularBaralho = true;
         x = 0;
     }
-     public void CriarCartaInicio(float ataq,float def,Sprite img)
+     public void CriarCartaInicio(float ataq,float def,Sprite img,Evento ev,Efeitos ef,AlvoPassiva alv)
      {
          GameObject objCarta = Instantiate(carta);
          objCarta.transform.localPosition = new Vector2(0,-20);
          objCarta.GetComponent<Image>().raycastTarget = false;
-         objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().definirComeco(ataq,def,img);
+         objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().definirComeco(ataq,def,img,ef,ev,alv);
          objCarta.transform.SetParent(transform, false);
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
          SetAnimacao((cartas.Count < 7) ? distanciamentoCartasMaximo : 175);
+         
         
     }  
     private void Angular() 

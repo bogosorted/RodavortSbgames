@@ -60,7 +60,7 @@ public class PlayerAdversario : MonoBehaviour
         maoAdversaria.RemoveAt(atributos.PosicaoBaralho);  
         distanciamentoCartasMaximo -= 10;
         SetAnimacao(distanciamentoCartasMaximo);   
-        mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem);
+        mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
         cartaColocada.GetComponent<Animator>().SetBool("autoDestruir",true);
     }
     void FixedUpdate()

@@ -10,6 +10,9 @@ public class Carta : MonoBehaviour
     private string _nome, _descricao;
     private float _ataque, _defesa, _valor;
     private int _posicaoBaralho;
+    private Evento _ativarPassivaQuando;
+    private Efeitos _passiva;
+    private AlvoPassiva _alvo;
 
     void autoDestruir()
     {   
@@ -19,6 +22,11 @@ public class Carta : MonoBehaviour
     {
         Card refCard = Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
+         //TESTE
+        AtivarPassivaQuando = refCard.ativarPassivaQuando;
+        Passiva = refCard.passiva;
+        Alvo = refCard.alvoDaPassiva;
+         //FIM TESTE
         Nome = refCard.nome;
         Descricao = refCard.desc;
         Ataque = refCard.dano; 
@@ -27,6 +35,31 @@ public class Carta : MonoBehaviour
         
     }
     #region Propiedades
+
+    public Evento AtivarPassivaQuando
+    {
+        get { return _ativarPassivaQuando; }
+        set
+        {
+            _ativarPassivaQuando = value;
+        }
+    }
+    public Efeitos Passiva
+    {
+        get { return _passiva; }
+        set
+        {
+            _passiva = value;
+        }
+    }
+     public AlvoPassiva Alvo
+    {
+        get { return _alvo; }
+        set
+        {
+            _alvo = value;
+        }
+    }
     public Vector2 PosicaoInicial
     {
         get;set;        

@@ -9,13 +9,25 @@ public class CartaInimigo : MonoBehaviour
     private float _ataque, _defesa;
     private int _valor;
     private Sprite _cartaImagem;
+    private Evento _ativarPassivaQuando;
+    private Efeitos _passiva;
+    private AlvoPassiva _alvo;
+
+
 
     public void definirComeco(string numero)
     {
-        Ataque = Resources.Load<Card>("InformacoesCartas/" + numero).dano; 
-        Defesa = Resources.Load<Card>("InformacoesCartas/" + numero).vida;
-        Valor = Resources.Load<Card>("InformacoesCartas/" + numero).valor;
+        Card refCard =Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero); 
+        //TESTE
+        AtivarPassivaQuando = refCard.ativarPassivaQuando;
+        Passiva = refCard.passiva;
+        Alvo = refCard.alvoDaPassiva;
+        //FIM TESTE
+        Ataque = refCard.dano; 
+        Defesa = refCard.vida;
+        Valor = refCard.valor;
+
     }
     public void autoDestruir()
     {   
@@ -29,6 +41,31 @@ public class CartaInimigo : MonoBehaviour
             _cartaImagem = value;
         }
     }
+    public Evento AtivarPassivaQuando
+    {
+        get { return _ativarPassivaQuando; }
+        set
+        {
+            _ativarPassivaQuando = value;
+        }
+    }
+    public Efeitos Passiva
+    {
+        get { return _passiva; }
+        set
+        {
+            _passiva = value;
+        }
+    }
+     public AlvoPassiva Alvo
+    {
+        get { return _alvo; }
+        set
+        {
+            _alvo = value;
+        }
+    }
+    
      public float Ataque
     {
         get { return _ataque; }

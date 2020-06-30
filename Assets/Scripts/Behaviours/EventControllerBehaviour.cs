@@ -63,11 +63,9 @@ public class EventControllerBehaviour : MonoBehaviour
         Inimigo.SetarGold(ouroMaximo);
     }
     private void DecidirIniciante(){
-        print("decidirIniciante");
         preparado = true;
     }
     private void DecidirCartaInicial(){
-        print("decidirCartaInicial");
         preparado = true;
     }
     private void TurnoEscolhaP1()
@@ -76,13 +74,11 @@ public class EventControllerBehaviour : MonoBehaviour
         Player.SetRaycast(true);
         Player.CriarCarta(Random.Range(0,13));
         CartasPlayer.SetRaycast(false);
-        print("TurnoEscolhaP1");
         preparado = true;
     }
     private void TurnoAtaqueP1()
     {
          botao.interactable = true;
-         print("TurnoAtaqueP1");
          Player.SetRaycast(false);
          CartasPlayer.SetRaycast(true);
          preparado = true;
@@ -95,7 +91,6 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     private void TurnoAtaqueP2(){
        botao.interactable = false;
-        print("turnoAtaquep2");
        AtaqueCartas();
     }
     private void Vitoria(){
@@ -119,7 +114,6 @@ public class EventControllerBehaviour : MonoBehaviour
             Inimigo.goldInimigo.text = string.Format("{0}/{1}",Inimigo.gold, ouroMaximo);
         }
         Player.Audio(1);
-        print("TurnoEscolhaP2");
 
         preparado = true;
         OnClick();
@@ -132,15 +126,12 @@ public class EventControllerBehaviour : MonoBehaviour
         {
             // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
             // só pra testar.
-            print(CartasPlayer.cartas.Count + "alo");
         Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
         }
         else if(CartasPlayer.cartas.Count == 0)
         {
-            print("eITA");
             Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
         }
-        print("TurnoAtaqueP2");
         botao.interactable = true;
         preparado = true;    
         OnClick();   

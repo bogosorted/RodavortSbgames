@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90a957d87902504c89c04df7d8d8947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadeAnimacao: 3
+  velocidadeAnimacao: 1
   distancia: 1
   indiceAngulacao: 10
   altitude: -290
@@ -1184,6 +1184,7 @@ MonoBehaviour:
   goldInimigo: {fileID: 1420204526}
   maoAdversaria: []
   vida: 40
+  gold: 0
 --- !u!82 &923204127
 AudioSource:
   m_ObjectHideFlags: 0
