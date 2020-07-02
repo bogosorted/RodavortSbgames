@@ -359,7 +359,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         SetAnimacao(distanciamentoCartasMaximo);
     }
   
-    void Start()
+    void Awake()
     {
         OutPut = transform.GetChild(5).GetComponent<Animator>();
         exibir = transform.GetChild(5).GetComponent<Exibicao>();

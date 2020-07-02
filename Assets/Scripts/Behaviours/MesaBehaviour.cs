@@ -65,7 +65,7 @@
         angularBaralho = true;
         x = 0;
     }
-     public void CriarCartaInicio(float ataq,float def,Sprite img,Evento ev,Efeitos ef,AlvoPassiva alv)
+     public void CriarCartaInicio(float ataq,float def,Sprite img,Evento ev,PassivaComulativa ef,AlvoPassiva alv)
      {
          GameObject objCarta = Instantiate(carta);
          objCarta.transform.localPosition = new Vector2(0,-20);

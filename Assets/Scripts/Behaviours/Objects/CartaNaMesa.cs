@@ -9,22 +9,48 @@ public class CartaNaMesa : MonoBehaviour
     private Vector2 _posicaoInicial,_posicaoFinal;
     private Sprite _cartaImagem;
     private int _posicaoBaralho;
+    //enum
     private Evento _ativarPassivaQuando;
-    private Efeitos _passiva;
+    //struct
+    private PassivaComulativa _passiva;
+    //enum
     private AlvoPassiva _alvo;
-
+    //efeitos causados na carta
+    private List<PassivaComulativa> efeitosComulativos = new List<PassivaComulativa>();
 
     void Start()
     {
-       print($"{_passiva} : {_ativarPassivaQuando} : {_alvo}");
+       print($"{_passiva.efeito} : {_ativarPassivaQuando} : {_alvo}");
     }
+    public void AdicionarPassiva(PassivaComulativa a)
+    {
+         efeitosComulativos.Add(a);
+    }
+    public void RodarPassivas()
+    {
+        //aconselhado a rodar a cada round
+        // NAO SEI SE TA FUNCIONANDO TESTAR OK?
+        List<string> passivasRodadas = new List<string>();
+        for(int i = efeitosComulativos.Count; i != 0; i--)
+        {           
+            if(!passivasRodadas.Contains(efeitosComulativos[i-1].efeito.ToString()))
+            {
+                passivasRodadas.Add(efeitosComulativos[i-1].efeito.ToString());
+                efeitosComulativos[i-1].quantidade--;
+                Invoke(efeitosComulativos[i-1].efeito.ToString(),0);    
+                if (efeitosComulativos[i-1].quantidade < 0)
+                    efeitosComulativos.Remove(efeitosComulativos[i-1]);                   
+            }
+        }
+    }
+    
     public void Destruir()
     {
         MesaBehaviour mesa = transform.parent.transform.parent.GetComponent<MesaBehaviour>();
         mesa.SetAnimacao(mesa.distanciamentoCartasMaximo);
         Destroy(this.transform.parent.gameObject);
     }
-    public void definirComeco(float ataq,float def,Sprite img,Efeitos passiva,Evento ativarPassivaQuando,AlvoPassiva alvoDaPassiva)
+    public void definirComeco(float ataq,float def,Sprite img,PassivaComulativa passiva,Evento ativarPassivaQuando,AlvoPassiva alvoDaPassiva)
     {
         Ataque = ataq; 
         Defesa = def;
@@ -33,6 +59,14 @@ public class CartaNaMesa : MonoBehaviour
         Passiva = passiva;
         Alvo = alvoDaPassiva;
     }
+
+    #region Efeitos
+    void Curar()
+    {
+      Defesa += 2; 
+    }
+    #endregion
+    #region Propiedades
     public Evento AtivarPassivaQuando
     {
         get { return _ativarPassivaQuando; }
@@ -41,7 +75,7 @@ public class CartaNaMesa : MonoBehaviour
             _ativarPassivaQuando = value;
         }
     }
-    public Efeitos Passiva
+    public PassivaComulativa Passiva
     {
         get { return _passiva; }
         set
@@ -97,4 +131,5 @@ public class CartaNaMesa : MonoBehaviour
              transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _cartaImagem;
         }
     }
+    #endregion
 }

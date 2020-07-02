@@ -11,8 +11,8 @@ public class Carta : MonoBehaviour
     private float _ataque, _defesa, _valor;
     private int _posicaoBaralho;
     private Evento _ativarPassivaQuando;
-    private Efeitos _passiva;
     private AlvoPassiva _alvo;
+    private PassivaComulativa passiva;
 
     void autoDestruir()
     {   
@@ -24,7 +24,6 @@ public class Carta : MonoBehaviour
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
          //TESTE
         AtivarPassivaQuando = refCard.ativarPassivaQuando;
-        Passiva = refCard.passiva;
         Alvo = refCard.alvoDaPassiva;
          //FIM TESTE
         Nome = refCard.nome;
@@ -32,6 +31,7 @@ public class Carta : MonoBehaviour
         Ataque = refCard.dano; 
         Defesa =refCard.vida;
         Valor = refCard.valor;
+        passiva = new PassivaComulativa(refCard.quantidade,refCard.passiva);
         
     }
     #region Propiedades
@@ -44,14 +44,7 @@ public class Carta : MonoBehaviour
             _ativarPassivaQuando = value;
         }
     }
-    public Efeitos Passiva
-    {
-        get { return _passiva; }
-        set
-        {
-            _passiva = value;
-        }
-    }
+
      public AlvoPassiva Alvo
     {
         get { return _alvo; }
@@ -59,6 +52,11 @@ public class Carta : MonoBehaviour
         {
             _alvo = value;
         }
+    }
+      public PassivaComulativa Passiva
+    {
+        get{return passiva;}
+        set{passiva = value;}
     }
     public Vector2 PosicaoInicial
     {

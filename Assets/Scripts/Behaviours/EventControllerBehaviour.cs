@@ -16,6 +16,7 @@ public class EventControllerBehaviour : MonoBehaviour
     Mao Player;
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
+    CartaNaMesa passivCard;
     Efeitos efeitoAtual;
     [SerializeField] private Selectable botao;
     
@@ -30,6 +31,7 @@ public class EventControllerBehaviour : MonoBehaviour
         Vitoria,
         Derrota
     }
+
     private void Start() {
         turno = Turnos.TurnoEscolhaP1;
         Inimigo = GetComponent<PlayerAdversario>();
@@ -42,6 +44,22 @@ public class EventControllerBehaviour : MonoBehaviour
         CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
         preparado = true;
     }
+    public void RealizarPassivaEm(PassivaComulativa efeito, AlvoPassiva alvo,bool player1)
+    {
+        switch(alvo)
+        {
+            case AlvoPassiva.TodasAsCartas:
+                foreach(var obj in CartasPlayer.cartas)
+                {    
+                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                }
+                foreach(var obj in CartasInimigo.cartas)
+                {          
+                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                }
+                break;
+        }
+    }
      public void OnClick()
     {
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
@@ -51,9 +69,25 @@ public class EventControllerBehaviour : MonoBehaviour
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else
         {
+            //quando reseta o turno 
             ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
             AtualizarOuro(ouroMaximo);
             turno = Turnos.TurnoEscolhaP1;
+            //testando pra ver se tem alguma passiva a ser rodada no novo round
+            foreach(var obj in CartasPlayer.cartas)
+            {
+                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
+                refCard.RodarPassivas();
+            }
+            foreach(var obj in CartasInimigo.cartas)
+            {
+                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
+                refCard.RodarPassivas();
+            }
         }
         preparado = false;
         Invoke(turno.ToString(),0f);

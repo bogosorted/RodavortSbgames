@@ -9,9 +9,22 @@ public enum Efeitos
         Atacar,
         Curar,
         Sangrear,
-        Executar,
-        
-
+        Executar,     
+    }
+   public class PassivaComulativa
+    {
+     public PassivaComulativa(int a,Efeitos b)
+      {
+       quantidade = a;
+       efeito = b;
+      }
+      public void InfoAdd(int a , Efeitos b)
+      {
+        quantidade = a;
+         efeito = b;
+      }
+        public Efeitos efeito;
+        public int quantidade;
     }
     public enum Evento
     {
@@ -29,15 +42,15 @@ public enum Efeitos
         TodasAsCartas,
         CartasPlayer1,
         CartasPlayer2,
+        //nao fiz essa parte aq de baixo
         CartaAtacada,
     }
 
 [CreateAssetMenu(menuName = "atributos da carta")]
 public class Card : ScriptableObject
 {
-    //testando
-    
     public Efeitos passiva;
+    public int quantidade;
     public Evento ativarPassivaQuando;
     public AlvoPassiva alvoDaPassiva; // por enquanto nem é passada
     // fim do teste

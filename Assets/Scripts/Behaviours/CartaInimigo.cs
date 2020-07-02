@@ -10,8 +10,8 @@ public class CartaInimigo : MonoBehaviour
     private int _valor;
     private Sprite _cartaImagem;
     private Evento _ativarPassivaQuando;
-    private Efeitos _passiva;
     private AlvoPassiva _alvo;
+    private PassivaComulativa passiva; 
 
 
 
@@ -21,13 +21,12 @@ public class CartaInimigo : MonoBehaviour
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero); 
         //TESTE
         AtivarPassivaQuando = refCard.ativarPassivaQuando;
-        Passiva = refCard.passiva;
         Alvo = refCard.alvoDaPassiva;
         //FIM TESTE
         Ataque = refCard.dano; 
         Defesa = refCard.vida;
         Valor = refCard.valor;
-
+        passiva = new PassivaComulativa(refCard.quantidade,refCard.passiva);
     }
     public void autoDestruir()
     {   
@@ -49,14 +48,6 @@ public class CartaInimigo : MonoBehaviour
             _ativarPassivaQuando = value;
         }
     }
-    public Efeitos Passiva
-    {
-        get { return _passiva; }
-        set
-        {
-            _passiva = value;
-        }
-    }
      public AlvoPassiva Alvo
     {
         get { return _alvo; }
@@ -64,6 +55,11 @@ public class CartaInimigo : MonoBehaviour
         {
             _alvo = value;
         }
+    }
+    public PassivaComulativa Passiva
+    {
+        get{return passiva;}
+        set{passiva = value;}
     }
     
      public float Ataque
