@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
+
 
 public class CartaNaMesa : MonoBehaviour
 {
@@ -37,7 +40,8 @@ public class CartaNaMesa : MonoBehaviour
             {
                 passivasRodadas.Add(efeitosComulativos[i-1].efeito.ToString());
                 efeitosComulativos[i-1].quantidade--;
-                Invoke(efeitosComulativos[i-1].efeito.ToString(),0);    
+                // funciona mas nao tem como mudar
+                Invoke(efeitosComulativos[i-1].efeito.ToString(),0);                
                 if (efeitosComulativos[i-1].quantidade < 0)
                     efeitosComulativos.Remove(efeitosComulativos[i-1]);                   
             }
@@ -61,10 +65,11 @@ public class CartaNaMesa : MonoBehaviour
     }
 
     #region Efeitos
-    void Curar()
+    public void Curar()
     {
-      Defesa += 2; 
+      Defesa += 1; 
     }
+
     #endregion
     #region Propiedades
     public Evento AtivarPassivaQuando
