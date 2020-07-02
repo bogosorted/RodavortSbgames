@@ -52,10 +52,12 @@ public class EventControllerBehaviour : MonoBehaviour
                 foreach(var obj in CartasPlayer.cartas)
                 {    
                     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().RodarPassivas();
                 }
                 foreach(var obj in CartasInimigo.cartas)
                 {          
                     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().RodarPassivas();
                 }
                 break;
         }
@@ -78,15 +80,19 @@ public class EventControllerBehaviour : MonoBehaviour
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
-                refCard.RodarPassivas();
+                    refCard.RodarPassivas();
+                }
             }
             foreach(var obj in CartasInimigo.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
-                refCard.RodarPassivas();
+                    refCard.RodarPassivas();
+                }
             }
         }
         preparado = false;
@@ -165,7 +171,7 @@ public class EventControllerBehaviour : MonoBehaviour
             // só pra testar.
         Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
         }
-        else if(CartasPlayer.cartas.Count == 0)
+        else if(CartasPlayer.cartas.Count == 0 && CartasInimigo.cartas.Count > 0)
         {
             Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
         }
