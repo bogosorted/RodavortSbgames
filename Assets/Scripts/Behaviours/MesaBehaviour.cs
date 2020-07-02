@@ -15,6 +15,8 @@
     public float distanciamentoCartasMaximo;
     [SerializeField] private GameObject carta;
     public List<GameObject> cartas = new List<GameObject>();
+    //fazer isso de baixo aq ó. pa passiva
+    //public static List<GameObject> cartasEmJogo = new List<GameObject>();
     bool angularBaralho;
     void Start()
     {
@@ -72,7 +74,15 @@
          objCarta.transform.SetParent(transform, false);
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
+         //dispersar cartas na mesa
          SetAnimacao((cartas.Count < 7) ? distanciamentoCartasMaximo : 175);
+         switch(objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().AtivarPassivaQuando)
+         {
+            case Evento.CartaIniciada:
+               // EventControllerBehaviour.EventoRealizado(ef,alv)
+                break;
+         }
+
          
         
     }  

@@ -15,6 +15,7 @@ public enum Efeitos
     }
     public enum Evento
     {
+      //evite mudar um nome que ja haja programação
         Nunca,
         CartaIniciada,
         NovoRound,
@@ -23,10 +24,11 @@ public enum Efeitos
     }
     public enum AlvoPassiva
     {
+      //evite mudar um nome que ja haja programação
         Nenhum,
         TodasAsCartas,
-        CartasAliado,
-        CartasInimigo,
+        CartasPlayer1,
+        CartasPlayer2,
         CartaAtacada,
     }
 

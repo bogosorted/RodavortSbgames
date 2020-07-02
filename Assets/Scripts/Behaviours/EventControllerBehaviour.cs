@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 
 public class EventControllerBehaviour : MonoBehaviour
@@ -15,6 +16,7 @@ public class EventControllerBehaviour : MonoBehaviour
     Mao Player;
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
+    Efeitos efeitoAtual;
     [SerializeField] private Selectable botao;
     
     public enum Turnos
@@ -53,10 +55,11 @@ public class EventControllerBehaviour : MonoBehaviour
             AtualizarOuro(ouroMaximo);
             turno = Turnos.TurnoEscolhaP1;
         }
-
         preparado = false;
         Invoke(turno.ToString(),0f);
     }
+   
+    #region TURNOS
     private void AtualizarOuro(int ouroMaximo) 
     {
         Player.SetarGold(ouroMaximo);
@@ -101,7 +104,7 @@ public class EventControllerBehaviour : MonoBehaviour
          print("Voce perdeu");
         preparado = true;
     }
- 
+  #endregion
     IEnumerator BotEscolha()
     {
         yield return new WaitForSeconds(0f);
