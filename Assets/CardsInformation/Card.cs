@@ -8,6 +8,8 @@ public enum Efeitos
         Nenhum,
         Atacar,
         Curar,
+        Curar2,
+        Curar3,
         Sangrear,
         Executar,     
     }
@@ -40,8 +42,7 @@ public enum Efeitos
       //evite mudar um nome que ja haja programação
         Nenhum,
         TodasAsCartas,
-        CartasPlayer1,
-        CartasPlayer2,
+        CartaAdversaria,
         //nao fiz essa parte aq de baixo
         CartaAtacada,
     }

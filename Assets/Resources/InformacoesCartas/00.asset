@@ -19,5 +19,5 @@ MonoBehaviour:
   nome: TROVADOR
   desc: A carta mais bolada  que tem <color=green>10 de vida</color>
   dano: 6
-  vida: 6
-  valor: 6
+  vida: 2
+  valor: 0

@@ -48,19 +48,36 @@ public class EventControllerBehaviour : MonoBehaviour
     {
         switch(alvo)
         {
+            case AlvoPassiva.CartaAdversaria:
+                if(player1)                  
+                    foreach(var obj in CartasPlayer.cartas)
+                    {    
+                        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                    }
+                else
+                {
+                    foreach(var obj in CartasInimigo.cartas)
+                    {          
+                        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
+                    }
+                }
+            break;
             case AlvoPassiva.TodasAsCartas:
                 foreach(var obj in CartasPlayer.cartas)
                 {    
                     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().RodarPassivas();
                 }
                 foreach(var obj in CartasInimigo.cartas)
                 {          
                     obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().RodarPassivas();
                 }
                 break;
         }
+    }
+    //metodo sobrecarregado para alvos especificos
+    public void RealizarPassivaEm(PassivaComulativa efeito, GameObject alvo,bool player1)
+    {
+        
     }
      public void OnClick()
     {
@@ -74,6 +91,7 @@ public class EventControllerBehaviour : MonoBehaviour
             //quando reseta o turno 
             ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
             AtualizarOuro(ouroMaximo);
+            // cara ou coroa dps
             turno = Turnos.TurnoEscolhaP1;
             //testando pra ver se tem alguma passiva a ser rodada no novo round
             foreach(var obj in CartasPlayer.cartas)
@@ -82,8 +100,9 @@ public class EventControllerBehaviour : MonoBehaviour
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
                 {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
-                    refCard.RodarPassivas();
                 }
+                refCard.RodarPassivas();
+                
             }
             foreach(var obj in CartasInimigo.cartas)
             {
@@ -91,9 +110,10 @@ public class EventControllerBehaviour : MonoBehaviour
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
                 {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
-                    refCard.RodarPassivas();
                 }
+                refCard.RodarPassivas();
             }
+            
         }
         preparado = false;
         Invoke(turno.ToString(),0f);

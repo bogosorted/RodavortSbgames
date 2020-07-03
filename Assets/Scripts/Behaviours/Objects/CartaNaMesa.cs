@@ -31,21 +31,31 @@ public class CartaNaMesa : MonoBehaviour
     }
     public void RodarPassivas()
     {
+        // por algum motivo o efeitoComulativo[i].quantidade está sendo compartilhada cm todos no campo...
+        // resolver isso pra ja
+
         //aconselhado a rodar a cada round
         // NAO SEI SE TA FUNCIONANDO TESTAR OK?
-        List<string> passivasRodadas = new List<string>();
-        for(int i = efeitosComulativos.Count; i != 0; i--)
-        {           
-            if(!passivasRodadas.Contains(efeitosComulativos[i-1].efeito.ToString()))
-            {
-                passivasRodadas.Add(efeitosComulativos[i-1].efeito.ToString());
-                efeitosComulativos[i-1].quantidade--;
-                // funciona mas nao tem como mudar
-                Invoke(efeitosComulativos[i-1].efeito.ToString(),0);                
-                if (efeitosComulativos[i-1].quantidade < 0)
-                    efeitosComulativos.Remove(efeitosComulativos[i-1]);                   
-            }
-        }
+        // List<string> passivasRodadas = new List<string>();
+        // if(efeitosComulativos.Count>0)
+        // {
+        //     for(int i = efeitosComulativos.Count - 1; i > 0 ;i--)
+        //     {        
+        //         print(efeitosComulativos[i].quantidade);
+        //         if(!passivasRodadas.Contains(efeitosComulativos[i].efeito.ToString()))
+        //         {      
+                
+        //         passivasRodadas.Add(efeitosComulativos[i].efeito.ToString());
+        //         --efeitosComulativos[i].quantidade;
+        //         // funciona mas nao tem como mudar
+        //         Invoke(efeitosComulativos[i].efeito.ToString(),0);                
+        //         if (efeitosComulativos[i].quantidade < 1)
+        //             {
+        //             efeitosComulativos.Remove(efeitosComulativos[i]);            
+        //             }            
+        //         }
+        //     }
+        // }
     }
     
     public void Destruir()
@@ -67,8 +77,10 @@ public class CartaNaMesa : MonoBehaviour
     #region Efeitos
     public void Curar()
     {
-      Defesa += 1; 
+      Defesa += 0.5f; 
     }
+    public void Nenhum()
+    {}
 
     #endregion
     #region Propiedades
@@ -122,8 +134,21 @@ public class CartaNaMesa : MonoBehaviour
         get { return _defesa; }
         set
         { 
+            if(value>_defesa && _defesa != 0)
+            {
             _defesa = value; 
-            transform.GetChild(1).GetComponent<Text>().text = _defesa.ToString();
+            transform.GetChild(1).GetComponent<Text>().text = $"<color=green>{_defesa.ToString()}</color>";
+            }
+            else if(value <_defesa)
+            {
+                _defesa = value; 
+            transform.GetChild(1).GetComponent<Text>().text = $"<color=red>{_defesa.ToString()}</color>";
+            }
+            else{
+                 _defesa = value; 
+                transform.GetChild(1).GetComponent<Text>().text =_defesa.ToString();
+            }
+            
         }
     }
     public float Defesa1 { get; set; }
