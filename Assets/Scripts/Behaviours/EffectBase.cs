@@ -26,8 +26,8 @@ public static class Factory
      public static  Dictionary<int, Func<EffectBase>> cardFactories = new Dictionary<int, Func<EffectBase>>{  
                      {4, ()=>new Nada()},
                      {3, ()=>new Nada()},
-                     {2, ()=>new Curar()},
-                     {1, ()=>new Nada()}, 
+                     {1, ()=>new Curar()},
+                     {2, ()=>new Matar()}, 
                      {0, ()=>new Nada()}
     };  
 }
@@ -44,6 +44,19 @@ public class Curar:EffectBase
     public override void RealizarEfeitoEm(GameObject a)
     {
         a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa += quantidadeDoEfeito;
+    }
+}
+public class Matar:EffectBase
+{
+    public override void RealizarEfeitoEm(List<GameObject> a)
+    {
+        for(int i = a.Count - 1 ; i >= 0;i--)
+            RealizarEfeitoEm(a[i]);
+    }
+   
+    public override void RealizarEfeitoEm(GameObject a)
+    {
+      a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa;
     }
 }
 // clase temporaria e sera removida na versão final

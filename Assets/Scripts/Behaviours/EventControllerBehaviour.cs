@@ -63,6 +63,7 @@ public class EventControllerBehaviour : MonoBehaviour
                 break;
         }
     }
+    
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {

@@ -331,6 +331,7 @@ MonoBehaviour:
   latitude: 1
   distanciamentoCartasMaximo: 0
   carta: {fileID: 1789923327080410604, guid: 6c49d85f8d848304780ba4779b860207, type: 3}
+  Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   cartas: []
 --- !u!1 &127483679
 GameObject:
@@ -1716,6 +1717,7 @@ MonoBehaviour:
   latitude: 1
   distanciamentoCartasMaximo: 0
   carta: {fileID: 5996462921864894780, guid: 1bcace26ff7ba364488b1476b3a63140, type: 3}
+  Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   cartas: []
 --- !u!1 &1420204523
 GameObject:

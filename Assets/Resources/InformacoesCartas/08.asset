@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
   m_Name: 08
   m_EditorClassIdentifier: 
-  passiva: 0
+  passiva: 2
   quantidade: 0
-  ativarPassivaQuando: 0
-  alvoDaPassiva: 0
+  ativarPassivaQuando: 1
+  alvoDaPassiva: 1
   nome: HIPERNOVA
   desc: 
-  dano: 1
-  vida: 1
-  valor: 0
+  dano: 2
+  vida: 0
+  valor: 10

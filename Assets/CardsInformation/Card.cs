@@ -6,12 +6,8 @@ public enum Efeitos
     {
         //atacar é um efeito comum a todas ascartas
         Nenhum,
-        Atacar,
         Curar,
-        Curar2,
-        Curar3,
-        Sangrear,
-        Executar,     
+        Executar
     }
    public class PassivaComulativa
     {

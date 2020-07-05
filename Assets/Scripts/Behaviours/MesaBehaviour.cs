@@ -14,12 +14,16 @@
     [HideInInspector]
     public float distanciamentoCartasMaximo;
     [SerializeField] private GameObject carta;
+    private EventControllerBehaviour controller;
+    [SerializeField] public GameObject Dano;
     public List<GameObject> cartas = new List<GameObject>();
+    
     //fazer isso de baixo aq ó. pa passiva
     //public static List<GameObject> cartasEmJogo = new List<GameObject>();
     bool angularBaralho;
     void Start()
     {
+        controller = transform.parent.GetComponent<EventControllerBehaviour>();
         distanciamentoCartasMaximo = 40;
     }
 
@@ -71,8 +75,9 @@
          GameObject objCarta = Instantiate(carta);
          objCarta.transform.localPosition = new Vector2(0,-20);
          objCarta.GetComponent<Image>().raycastTarget = false;
-         objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().definirComeco(ataq,def,img,ef,ev,alv);
+        CartaNaMesa obj = objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>();
          objCarta.transform.SetParent(transform, false);
+         obj.definirComeco(ataq,def,img,ef,ev,alv);
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
          //dispersar cartas na mesa
@@ -80,7 +85,7 @@
          switch(objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:
-               // EventControllerBehaviour.EventoRealizado(ef,alv)
+               controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"));
                 break;
          }
 

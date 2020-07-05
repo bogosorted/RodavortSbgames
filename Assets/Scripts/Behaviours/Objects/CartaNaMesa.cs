@@ -39,12 +39,13 @@ public class CartaNaMesa : MonoBehaviour
     }
     public void definirComeco(float ataq,float def,Sprite img,PassivaComulativa passiva,Evento ativarPassivaQuando,AlvoPassiva alvoDaPassiva)
     {
-        Ataque = ataq; 
-        Defesa = def;
+          
         Imagem = img;  
         AtivarPassivaQuando = ativarPassivaQuando;
         Passiva = passiva;
         Alvo = alvoDaPassiva;
+        Defesa = def;
+        Ataque = ataq; 
     }
     
     #region Propiedades
@@ -98,22 +99,42 @@ public class CartaNaMesa : MonoBehaviour
         get { return _defesa; }
         set
         { 
-            print(value);
-            print(_defesa);
+            GameObject Dano = transform.parent.parent.GetComponent<MesaBehaviour>().Dano;
             if(value>_defesa && _defesa != 0)
             {
-            _defesa = value; 
-            transform.GetChild(1).GetComponent<Text>().text = $"<color=green>{_defesa.ToString()}</color>";
+                Dano = Instantiate(Dano);
+                Dano.transform.SetParent(transform.parent.parent, false);
+                Dano.transform.localPosition = transform.parent.localPosition + Vector3.up * 50;
+                Dano.GetComponent<Text>().text += $"<color=green>+{(value - _defesa).ToString()}</color>";
+
+                _defesa = value; 
+            
+                transform.GetChild(1).GetComponent<Text>().text = $"<color=green>{_defesa.ToString()}</color>";
             }
             else if(value <_defesa)
             {
-                _defesa = value; 
+
+                 Dano = Instantiate(Dano);
+                 Dano.transform.SetParent(transform.parent.parent, false);
+                 Dano.transform.localPosition = transform.parent.localPosition + Vector3.up * 50;
+                 Dano.GetComponent<Text>().text += (value - _defesa).ToString();
+
+                 _defesa = value;                 
+
+                if(_defesa <= 0)
+                {
+                    gameObject.name = "morto";
+                    transform.parent.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(GetComponent<CartaNaMesa>().PosicaoBaralho);
+                    transform.parent.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
+                    transform.parent.parent.GetComponent<MesaBehaviour>().SetAnimacao(transform.parent.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
+                    transform.GetComponent<Animator>().SetTrigger("Destruido");
+                }
             transform.GetChild(1).GetComponent<Text>().text = $"<color=red>{_defesa.ToString()}</color>";
             }
             else{
-                 _defesa = value; 
+                _defesa = value; 
                 transform.GetChild(1).GetComponent<Text>().text =_defesa.ToString();
-            }
+                }
             
         }
     }
