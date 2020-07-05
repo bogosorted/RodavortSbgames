@@ -46,39 +46,24 @@ public class EventControllerBehaviour : MonoBehaviour
     }
     public void RealizarPassivaEm(PassivaComulativa efeito, AlvoPassiva alvo,bool player1)
     {
+        EffectBase a = Factory.Criar((int)(efeito.efeito));
+        a.quantidadeDoEfeito = efeito.quantidade;
         switch(alvo)
         {
             case AlvoPassiva.CartaAdversaria:
-                if(player1)                  
-                    foreach(var obj in CartasPlayer.cartas)
-                    {    
-                        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                    }
-                else
-                {
-                    foreach(var obj in CartasInimigo.cartas)
-                    {          
-                        obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                    }
-                }
+                a.RealizarEfeitoEm(player1?CartasInimigo.cartas:CartasPlayer.cartas);
             break;
+
+            case AlvoPassiva.CartaAliada:
+                 a.RealizarEfeitoEm(player1?  CartasPlayer.cartas: CartasInimigo.cartas);
+                 break;
             case AlvoPassiva.TodasAsCartas:
-                foreach(var obj in CartasPlayer.cartas)
-                {    
-                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                }
-                foreach(var obj in CartasInimigo.cartas)
-                {          
-                    obj.transform.GetChild(0).GetComponent<CartaNaMesa>().AdicionarPassiva(efeito);
-                }
+                    a.RealizarEfeitoEm(CartasPlayer.cartas);
+                    a.RealizarEfeitoEm(CartasInimigo.cartas);
                 break;
         }
     }
     //metodo sobrecarregado para alvos especificos
-    public void RealizarPassivaEm(PassivaComulativa efeito, GameObject alvo,bool player1)
-    {
-        
-    }
      public void OnClick()
     {
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
@@ -98,20 +83,14 @@ public class EventControllerBehaviour : MonoBehaviour
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
-                }
-                refCard.RodarPassivas();
                 
             }
             foreach(var obj in CartasInimigo.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                {
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
-                }
-                refCard.RodarPassivas();
             }
             
         }

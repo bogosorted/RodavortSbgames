@@ -29,34 +29,7 @@ public class CartaNaMesa : MonoBehaviour
     {
          efeitosComulativos.Add(a);
     }
-    public void RodarPassivas()
-    {
-        // por algum motivo o efeitoComulativo[i].quantidade está sendo compartilhada cm todos no campo...
-        // resolver isso pra ja
-
-        //aconselhado a rodar a cada round
-        // NAO SEI SE TA FUNCIONANDO TESTAR OK?
-        // List<string> passivasRodadas = new List<string>();
-        // if(efeitosComulativos.Count>0)
-        // {
-        //     for(int i = efeitosComulativos.Count - 1; i > 0 ;i--)
-        //     {        
-        //         print(efeitosComulativos[i].quantidade);
-        //         if(!passivasRodadas.Contains(efeitosComulativos[i].efeito.ToString()))
-        //         {      
-                
-        //         passivasRodadas.Add(efeitosComulativos[i].efeito.ToString());
-        //         --efeitosComulativos[i].quantidade;
-        //         // funciona mas nao tem como mudar
-        //         Invoke(efeitosComulativos[i].efeito.ToString(),0);                
-        //         if (efeitosComulativos[i].quantidade < 1)
-        //             {
-        //             efeitosComulativos.Remove(efeitosComulativos[i]);            
-        //             }            
-        //         }
-        //     }
-        // }
-    }
+    
     
     public void Destruir()
     {
@@ -73,16 +46,7 @@ public class CartaNaMesa : MonoBehaviour
         Passiva = passiva;
         Alvo = alvoDaPassiva;
     }
-
-    #region Efeitos
-    public void Curar()
-    {
-      Defesa += 0.5f; 
-    }
-    public void Nenhum()
-    {}
-
-    #endregion
+    
     #region Propiedades
     public Evento AtivarPassivaQuando
     {
@@ -134,6 +98,8 @@ public class CartaNaMesa : MonoBehaviour
         get { return _defesa; }
         set
         { 
+            print(value);
+            print(_defesa);
             if(value>_defesa && _defesa != 0)
             {
             _defesa = value; 
@@ -151,7 +117,6 @@ public class CartaNaMesa : MonoBehaviour
             
         }
     }
-    public float Defesa1 { get; set; }
     public Sprite Imagem
     {
         get { return _cartaImagem; }

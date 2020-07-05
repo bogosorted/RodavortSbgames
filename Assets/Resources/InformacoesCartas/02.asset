@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 02
   m_EditorClassIdentifier: 
   passiva: 0
+  quantidade: 0
   ativarPassivaQuando: 2
   alvoDaPassiva: 2
   nome: GOBLIN
   desc: 
   dano: 2
-  vida: 0
+  vida: 1
   valor: 4

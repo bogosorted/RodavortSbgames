@@ -43,8 +43,10 @@ public enum Efeitos
         Nenhum,
         TodasAsCartas,
         CartaAdversaria,
+        CartaAliada,
         //nao fiz essa parte aq de baixo
         CartaAtacada,
+        
     }
 
 [CreateAssetMenu(menuName = "atributos da carta")]

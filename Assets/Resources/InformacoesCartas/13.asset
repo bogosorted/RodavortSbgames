@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
   m_Name: 13
   m_EditorClassIdentifier: 
+  passiva: 0
+  quantidade: 0
+  ativarPassivaQuando: 0
+  alvoDaPassiva: 0
+  nome: 
+  desc: 
   dano: 0
-  vida: 0
+  vida: 1
   valor: 0

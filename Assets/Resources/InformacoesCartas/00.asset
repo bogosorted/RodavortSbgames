@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 00
   m_EditorClassIdentifier: 
   passiva: 2
-  quantidade: 5
+  quantidade: 1
   ativarPassivaQuando: 2
   alvoDaPassiva: 1
   nome: TROVADOR

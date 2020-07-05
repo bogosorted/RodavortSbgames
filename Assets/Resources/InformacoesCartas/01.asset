@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 01
   m_EditorClassIdentifier: 
   passiva: 1
+  quantidade: 0
   ativarPassivaQuando: 4
   alvoDaPassiva: 1
   nome: "BOTIC\xC1RIO"
   desc: 
   dano: 3
-  vida: 0
+  vida: 1
   valor: 1
