@@ -18,6 +18,6 @@ MonoBehaviour:
   alvoDaPassiva: 0
   nome: ESPADACHIM
   desc: 
-  dano: 0
+  dano: 1
   vida: 1
   valor: 0

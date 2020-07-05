@@ -45,6 +45,7 @@
         // a imparidade ou paridade da divisão.
 
         //constante de distanciamento
+        distanciamentoCartasMaximo = (cartas.Count < 7) ? distanciamentoCartasMaximo : 175;
         float angulacaoConst = cartas.Count % 2 == 0f ? distanciamentoCartasMaximo / (float)(cartas.Count / 2) : distanciamentoCartasMaximo / (float)((cartas.Count - 1) / 2);
         //distancia inicial
         float concatenador = -distanciamentoCartasMaximo;
@@ -75,7 +76,7 @@
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
          //dispersar cartas na mesa
-         SetAnimacao((cartas.Count < 7) ? distanciamentoCartasMaximo : 175);
+         SetAnimacao(distanciamentoCartasMaximo);
          switch(objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:

@@ -15,7 +15,7 @@ MonoBehaviour:
   passiva: 2
   quantidade: 1
   ativarPassivaQuando: 2
-  alvoDaPassiva: 1
+  alvoDaPassiva: 3
   nome: TROVADOR
   desc: A carta mais bolada  que tem <color=green>10 de vida</color>
   dano: 6
