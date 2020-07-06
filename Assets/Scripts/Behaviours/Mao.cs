@@ -9,7 +9,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 {
     [Header("Animações do Baralho")]
     [SerializeField] float velocidadeAnimacao = 1f;
-    [SerializeField]float distancia = 1;
+    [SerializeField] float distancia = 1;
     [SerializeField] float indiceAngulacao = 12;
     [SerializeField] float altitude = -290 ;
     [SerializeField] float latitude = 0; 
@@ -60,16 +60,20 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                             CartaAtual.name = "segurado";
                             SetAnimacao(distanciamentoCartasMaximo);           
                         }
-                    break;
+                    goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
                 case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
                     if(CartaAtual.name == "CartaNaMesa")
                     {
-                        AtaqueNoInimigo = CartaAtual;
-                        seta = Instantiate(Seta);
-                        seta.transform.SetParent(transform.GetChild(4),false);
-                        seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
-                    }
-                    
+                         AtaqueNoInimigo = CartaAtual;
+                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
+                         print(refCard.PodeAtacar);
+                                if(refCard.PodeAtacar)
+                                {
+                                    seta = Instantiate(Seta);
+                                    seta.transform.SetParent(transform.GetChild(4),false);
+                                    seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
+                                }                                          
+                    }                   
                     break;
                 }
            }      
@@ -158,7 +162,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                 SetRaycast(true);
                 SetAnimacao(distanciamentoCartasMaximo);         
                 }
-                break;
+                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
             case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
                 if(seta != null)
                 {              
@@ -169,18 +173,28 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     {
                         foreach(var obj in resultados)
                         {
+                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                         // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
-                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo != null)
-                            {
-                             AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                             StartCoroutine(DarDano(obj.gameObject));
+                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
+                            {                     
+                                         
+                                if(refCard.QuantidadeAtaque > 0)
+                                {
+                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                refCard.QuantidadeAtaque--;
+                                StartCoroutine(DarDano(obj.gameObject));
+                                }
                             break;
                             }
                         //esse else if vai servir pra atacar o player inimigo
-                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0)
-                            {
-                             AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                            StartCoroutine(DarDanoInimigo(obj.gameObject));
+                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
+                            {  
+                            if(refCard.QuantidadeAtaque > 0)
+                                {                                                   
+                                    AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                    refCard.QuantidadeAtaque--; 
+                                    StartCoroutine(DarDanoInimigo(obj.gameObject));
+                                }
                             }
                         } 
                     }
@@ -395,20 +409,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         yield return new WaitForSeconds(0.40f);
         if (obj)
         {
-            // Transform ObjT = obj.transform.parent.transform;
-            // dano = Instantiate(Dano);
-            // dano.transform.SetParent(transform.GetChild(4), false);
-            // dano.transform.localPosition = ObjT.localPosition + Vector3.up * 50;
-            // dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
-             obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
-            // if (obj.GetComponent<CartaNaMesa>().Defesa < 0.1f && obj.name == "CartaNaMesaInimigo")
-            // {
-            //     obj.name = "morto";
-            //     ObjT.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(obj.GetComponent<CartaNaMesa>().PosicaoBaralho);
-            //     ObjT.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;
-            //     ObjT.parent.GetComponent<MesaBehaviour>().SetAnimacao(ObjT.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo);
-            //     obj.GetComponent<Animator>().SetTrigger("Destruido");
-            // }
+            obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
             som.PlayOneShot(audios[2]);
         }
     }

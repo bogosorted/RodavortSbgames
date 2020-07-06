@@ -12,6 +12,8 @@ public class CartaNaMesa : MonoBehaviour
     private Vector2 _posicaoInicial,_posicaoFinal;
     private Sprite _cartaImagem;
     private int _posicaoBaralho;
+    private int _quantidadeAtaque;
+    private bool _podeAtacar;
     //enum
     private Evento _ativarPassivaQuando;
     //struct
@@ -73,18 +75,26 @@ public class CartaNaMesa : MonoBehaviour
             _alvo = value;
         }
     }
-    public int PosicaoBaralho
-    {
-        get;set;
+    public int PosicaoBaralho{get;set;}
+     public Vector2 PosicaoInicial{get;set;}
+    public Vector2 PosicaoFinal{get;set;}
+
+    public int QuantidadeAtaque{
+        get{return _quantidadeAtaque;}
+        set
+        { 
+            _quantidadeAtaque = value ;
+           PodeAtacar = value > 0 ? true : false;
+        }
     }
-     public Vector2 PosicaoInicial
-    {
-        get;set;        
-    }
-    public Vector2 PosicaoFinal
-    {
-        get;set;        
-    }
+    public bool PodeAtacar{
+        get{return _podeAtacar;}
+        set
+        {
+            _podeAtacar = value;
+            transform.GetChild(3).GetComponent<Image>().enabled = !_podeAtacar;
+        }
+        }
       public float Ataque
     {
         get { return _ataque; }

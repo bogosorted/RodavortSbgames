@@ -1713,7 +1713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadeAnimacao: 1
-  altitude: 1
+  altitude: -5
   latitude: 1
   distanciamentoCartasMaximo: 0
   carta: {fileID: 5996462921864894780, guid: 1bcace26ff7ba364488b1476b3a63140, type: 3}

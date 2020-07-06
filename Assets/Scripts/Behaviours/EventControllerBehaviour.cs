@@ -91,6 +91,7 @@ public class EventControllerBehaviour : MonoBehaviour
             foreach(var obj in CartasPlayer.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                refCard.QuantidadeAtaque =1;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
                 
@@ -98,6 +99,7 @@ public class EventControllerBehaviour : MonoBehaviour
             foreach(var obj in CartasInimigo.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                refCard.QuantidadeAtaque = 1 ;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
             }
@@ -124,7 +126,7 @@ public class EventControllerBehaviour : MonoBehaviour
         botao.interactable = true;
         Player.SetRaycast(true);
         Player.CriarCarta(Random.Range(0,13));
-        CartasPlayer.SetRaycast(false);
+        //CartasPlayer.SetRaycast(false);
         preparado = true;
     }
     private void TurnoAtaqueP1()
