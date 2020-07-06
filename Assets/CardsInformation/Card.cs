@@ -40,7 +40,9 @@ public enum Efeitos
         TodasAsCartas,
         CartaAdversaria,
         CartaAliada,
-        //nao fiz essa parte aq de baixo
+        CartaAleatoriaAliada,
+        CartaAleatoriaAdversaria,
+          //nao fiz essa parte aq de baixo    
         CartaAtacada,
         
     }

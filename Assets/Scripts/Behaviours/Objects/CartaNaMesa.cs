@@ -123,6 +123,13 @@ public class CartaNaMesa : MonoBehaviour
 
                 if(_defesa <= 0)
                 {
+                    switch(AtivarPassivaQuando)
+                    {
+                        case Evento.CartaMorreu:
+                        print("a");
+                      gameObject.transform.parent.transform.parent.transform.parent.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(this.Passiva,this.Alvo,(transform.parent.tag == "Player"));
+                        break;
+                    }
                     gameObject.name = "morto";
                     transform.parent.parent.GetComponent<MesaBehaviour>().cartas.RemoveAt(GetComponent<CartaNaMesa>().PosicaoBaralho);
                     transform.parent.parent.GetComponent<MesaBehaviour>().distanciamentoCartasMaximo -= 20;

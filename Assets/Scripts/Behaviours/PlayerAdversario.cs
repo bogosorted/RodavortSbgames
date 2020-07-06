@@ -142,7 +142,7 @@ public class PlayerAdversario : MonoBehaviour
     //animações dos efeitos
      Mao player = transform.GetComponent<Mao>();   
      yield return new WaitForSeconds(0.4f);
-        if (obj)
+        if (obj && obj.transform.GetChild(0))
         {
             obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
         }

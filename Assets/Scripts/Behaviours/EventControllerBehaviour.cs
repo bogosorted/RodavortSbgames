@@ -61,6 +61,14 @@ public class EventControllerBehaviour : MonoBehaviour
                     a.RealizarEfeitoEm(CartasPlayer.cartas);
                     a.RealizarEfeitoEm(CartasInimigo.cartas);
                 break;
+            case AlvoPassiva.CartaAleatoriaAliada:
+              if(!player1 && CartasInimigo.cartas.Count > 0 || player1 && CartasPlayer.cartas.Count > 0)
+              a.RealizarEfeitoEm(player1?  CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)] : CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]);
+            break;
+            case AlvoPassiva.CartaAleatoriaAdversaria:
+              if(player1 && CartasInimigo.cartas.Count > 0 || !player1 && CartasPlayer.cartas.Count > 0)
+              a.RealizarEfeitoEm(player1?  CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]:CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)]);
+            break;
         }
     }
     
