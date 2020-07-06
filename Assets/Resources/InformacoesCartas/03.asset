@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 03
   m_EditorClassIdentifier: 
   passiva: 0
+  quantidade: 0
   ativarPassivaQuando: 3
   alvoDaPassiva: 3
   nome: CATAPULTA

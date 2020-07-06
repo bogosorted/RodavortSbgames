@@ -44,34 +44,38 @@ public class EventControllerBehaviour : MonoBehaviour
         CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
         preparado = true;
     }
-    public void RealizarPassivaEm(PassivaComulativa efeito, AlvoPassiva alvo,bool player1)
+    public void RealizarPassivaEm(PassivaComulativa efeito, AlvoPassiva alvo,bool player1,GameObject realizador)
     {
         EffectBase a = Factory.Criar((int)(efeito.efeito));
         a.quantidadeDoEfeito = efeito.quantidade;
         switch(alvo)
         {
             case AlvoPassiva.CartaAdversaria:
-                a.RealizarEfeitoEm(player1?CartasInimigo.cartas:CartasPlayer.cartas);
+                a.RealizarEfeitoEm(player1?CartasInimigo.cartas:CartasPlayer.cartas,realizador);
             break;
 
             case AlvoPassiva.CartaAliada:
-                 a.RealizarEfeitoEm(player1?  CartasPlayer.cartas: CartasInimigo.cartas);
+                 a.RealizarEfeitoEm(player1?  CartasPlayer.cartas: CartasInimigo.cartas,realizador);
                  break;
             case AlvoPassiva.TodasAsCartas:
-                    a.RealizarEfeitoEm(CartasPlayer.cartas);
-                    a.RealizarEfeitoEm(CartasInimigo.cartas);
+                    a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
+                    a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
                 break;
             case AlvoPassiva.CartaAleatoriaAliada:
               if(!player1 && CartasInimigo.cartas.Count > 0 || player1 && CartasPlayer.cartas.Count > 0)
-              a.RealizarEfeitoEm(player1?  CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)] : CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]);
+              a.RealizarEfeitoEm(player1?  CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)] : CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)],realizador);
             break;
             case AlvoPassiva.CartaAleatoriaAdversaria:
               if(player1 && CartasInimigo.cartas.Count > 0 || !player1 && CartasPlayer.cartas.Count > 0)
-              a.RealizarEfeitoEm(player1?  CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]:CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)]);
+              a.RealizarEfeitoEm(player1?  CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]:CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)],realizador);
             break;
+            case AlvoPassiva.Carta:
+            a.RealizarEfeitoEm(realizador,realizador);
+            break;
+            
         }
     }
-    
+
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {
@@ -93,7 +97,7 @@ public class EventControllerBehaviour : MonoBehaviour
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque =1;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true);
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,obj);
                 
             }
             foreach(var obj in CartasInimigo.cartas)
@@ -101,7 +105,7 @@ public class EventControllerBehaviour : MonoBehaviour
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque = 1 ;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false);
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false,obj);
             }
             
         }

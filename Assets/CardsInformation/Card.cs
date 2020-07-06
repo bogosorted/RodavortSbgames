@@ -6,8 +6,10 @@ public enum Efeitos
     {
         //atacar é um efeito comum a todas ascartas
         Nenhum,
+        AtaqueConsecutivo,
         Curar,
-        Executar
+        Executar,
+       
     }
    public class PassivaComulativa
     {
@@ -42,8 +44,8 @@ public enum Efeitos
         CartaAliada,
         CartaAleatoriaAliada,
         CartaAleatoriaAdversaria,
+        Carta,
           //nao fiz essa parte aq de baixo    
-        CartaAtacada,
         
     }
 

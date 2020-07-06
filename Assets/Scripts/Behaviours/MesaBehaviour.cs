@@ -85,7 +85,7 @@
          switch(objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:
-               controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"));
+               controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"),objCarta);
                 break;
          }
 

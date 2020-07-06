@@ -173,14 +173,21 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     {
                         foreach(var obj in resultados)
                         {
-                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+                            
+                           
                         // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
                             if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
                             {                     
-                                         
+                                CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                                 if(refCard.QuantidadeAtaque > 0)
                                 {
                                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                switch(refCard.AtivarPassivaQuando)
+                                {
+                                    case Evento.CartaAtaque:
+                                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
+                                    break;
+                                }
                                 refCard.QuantidadeAtaque--;
                                 StartCoroutine(DarDano(obj.gameObject));
                                 }
@@ -189,6 +196,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                         //esse else if vai servir pra atacar o player inimigo
                             else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
                             {  
+                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                             if(refCard.QuantidadeAtaque > 0)
                                 {                                                   
                                     AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
@@ -207,7 +215,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     }
     public void Mouse()
     {
-
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);

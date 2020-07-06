@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EffectBase
+//usando mono behaviour só pra printar(tirar na versão final)
+public abstract class EffectBase:MonoBehaviour
 {
     protected Efeitos efeito {get;set;}
     protected Evento evento{get;set;}
     protected AlvoPassiva alvo {get;set;}
     public int quantidadeDoEfeito{get;set;}
     
-    public abstract void RealizarEfeitoEm(List<GameObject> a);
-    public abstract void RealizarEfeitoEm(GameObject a);
+    public abstract void RealizarEfeitoEm(List<GameObject> realizado,GameObject objetoRealizador);
+    public abstract void RealizarEfeitoEm(GameObject realizado,GameObject objetoRealizador);
 }
 
 
@@ -25,9 +26,9 @@ public static class Factory
     }
      public static  Dictionary<int, Func<EffectBase>> cardFactories = new Dictionary<int, Func<EffectBase>>{  
                      {4, ()=>new Nada()},
-                     {3, ()=>new Nada()},
-                     {1, ()=>new Curar()},
-                     {2, ()=>new Matar()}, 
+                     {3, ()=>new Matar()},
+                     {1, ()=>new AtaqueConsecutivo()},
+                     {2, ()=>new Curar()}, 
                      {0, ()=>new Nada()}
     };  
 }
@@ -35,39 +36,53 @@ public static class Factory
 
 public class Curar:EffectBase
 {   
-     public override void RealizarEfeitoEm(List<GameObject> a)
+     public override void RealizarEfeitoEm(List<GameObject> a, GameObject b)
     {
         for(int i = a.Count - 1 ; i >= 0;i--)
-            RealizarEfeitoEm(a[i]);
+            RealizarEfeitoEm(a[i],b);
     }
    
-    public override void RealizarEfeitoEm(GameObject a)
+    public override void RealizarEfeitoEm(GameObject a,  GameObject b)
     {
+        print(a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa);
         a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa += quantidadeDoEfeito;
     }
 }
 public class Matar:EffectBase
 {
-    public override void RealizarEfeitoEm(List<GameObject> a)
+    public override void RealizarEfeitoEm(List<GameObject> a ,GameObject b)
     {
         for(int i = a.Count - 1 ; i >= 0;i--)
-            RealizarEfeitoEm(a[i]);
+            RealizarEfeitoEm(a[i],b);
     }
    
-    public override void RealizarEfeitoEm(GameObject a)
+    public override void RealizarEfeitoEm(GameObject a, GameObject b)
     {
       a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa;
+    }
+}
+public class AtaqueConsecutivo:EffectBase
+{
+    public override void RealizarEfeitoEm(List<GameObject> a , GameObject b)
+    {      
+        for(int i = a.Count - 1 ; i >= 0;i--)
+            RealizarEfeitoEm(a[i],b);
+    }
+   
+    public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
+    {
+       a.transform.GetChild(0).GetComponent<CartaNaMesa>().QuantidadeAtaque += quantidadeDoEfeito;
     }
 }
 // clase temporaria e sera removida na versão final
 public class Nada:EffectBase
 {
-    public override void RealizarEfeitoEm(List<GameObject> a)
+    public override void RealizarEfeitoEm(List<GameObject> a ,  GameObject b)
     {
        //absolutamente nada
     }
    
-    public override void RealizarEfeitoEm(GameObject a)
+    public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
     {
        // nadica
     }
