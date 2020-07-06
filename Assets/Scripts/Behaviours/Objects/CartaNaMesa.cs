@@ -126,7 +126,6 @@ public class CartaNaMesa : MonoBehaviour
                     switch(AtivarPassivaQuando)
                     {
                         case Evento.CartaMorreu:
-                        print("a");
                       gameObject.transform.parent.transform.parent.transform.parent.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(this.Passiva,this.Alvo,(transform.parent.tag == "Player"));
                         break;
                     }
