@@ -9,6 +9,7 @@ TagManager:
   - layer3
   - Canvas
   - CampoAmigo
+  - PlayerId
   layers:
   - Default
   - TransparentFX

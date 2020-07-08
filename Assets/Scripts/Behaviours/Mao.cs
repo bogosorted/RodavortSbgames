@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Runtime;
+using Mirror;
 
-public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
+public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [Header("Animações do Baralho")]
     [SerializeField] float velocidadeAnimacao = 1f;
@@ -24,6 +25,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
     [SerializeField] private GameObject carta,Seta,Dano;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;
+    PlayerId iplayerid;
+    public static bool isplayer2;
     [Header("VIDA")]
     public float vida;
     private int gold;
@@ -45,7 +48,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         if(Input.touchCount < 2)
         {
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-           if(CartaAtual != null)
+           if(CartaAtual != null && !isplayer2)
            {
              switch(EventControllerBehaviour.turno)
                 {
@@ -76,7 +79,8 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
                     }                   
                     break;
                 }
-           }      
+           }    
+          
         }
     }
     public void OnDrag(PointerEventData eventData)
@@ -213,6 +217,7 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         }
         
     }
+    
     public void Mouse()
     {
         cursor.position = Input.mousePosition;
@@ -249,7 +254,6 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     }
     #endregion
-
     #region FisicasCarta
     private void SetPosicao(GameObject Carta, float longitude , float latitude)
     {
@@ -380,26 +384,22 @@ public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandl
         objCarta.GetComponent<Carta>().AngulacaoFinal = new Vector3(0, -90,-55);
         SetAnimacao(distanciamentoCartasMaximo);
     }
-  
-    void Awake()
-    {
+
+        void Awake()
+        {
+        mao = new List<GameObject>();  
         OutPut = transform.GetChild(5).GetComponent<Animator>();
         exibir = transform.GetChild(5).GetComponent<Exibicao>();
-
         vidaPlayer.text = vida + "/" + vida;
-
-        // se bugar a versão android de alguma forma tirar esse if (não testei)
+               // se bugar a versão android de alguma forma tirar esse if (não testei)
         #if UNITY_STANDALONE || UNITY_EDITOR_WIN
         cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
+        
         #endif
-
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-        CriarCartaInicio(Random.Range(0,13));
-    }
+        }
     void FixedUpdate()
     {
         #if UNITY_STANDALONE || UNITY_EDITOR_WIN

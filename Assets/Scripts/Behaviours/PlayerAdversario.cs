@@ -28,9 +28,9 @@ public class PlayerAdversario : MonoBehaviour
     void Start()
     {
       vidaInimigo.text = vida + "/" + vida;
-      CriarCarta(Random.Range(0,13));
-      CriarCarta(Random.Range(0,13));
-      CriarCarta(Random.Range(0,13));
+    //   CriarCarta(Random.Range(0,13));
+    //   CriarCarta(Random.Range(0,13));
+    //   CriarCarta(Random.Range(0,13));
     }
     //posicao atacar é o index do atacador na mesa do baralho inimigo e posicao inimigo 
     //é a posicao da carta do player que sera atacada

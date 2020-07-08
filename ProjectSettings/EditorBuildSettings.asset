@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MenuMultiplayer.unity
+    guid: 935bfc59b9585a24191dd210fa25f902
+  - enabled: 1
     path: Assets/Scenes/Campo.unity
     guid: c05ad0ae240a9c941b68f8d6a49101b9
   - enabled: 0

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using Mirror;
 
 
-public class EventControllerBehaviour : MonoBehaviour
+public class EventControllerBehaviour : NetworkBehaviour
 {  
     public static Turnos turno;
     [Header("OuroConfig")]
@@ -17,14 +18,15 @@ public class EventControllerBehaviour : MonoBehaviour
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
     CartaNaMesa passivCard;
+    PlayerId playerid;
     Efeitos efeitoAtual;
     [SerializeField] private Selectable botao;
     
     public enum Turnos
     {
-        DecidirIniciante = 1,
+        DecidirIniciante ,
         DecidirCartaInicial,
-        TurnoEscolhaP1,
+        TurnoEscolhaP1 = 1,
         TurnoEscolhaP2,
         TurnoAtaqueP1,
         TurnoAtaqueP2,
@@ -33,7 +35,8 @@ public class EventControllerBehaviour : MonoBehaviour
     }
 
     private void Start() {
-        turno = Turnos.TurnoEscolhaP1;
+        botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
+        turno = Turnos.DecidirIniciante;
         Inimigo = GetComponent<PlayerAdversario>();
         Player =  GetComponent<Mao>();
         ouroLimite = 10;
@@ -76,21 +79,29 @@ public class EventControllerBehaviour : MonoBehaviour
         }
     }
 
+    public void BotaoInteragivel(bool valor)
+    {
+        botao.interactable = valor;
+    }
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
         {
             turno += 1;
+            print(turno);
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
-        else
+        else if (preparado)
         {
             //quando reseta o turno 
             ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
             AtualizarOuro(ouroMaximo);
             // cara ou coroa dps
             turno = Turnos.TurnoEscolhaP1;
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            //playerid = ntwrkid.GetComponent<PlayerId>();
+            //playerid.CmdMudarTurno((int)turno);
             //testando pra ver se tem alguma passiva a ser rodada no novo round
             foreach(var obj in CartasPlayer.cartas)
             {
@@ -120,36 +131,99 @@ public class EventControllerBehaviour : MonoBehaviour
         Inimigo.SetarGold(ouroMaximo);
     }
     private void DecidirIniciante(){
-        preparado = true;
     }
     private void DecidirCartaInicial(){
-        preparado = true;
+        GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
+        if(numerosPlayers.Length == 2 || true )//tirar esse true dps
+        {
+            Player.SetRaycast(true);
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
+            playerid.CmdAwake();
+            preparado = true;
+        }
+            else
+            preparado =  false;
+            //mudar para falso no final dos testes
     }
     private void TurnoEscolhaP1()
     {
+        if(!Mao.isplayer2)
+        {
         botao.interactable = true;
         Player.SetRaycast(true);
-        Player.CriarCarta(Random.Range(0,13));
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
+        playerid.CmdMudarTurno((int)turno);   
+        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL
+        playerid.CmdCriarCartaInicio(Random.Range(0,13));
         //CartasPlayer.SetRaycast(false);
         preparado = true;
+        print("opa");
+        }
+        else
+        {
+            botao.interactable = true;
+        }
     }
     private void TurnoAtaqueP1()
     {
-         botao.interactable = true;
-         Player.SetRaycast(false);
-         CartasPlayer.SetRaycast(true);
-         preparado = true;
+        print("ope");
+        if(!Mao.isplayer2)
+            {
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
+            botao.interactable = true;
+            Player.SetRaycast(false);
+            CartasPlayer.SetRaycast(true);
+            preparado = true;            
+            }
+            else
+        {
+            botao.interactable = true;
+        }
     }
+
     private void TurnoEscolhaP2()
     {
-        botao.interactable = false;
+            print(Mao.isplayer2);
+        if(Mao.isplayer2)
+        {
+        botao.interactable = true;
+        Player.SetRaycast(true);
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
+       // playerid.CmdMudarTurno((int)turno);      
+        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL
+        playerid.CmdCriarCartaInicio(Random.Range(0,13));
+        //CartasPlayer.SetRaycast(false);
+        preparado = true;
+        }
+         else
+        {
+            print("EBA");
+            botao.interactable = false;
+        }
+    }
         //inimigo bot
-        StartCoroutine(BotEscolha());
-    }
+        //StartCoroutine(BotEscolha());
     private void TurnoAtaqueP2(){
-       botao.interactable = false;
-       AtaqueCartas();
+        if(Mao.isplayer2)
+            {
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
+            botao.interactable = true;
+            Player.SetRaycast(false);
+            CartasPlayer.SetRaycast(true);
+            preparado = true;
+            }
+             else
+        {
+            botao.interactable = false;
+        }
     }
+       //bot ataque
+       //AtaqueCartas();
     private void Vitoria(){
         print("Voce Ganhou");
         preparado = true;
@@ -171,7 +245,6 @@ public class EventControllerBehaviour : MonoBehaviour
             Inimigo.goldInimigo.text = string.Format("{0}/{1}",Inimigo.gold, ouroMaximo);
         }
         Player.Audio(1);
-
         preparado = true;
         OnClick();
     }
