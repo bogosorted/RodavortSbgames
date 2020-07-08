@@ -117,7 +117,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void DecidirCartaInicial(){
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
-        if(numerosPlayers.Length == 2 || true )//tirar esse true dps
+        if(numerosPlayers.Length == 2)// true 
         {
             Player.SetRaycast(true);
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;

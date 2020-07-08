@@ -36,7 +36,7 @@ public class PlayerId : NetworkBehaviour
         }
 
     }
-    [ClientRpc]
+     [ClientRpc]
     public void RpcAwake(int rn,int rn2)
     {
        Mao player = canvas.GetComponent<Mao>();
@@ -57,6 +57,28 @@ public class PlayerId : NetworkBehaviour
         }        
         //canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(hasAuthority);  
     }
+    [Command]
+    public void CmdAtualizarGold(int valor)
+    {
+        RpcAtualizarGold(valor);
+    }
+    [ClientRpc]
+    void RpcAtualizarGold(int valor)
+    {
+        if(hasAuthority)
+        {
+            Mao player =canvas.GetComponent<Mao>();
+           player.goldPlayer.text =$"{valor}/{ EventControllerBehaviour.ouroMaximo}";
+          print("temautoridade");    
+        }
+        else
+        {
+            print("naoautoridade");
+           PlayerAdversario adversario = canvas.GetComponent<PlayerAdversario>();
+           adversario.goldInimigo.text = $"{valor}/{EventControllerBehaviour.ouroMaximo}";
+        }
+    }
+   
     [Command]
     public void CmdInverterTurnoPlayers() { RpcInverterTurnos(); }
     [ClientRpc]
@@ -84,11 +106,11 @@ public class PlayerId : NetworkBehaviour
     {
         if(hasAuthority)
         {
-            print("tem autoridade");
+// print("tem autoridade");
             canvas.GetComponent<Mao>().CriarCarta(id);
         }
         else{
-            print("nao tem autoridade");    
+  //          print("nao tem autoridade");    
             canvas.GetComponent<PlayerAdversario>().CriarCarta(id);
         }
     }  

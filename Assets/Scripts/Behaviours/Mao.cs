@@ -19,7 +19,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     [SerializeField] AudioClip[] audios;
     [Header("Objetos")]
     [SerializeField] private Text vidaPlayer;
-    [SerializeField] private Text goldPlayer;
+    [SerializeField] public Text goldPlayer;
     //lembrar de colocar tudo
 
     [SerializeField] private GameObject carta,Seta,Dano;
@@ -176,6 +176,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                                 {
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                                    playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
                                     resultados[i].gameObject.name = "Destruido";
@@ -269,6 +270,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                                 {
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                                    playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
                                     resultados[i].gameObject.name = "Destruido";
