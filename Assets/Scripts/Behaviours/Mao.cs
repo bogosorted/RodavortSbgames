@@ -25,8 +25,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     [SerializeField] private GameObject carta,Seta,Dano;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;
-    PlayerId iplayerid;
-    public static bool isplayer2;
+    PlayerId playerid;
     [Header("VIDA")]
     public float vida;
     private int gold;
@@ -47,8 +46,12 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     {
         if(Input.touchCount < 2)
         {
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-           if(CartaAtual != null && !isplayer2)
+            print(playerid.isplayer2);
+            print(EventControllerBehaviour.turno);
+           if(CartaAtual != null && playerid.isplayer2)
            {
              switch(EventControllerBehaviour.turno)
                 {
@@ -68,8 +71,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                     if(CartaAtual.name == "CartaNaMesa")
                     {
                          AtaqueNoInimigo = CartaAtual;
-                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
-                         print(refCard.PodeAtacar);
+                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();                   
                                 if(refCard.PodeAtacar)
                                 {
                                     seta = Instantiate(Seta);
@@ -79,7 +81,39 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                     }                   
                     break;
                 }
-           }    
+           }  
+           //inverti sem querer agr ja era
+           else if(CartaAtual != null && !playerid.isplayer2)
+           {
+             switch(EventControllerBehaviour.turno)
+                {
+                case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
+                  if(CartaAtual.name == "Carta(Clone)")
+                        {
+                            x=1;
+                            OutPut.SetBool("MouseNaCarta",false);
+                            mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+                            SetRaycast(false);
+                            distanciamentoCartasMaximo -=20;
+                            CartaAtual.name = "segurado";
+                            SetAnimacao(distanciamentoCartasMaximo);           
+                        }
+                    goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
+                case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
+                    if(CartaAtual.name == "CartaNaMesa")
+                    {
+                         AtaqueNoInimigo = CartaAtual;
+                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
+                                if(refCard.PodeAtacar)
+                                {
+                                    seta = Instantiate(Seta);
+                                    seta.transform.SetParent(transform.GetChild(4),false);
+                                    seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
+                                }                                          
+                    }                   
+                    break;
+                }
+           }      
           
         }
     }
@@ -118,12 +152,18 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
+        print(playerid.isplayer2);
+        print(EventControllerBehaviour.turno);
         //CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-        switch(EventControllerBehaviour.turno)
+        if(playerid.isplayer2)
         {
+            switch(EventControllerBehaviour.turno)
+            {
             case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
                 if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
                 {
@@ -212,8 +252,102 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                     }
 
                 break;
+         }
+        }
+        else{
+            switch(EventControllerBehaviour.turno)
+            {
+            case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
+                if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+                {
+                    for(int i=0;i < resultados.Count - 1;i++)
+                    {
+                        switch(resultados[i].gameObject.name)
+                        {
+                            case "segurado":
+                                int barra = goldPlayer.text.IndexOf('/');
+                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
+                                {
+                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
+                                    resultados[i].gameObject.name = "Destruido";
+                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
+                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+                                    som.PlayOneShot(audios[1]);
+                                    SetRaycast(true);
+                                }
+                                else
+                                {
+                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
+                                    distanciamentoCartasMaximo += 20;
+                                    SetAnimacao(distanciamentoCartasMaximo);
+                                    //colocar um audio de negação
+                                    Audio(2);
+                                    SetRaycast(true);
+                                    resultados[i].gameObject.name = "Carta(Clone)";
+                                }
+                            break;
+                        }
+                    }
+                }
+                else if (CartaAtual != null && CartaAtual.name == "segurado")
+                {
+                mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
+                distanciamentoCartasMaximo +=20;
+                CartaAtual.name = "Carta(Clone)";
+                SetRaycast(true);
+                SetAnimacao(distanciamentoCartasMaximo);         
+                }
+                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
+            case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
+                if(seta != null)
+                {              
+                    seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
+                
+                }
+                if(resultados.Count > 0 )
+                    {
+                        foreach(var obj in resultados)
+                        {
+                            
+                           
+                        // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
+                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
+                            {                     
+                                CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+                                if(refCard.QuantidadeAtaque > 0)
+                                {
+                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                switch(refCard.AtivarPassivaQuando)
+                                {
+                                    case Evento.CartaAtaque:
+                                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
+                                    break;
+                                }
+                                refCard.QuantidadeAtaque--;
+                                StartCoroutine(DarDano(obj.gameObject));
+                                }
+                            break;
+                            }
+                        //esse else if vai servir pra atacar o player inimigo
+                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
+                            {  
+                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+                            if(refCard.QuantidadeAtaque > 0)
+                                {                                                   
+                                    AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                    refCard.QuantidadeAtaque--; 
+                                    StartCoroutine(DarDanoInimigo(obj.gameObject));
+                                }
+                            }
+                        } 
+                    }
+
+                break;
 
 
+         }
         }
         
     }

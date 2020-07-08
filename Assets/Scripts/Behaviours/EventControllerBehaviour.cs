@@ -24,9 +24,9 @@ public class EventControllerBehaviour : NetworkBehaviour
     
     public enum Turnos
     {
-        DecidirIniciante ,
+        DecidirIniciante,
         DecidirCartaInicial,
-        TurnoEscolhaP1 = 1,
+        TurnoEscolhaP1,
         TurnoEscolhaP2,
         TurnoAtaqueP1,
         TurnoAtaqueP2,
@@ -86,44 +86,27 @@ public class EventControllerBehaviour : NetworkBehaviour
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
         {
+            print(turno);
             turno += 1;
             print(turno);
+            playerid.CmdMudarTurno((int)turno);
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else if (preparado)
         {
-            //quando reseta o turno 
-            ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
-            AtualizarOuro(ouroMaximo);
-            // cara ou coroa dps
-            turno = Turnos.TurnoEscolhaP1;
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            //playerid = ntwrkid.GetComponent<PlayerId>();
-            //playerid.CmdMudarTurno((int)turno);
-            //testando pra ver se tem alguma passiva a ser rodada no novo round
-            foreach(var obj in CartasPlayer.cartas)
-            {
-                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
-                refCard.QuantidadeAtaque =1;
-                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,obj);
-                
-            }
-            foreach(var obj in CartasInimigo.cartas)
-            {
-                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
-                refCard.QuantidadeAtaque = 1 ;
-                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false,obj);
-            }
-            
+            playerid.CmdTrocouTurno();         
         }
         preparado = false;
-        Invoke(turno.ToString(),0f);
+        playerid.CmdInvoke((int)turno);
     }
-   
+   public void InvokeLater(int id)
+   {
+        Invoke(((EventControllerBehaviour.Turnos)id).ToString(),0f);
+   }
     #region TURNOS
     private void AtualizarOuro(int ouroMaximo) 
     {
@@ -141,6 +124,9 @@ public class EventControllerBehaviour : NetworkBehaviour
             playerid = ntwrkid.GetComponent<PlayerId>();
             playerid.CmdAwake();
             preparado = true;
+            turno = Turnos.TurnoEscolhaP1;
+            playerid.CmdMudarTurno((int)turno);
+            playerid.CmdInverterTurnoPlayers();
         }
             else
             preparado =  false;
@@ -148,89 +134,126 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void TurnoEscolhaP1()
     {
-        if(!Mao.isplayer2)
-        {
-        botao.interactable = true;
-        Player.SetRaycast(true);
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
-        playerid.CmdMudarTurno((int)turno);   
-        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL
-        playerid.CmdCriarCartaInicio(Random.Range(0,13));
-        //CartasPlayer.SetRaycast(false);
-        preparado = true;
-        print("opa");
+        if(!playerid.isplayer2)
+        {
+        Player.SetRaycast(true);
+        CartasPlayer.SetRaycast(true);
+        preparado = true;         
+        playerid.CmdInverterTurnoPlayers();
         }
         else
         {
-            botao.interactable = true;
+            preparado = false;
         }
     }
     private void TurnoAtaqueP1()
     {
         print("ope");
-        if(!Mao.isplayer2)
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
+        if(!playerid.isplayer2)
             {
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
-            botao.interactable = true;
-            Player.SetRaycast(false);
+                print("entrou");
+            Player.SetRaycast(true);
+            playerid.CmdCriarCartaInicio(Random.Range(0,13));
+            playerid.CmdInverterTurnoPlayers();
             CartasPlayer.SetRaycast(true);
             preparado = true;            
             }
             else
         {
-            botao.interactable = true;
+            print("nao entrou");
+            preparado= false;
         }
     }
 
     private void TurnoEscolhaP2()
     {
-            print(Mao.isplayer2);
-        if(Mao.isplayer2)
-        {
-        botao.interactable = true;
-        Player.SetRaycast(true);
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
-       // playerid.CmdMudarTurno((int)turno);      
-        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL
-        playerid.CmdCriarCartaInicio(Random.Range(0,13));
-        //CartasPlayer.SetRaycast(false);
-        preparado = true;
+        if(!playerid.isplayer2)
+        {   
+
         }
          else
         {
-            print("EBA");
-            botao.interactable = false;
+            preparado = true;
+        playerid.CmdInverterTurnoPlayers();
+        Player.SetRaycast(true);
+        playerid.CmdMudarTurno((int)turno);      
+        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL       
         }
     }
         //inimigo bot
         //StartCoroutine(BotEscolha());
     private void TurnoAtaqueP2(){
-        if(Mao.isplayer2)
-            {
+
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;
             playerid = ntwrkid.GetComponent<PlayerId>();
-            botao.interactable = true;
-            Player.SetRaycast(false);
+        if(playerid.isplayer2)
+            {
+                //player1 em game
+            print("teoricamente player ");
+            Player.SetRaycast(true);
             CartasPlayer.SetRaycast(true);
             preparado = true;
+            playerid.CmdCriarCartaInicio(Random.Range(0,13));
+            playerid.CmdInverterTurnoPlayers();
             }
              else
-        {
-            botao.interactable = false;
-        }
+            {
+                playerid.CmdInverterTurnoPlayers();
+                playerid.CmdCriarCartaInicio(Random.Range(0,13));
+                Player.SetRaycast(true);
+            }
     }
        //bot ataque
        //AtaqueCartas();
     private void Vitoria(){
-        print("Voce Ganhou");
+        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        playerid = ntwrkid.GetComponent<PlayerId>();
+        if(!playerid.isplayer2)
+        {
+        turno = Turnos.TurnoEscolhaP1;
+        playerid.CmdInverterTurnoPlayers();
+        playerid.CmdMudarTurno((int)turno); 
+        OnClick();
+        playerid.CmdTrocouTurno();  
         preparado = true;
+        }
     }
     private void Derrota(){
          print("Voce perdeu");
         preparado = true;
+    }
+   public void TrocouTurno()
+    {
+//quando reseta o turno 
+            ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
+            AtualizarOuro(ouroMaximo);
+            // cara ou coroa dps
+            turno = Turnos.TurnoEscolhaP1;
+            //playerid = ntwrkid.GetComponent<PlayerId>();
+            playerid.CmdMudarTurno((int)turno); 
+            playerid.CmdInverterTurnoPlayers();
+            //testando pra ver se tem alguma passiva a ser rodada no novo round
+            foreach(var obj in CartasPlayer.cartas)
+            {
+                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                refCard.QuantidadeAtaque =1;
+                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,obj);
+                
+            }
+            foreach(var obj in CartasInimigo.cartas)
+            {
+                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+                refCard.QuantidadeAtaque = 1 ;
+                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false,obj);
+            }
     }
   #endregion
     IEnumerator BotEscolha()

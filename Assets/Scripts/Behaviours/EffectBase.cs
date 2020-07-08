@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //usando mono behaviour só pra printar(tirar na versão final)
-public abstract class EffectBase:MonoBehaviour
+public abstract class EffectBase
 {
     protected Efeitos efeito {get;set;}
     protected Evento evento{get;set;}
@@ -44,7 +44,6 @@ public class Curar:EffectBase
    
     public override void RealizarEfeitoEm(GameObject a,  GameObject b)
     {
-        print(a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa);
         a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa += quantidadeDoEfeito;
     }
 }

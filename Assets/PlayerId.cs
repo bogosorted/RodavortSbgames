@@ -5,12 +5,24 @@ using Mirror;
 
 public class PlayerId : NetworkBehaviour
 {
+    PlayerId playerid;
+    public bool isplayer2;
     private GameObject canvas;
     void Awake()
     {
         canvas = GameObject.Find("Canvas");
         print(canvas.name);
         print(canvas.transform.GetChild(4).name);
+    }
+    [Command]
+    public void CmdTrocouTurno()
+    {
+        RpcTrocouTurno();
+    }
+    [ClientRpc]
+    void RpcTrocouTurno()
+    {
+        canvas.GetComponent<EventControllerBehaviour>().TrocouTurno();
     }
       [Command]
     public void CmdAwake()
@@ -36,23 +48,21 @@ public class PlayerId : NetworkBehaviour
             player2.CriarCarta(rn2);
         }
     else
-        {     
-            Mao.isplayer2 = true;     
+        {       
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
+            playerid.isplayer2 = true;     
             player.CriarCartaInicio(rn2);
             player2.CriarCarta(rn);
-        }
-            
-        canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(hasAuthority);
-        
-    
+        }        
+        //canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(hasAuthority);  
     }
     [Command]
-    public void CmdInverterTurnoPlayers() => RpcInverterTurnos();
+    public void CmdInverterTurnoPlayers() { RpcInverterTurnos(); }
     [ClientRpc]
     void RpcInverterTurnos()
     {
           canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!hasAuthority);
-          canvas.GetComponent<EventControllerBehaviour>().OnClick();
     }
     [Command]
     public void CmdMudarTurno(int turno)
@@ -82,4 +92,14 @@ public class PlayerId : NetworkBehaviour
             canvas.GetComponent<PlayerAdversario>().CriarCarta(id);
         }
     }  
+    [Command]
+    public void CmdInvoke(int id)
+    {
+             RpcInvoke(id);
+    }
+    [ClientRpc] public void RpcInvoke(int id)
+    {
+        if(hasAuthority)
+         canvas.GetComponent<EventControllerBehaviour>().InvokeLater(id);
+    }
 }
