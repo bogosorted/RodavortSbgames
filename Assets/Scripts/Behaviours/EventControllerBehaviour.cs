@@ -94,6 +94,7 @@ public class EventControllerBehaviour : NetworkBehaviour
             turno += 1;
             print(turno);
             playerid.CmdMudarTurno((int)turno);
+            playerid.CmdInverterTurnoPlayers();
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else if (preparado)

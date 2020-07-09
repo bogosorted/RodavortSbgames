@@ -6,6 +6,7 @@ using Mirror;
 public class PlayerId : NetworkBehaviour
 {
     PlayerId playerid;
+    NetworkManager ntwrk;
     public bool isplayer2;
     private GameObject canvas;
     void Awake()
@@ -97,6 +98,27 @@ public class PlayerId : NetworkBehaviour
     {
         if(!hasAuthority)
         canvas.GetComponent<PlayerAdversario>().ColocarCartaBaralho(a);
+    }
+    [Command]
+    public void CmdStopHost()
+    {
+        RpcStopHost();
+    }
+    [ClientRpc]
+    public void RpcStopHost()
+    {
+        if(isServer)
+        {
+            GameObject ntworkManager = GameObject.Find("NetworkManager");
+            ntwrk = ntworkManager.GetComponent<NetworkManagerHUD2>().manager;
+            ntwrk.StopHost();
+        }
+        else
+        {
+            GameObject ntworkManager = GameObject.Find("NetworkManager");
+            ntwrk = ntworkManager.GetComponent<NetworkManagerHUD2>().manager;
+            ntwrk.StopClient();
+        }
     }
     [Command]
     public void CmdTirarCartaBaralho(int a)
