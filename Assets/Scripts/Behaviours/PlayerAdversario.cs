@@ -44,10 +44,9 @@ public class PlayerAdversario : MonoBehaviour
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
            CartaNaMesa refCard = atacante.cartas[posicaoAtacar].transform.GetChild(0).GetComponent<CartaNaMesa>();
+           refCard.QuantidadeAtaque--;
            atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
            StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
-           print("era p ir");
-
            switch(refCard.AtivarPassivaQuando)
                 {
                     
