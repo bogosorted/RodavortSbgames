@@ -214,15 +214,12 @@ public class EventControllerBehaviour : NetworkBehaviour
     private void Vitoria(){
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
-        if(!playerid.isplayer2)
-        {
         turno = Turnos.TurnoEscolhaP1;
         playerid.CmdInverterTurnoPlayers();
         playerid.CmdMudarTurno((int)turno); 
         OnClick();
         playerid.CmdTrocouTurno();  
         preparado = true;
-        }
     }
     private void Derrota(){
          print("Voce perdeu");

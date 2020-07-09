@@ -231,6 +231,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                                 if(refCard.QuantidadeAtaque > 0)
                                 {
+                                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
                                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
                                 switch(refCard.AtivarPassivaQuando)
                                 {
@@ -323,16 +324,18 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                         {
                             
                            
-                        // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
+                             //atacar carta
                             if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
                             {                     
                                 CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                                 if(refCard.QuantidadeAtaque > 0)
                                 {
+                                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
                                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
                                 switch(refCard.AtivarPassivaQuando)
                                 {
                                     case Evento.CartaAtaque:
+
                                     this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
                                     break;
                                 }
@@ -341,7 +344,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 }
                             break;
                             }
-                        //esse else if vai servir pra atacar o player inimigo
+                        //atacar player inimigo
                             else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
                             {  
                             CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 

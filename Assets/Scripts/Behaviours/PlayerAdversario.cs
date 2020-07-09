@@ -43,10 +43,21 @@ public class PlayerAdversario : MonoBehaviour
         //if redundante
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
-           
+           CartaNaMesa refCard = atacante.cartas[posicaoAtacar].transform.GetChild(0).GetComponent<CartaNaMesa>();
            atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
            StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
+           print("era p ir");
+
+           switch(refCard.AtivarPassivaQuando)
+                {
+                    
+                case Evento.CartaAtaque:
+                print("foi");
+                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,atacante.cartas[posicaoAtacar].transform.parent.gameObject);
+                 break;
+                }
         }
+        
     }
     //player no caso é a vida dele e não os das suas cartas
     public void AtacarPlayer(int posicaoAtacador) 

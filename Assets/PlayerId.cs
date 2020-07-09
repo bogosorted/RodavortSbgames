@@ -77,6 +77,17 @@ public class PlayerId : NetworkBehaviour
         }
     }
     [Command]
+    public void CmdAtacarCarta(int posAtacador,int posDefensor)
+    {
+        RpcAtacarCarta(posAtacador,posDefensor);
+    }
+    [ClientRpc] void RpcAtacarCarta(int posAtacador,int posDefensor)
+    {
+        if(!hasAuthority)
+         canvas.GetComponent<PlayerAdversario>().AtacarCarta(posAtacador,posDefensor);
+        
+    }
+    [Command]
     public void CmdColocarCartaBaralho(string a)
     {
         RpcColocarCartaBaralho(a);
@@ -135,13 +146,12 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
     public void RpcCriarCartaInicio(int id)
     {
+        //funcionando
         if(hasAuthority)
         {
-// print("tem autoridade");
             canvas.GetComponent<Mao>().CriarCarta(id);
         }
         else{
-  //          print("nao tem autoridade");    
             canvas.GetComponent<PlayerAdversario>().CriarCarta(id);
         }
     }  
