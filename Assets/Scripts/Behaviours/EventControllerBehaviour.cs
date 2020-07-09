@@ -256,21 +256,7 @@ public class EventControllerBehaviour : NetworkBehaviour
             }
     }
   #endregion
-    IEnumerator BotEscolha()
-    {
-        yield return new WaitForSeconds(0f);
-        Inimigo.CriarCarta(Random.Range(0,13));   
-        GameObject cartaEscolhida = Inimigo.maoAdversaria[Random.Range(0,Inimigo.maoAdversaria.Count -1)];
-        if(cartaEscolhida.GetComponent<CartaInimigo>().Valor <= Inimigo.gold)
-        {
-            Inimigo.ColocarCartaBaralho(cartaEscolhida);
-            Inimigo.gold -= cartaEscolhida.GetComponent<CartaInimigo>().Valor;
-            Inimigo.goldInimigo.text = string.Format("{0}/{1}",Inimigo.gold, ouroMaximo);
-        }
-        Player.Audio(1);
-        preparado = true;
-        OnClick();
-    }
+
     void AtaqueCartas()
     {
         //sistema de ataque aleatorio(desconsidera se pode atacar ou n)

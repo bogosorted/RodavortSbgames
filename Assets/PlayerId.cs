@@ -68,17 +68,48 @@ public class PlayerId : NetworkBehaviour
         if(hasAuthority)
         {
             Mao player =canvas.GetComponent<Mao>();
-           player.goldPlayer.text =$"{valor}/{ EventControllerBehaviour.ouroMaximo}";
-          print("temautoridade");    
+           player.goldPlayer.text =$"{valor}/{ EventControllerBehaviour.ouroMaximo}";  
         }
         else
         {
-            print("naoautoridade");
            PlayerAdversario adversario = canvas.GetComponent<PlayerAdversario>();
            adversario.goldInimigo.text = $"{valor}/{EventControllerBehaviour.ouroMaximo}";
         }
     }
-   
+    [Command]
+    public void CmdColocarCartaBaralho(string a)
+    {
+        RpcColocarCartaBaralho(a);
+    }
+    [ClientRpc]
+    public void RpcColocarCartaBaralho(string a)
+    {
+        if(!hasAuthority)
+        canvas.GetComponent<PlayerAdversario>().ColocarCartaBaralho(a);
+    }
+    [Command]
+    public void CmdTirarCartaBaralho(int a)
+    {
+        RpcTirarCartaBaralho(a);
+    }
+   [ClientRpc]
+   public void RpcTirarCartaBaralho(int a)
+   {
+       if(!hasAuthority)
+        canvas.GetComponent<PlayerAdversario>().TirarCarta(a);
+   }
+   [Command]
+   public void CmdVoltarCartaBaralho()
+   {
+     RpcVoltarCartaBaralho();
+
+   }
+   [ClientRpc]
+   public void RpcVoltarCartaBaralho()
+   {
+       if(!hasAuthority)
+        canvas.GetComponent<PlayerAdversario>().VoltarBaralho();
+   }
     [Command]
     public void CmdInverterTurnoPlayers() { RpcInverterTurnos(); }
     [ClientRpc]

@@ -175,8 +175,13 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 int barra = goldPlayer.text.IndexOf('/');
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                                 {
+                                    //tirar carta mao****
+                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
+                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
+                                    //ouro
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
+                                    //
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
                                     resultados[i].gameObject.name = "Destruido";
@@ -191,7 +196,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                     distanciamentoCartasMaximo += 20;
                                     SetAnimacao(distanciamentoCartasMaximo);
                                     //colocar um audio de negação
-                                    Audio(2);
+                                    
                                     SetRaycast(true);
                                     resultados[i].gameObject.name = "Carta(Clone)";
                                 }
@@ -269,6 +274,10 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                 int barra = goldPlayer.text.IndexOf('/');
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                                 {
+                                      //tirar carta mao****
+                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
+                                    //
+                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();

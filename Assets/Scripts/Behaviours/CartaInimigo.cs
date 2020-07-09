@@ -14,78 +14,12 @@ public class CartaInimigo : MonoBehaviour
     private PassivaComulativa passiva; 
 
 
-
-    public void definirComeco(string numero)
-    {
-        Card refCard =Resources.Load<Card>("InformacoesCartas/" + numero);
-        Imagem = Resources.Load<Sprite>("CartasProntas/" + numero); 
-        //TESTE
-        AtivarPassivaQuando = refCard.ativarPassivaQuando;
-        Alvo = refCard.alvoDaPassiva;
-        //FIM TESTE
-        Ataque = refCard.dano; 
-        Defesa = refCard.vida;
-        Valor = refCard.valor;
-        passiva = new PassivaComulativa(refCard.quantidade,refCard.passiva);
-    }
     public void autoDestruir()
     {   
         Destroy(this.gameObject);
     }
-   public Sprite Imagem
-    {
-        get { return _cartaImagem; }
-        set
-        {
-            _cartaImagem = value;
-        }
-    }
-    public Evento AtivarPassivaQuando
-    {
-        get { return _ativarPassivaQuando; }
-        set
-        {
-            _ativarPassivaQuando = value;
-        }
-    }
-     public AlvoPassiva Alvo
-    {
-        get { return _alvo; }
-        set
-        {
-            _alvo = value;
-        }
-    }
-    public PassivaComulativa Passiva
-    {
-        get{return passiva;}
-        set{passiva = value;}
-    }
-    
-     public float Ataque
-    {
-        get { return _ataque; }
-        set 
-        {
-            _ataque = value;
-        }
-    }
-    public float Defesa
-    {
-        get { return _defesa; }
-        set
-        { 
-            _defesa = value; 
-        }
-    }
-    public int Valor
-    {
-        get { return _valor; }
-        set
-        { 
-            _valor = value; 
-        }
-    }
+    public string ID{get;set;}
+
     public Vector2 PosicaoInicial
     {
         get;set;        
@@ -108,8 +42,5 @@ public class CartaInimigo : MonoBehaviour
     {
         get;set;
     }
-    public void Constructor(int id)
-    {
-        definirComeco(id < 10 ? "0" + id.ToString() : id.ToString());
-    }
+
 }

@@ -13,6 +13,7 @@ public class Carta : MonoBehaviour
     private Evento _ativarPassivaQuando;
     private AlvoPassiva _alvo;
     private PassivaComulativa passiva;
+  
 
     void autoDestruir()
     {   
@@ -20,6 +21,7 @@ public class Carta : MonoBehaviour
     }
     public void definirComeco(string numero)
     {
+        Id = numero;
         Card refCard = Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
          //TESTE
@@ -36,6 +38,7 @@ public class Carta : MonoBehaviour
     }
     #region Propiedades
 
+    public string Id{get;set;}
     public Evento AtivarPassivaQuando
     {
         get { return _ativarPassivaQuando; }

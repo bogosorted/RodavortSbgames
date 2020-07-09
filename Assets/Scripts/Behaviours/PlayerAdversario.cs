@@ -18,6 +18,7 @@ public class PlayerAdversario : MonoBehaviour
      [SerializeField] public Text goldInimigo;
      
     public List<GameObject> maoAdversaria = new List<GameObject>();
+    public GameObject CartaSegurada;
     GameObject Dano;
     float x,y;
     [Header("Vida")]
@@ -32,6 +33,7 @@ public class PlayerAdversario : MonoBehaviour
     //   CriarCarta(Random.Range(0,13));
     //   CriarCarta(Random.Range(0,13));
     }
+
     //posicao atacar é o index do atacador na mesa do baralho inimigo e posicao inimigo 
     //é a posicao da carta do player que sera atacada
     public void AtacarCarta(int posicaoAtacar, int posicaoInimigo)
@@ -53,15 +55,26 @@ public class PlayerAdversario : MonoBehaviour
         defensor.cartas[posicaoAtacador].transform.GetComponent<Animator>().SetTrigger("Atacar");
         StartCoroutine(DarDanoInimigo(defensor.cartas[posicaoAtacador]));
     }
-    public void ColocarCartaBaralho(GameObject cartaColocada)
+    public void ColocarCartaBaralho(string id)
     {
-        CartaInimigo atributos = cartaColocada.GetComponent<CartaInimigo>();
         MesaBehaviour mesa = transform.GetChild(2).GetComponent<MesaBehaviour>();
-        maoAdversaria.RemoveAt(atributos.PosicaoBaralho);  
+        Card refCard =Resources.Load<Card>("InformacoesCartas/" + id);
+        mesa.CriarCartaInicio(refCard.dano,refCard.vida,
+        Resources.Load<Sprite>("CartasProntas/" + id),
+        refCard.ativarPassivaQuando,
+        new PassivaComulativa(refCard.quantidade,refCard.passiva),
+        refCard.alvoDaPassiva);
+    }
+    public void TirarCarta(int a)
+    {
+        
+        CartaInimigo atributos = maoAdversaria[a].GetComponent<CartaInimigo>();
+        MesaBehaviour mesa = transform.GetChild(2).GetComponent<MesaBehaviour>();
+        CartaSegurada = maoAdversaria[a];    
         distanciamentoCartasMaximo -= 10;
+        maoAdversaria[a].GetComponent<Animator>().SetBool("autoDestruir",true);
+        maoAdversaria.RemoveAt(a);  
         SetAnimacao(distanciamentoCartasMaximo);   
-        mesa.CriarCartaInicio(atributos.Ataque,atributos.Defesa,atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
-        cartaColocada.GetComponent<Animator>().SetBool("autoDestruir",true);
     }
     void FixedUpdate()
     {
@@ -73,11 +86,16 @@ public class PlayerAdversario : MonoBehaviour
       public void CriarCarta(int id)
     {
         GameObject objCarta = Instantiate(carta);
-        objCarta.GetComponent<CartaInimigo>().Constructor(id);
         objCarta.transform.SetParent(transform.GetChild(3), false);
         objCarta.transform.localPosition += new Vector3(0, 400);  
         maoAdversaria.Add(objCarta);
         distanciamentoCartasMaximo += 10;
+        SetAnimacao(distanciamentoCartasMaximo);
+    }
+    public void VoltarBaralho()
+    {
+        maoAdversaria.Insert(CartaSegurada.GetComponent<CartaInimigo>().PosicaoBaralho,CartaSegurada);
+        distanciamentoCartasMaximo += 20;
         SetAnimacao(distanciamentoCartasMaximo);
     }
 
