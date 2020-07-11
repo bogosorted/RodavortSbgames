@@ -229,7 +229,7 @@ namespace Mirror.Discovery
         /// Start Active Discovery
         /// </summary>
         public void StartDiscovery()
-        {
+       { 
             if (!SupportedOnThisPlatform)
                 throw new PlatformNotSupportedException("Network discovery not supported in this platform");
 

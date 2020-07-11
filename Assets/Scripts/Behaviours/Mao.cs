@@ -249,7 +249,8 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                             {  
                             CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
                             if(refCard.QuantidadeAtaque > 0)
-                                {                                                   
+                                {                                      
+                                    playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);             
                                     AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
                                     refCard.QuantidadeAtaque--; 
                                     StartCoroutine(DarDanoInimigo(obj.gameObject));
@@ -351,6 +352,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                             if(refCard.QuantidadeAtaque > 0)
                                 {                                                   
                                     AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                                    playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);
                                     refCard.QuantidadeAtaque--; 
                                     StartCoroutine(DarDanoInimigo(obj.gameObject));
                                 }
@@ -539,14 +541,12 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         OutPut = transform.GetChild(5).GetComponent<Animator>();
         exibir = transform.GetChild(5).GetComponent<Exibicao>();
         vidaPlayer.text = vida + "/" + vida;
-               // se bugar a versão android de alguma forma tirar esse if (não testei)
-        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
+
         cursor = new PointerEventData(input);
         resultados = new List<RaycastResult>();
         raycast = GetComponent<GraphicRaycaster>();
         input = GetComponent<EventSystem>();
-        
-        #endif
+
         }
     void FixedUpdate()
     {

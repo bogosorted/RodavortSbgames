@@ -89,6 +89,17 @@ public class PlayerId : NetworkBehaviour
         
     }
     [Command]
+    public void CmdAtacarPlayer(int posAtacador)
+    {
+        RpcAtacarPlayer(posAtacador);
+    }
+    [ClientRpc]
+    public void RpcAtacarPlayer(int posAtacador)
+    {
+        if(!hasAuthority)
+            canvas.GetComponent<PlayerAdversario>().AtacarPlayer(posAtacador);
+    }
+    [Command]
     public void CmdColocarCartaBaralho(string a)
     {
         RpcColocarCartaBaralho(a);

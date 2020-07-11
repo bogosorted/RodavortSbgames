@@ -86,9 +86,10 @@ public class EventControllerBehaviour : NetworkBehaviour
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {
+        GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
-        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2)
+        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2)
         {
             print(turno);
             turno += 1;
@@ -97,10 +98,8 @@ public class EventControllerBehaviour : NetworkBehaviour
             playerid.CmdInverterTurnoPlayers();
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
-        else if (preparado)
-        {
+        else if (preparado && numerosPlayers.Length == 2)
             playerid.CmdTrocouTurno();         
-        }
         preparado = false;
         playerid.CmdInvoke((int)turno);
     }
@@ -129,9 +128,12 @@ public class EventControllerBehaviour : NetworkBehaviour
             playerid.CmdMudarTurno((int)turno);
             playerid.CmdInverterTurnoPlayers();
         }
-            else
-            preparado =  false;
-            //mudar para falso no final dos testes
+        else{
+            turno = Turnos.DecidirIniciante;
+            preparado = false;
+        }
+
+ 
     }
     private void TurnoEscolhaP1()
     {

@@ -62,6 +62,7 @@ public class PlayerAdversario : MonoBehaviour
     public void AtacarPlayer(int posicaoAtacador) 
     {
         MesaBehaviour defensor = transform.GetChild(2).GetComponent<MesaBehaviour>();
+        defensor.cartas[posicaoAtacador].transform.GetChild(0).GetComponent<CartaNaMesa>().QuantidadeAtaque--;
         defensor.cartas[posicaoAtacador].transform.GetComponent<Animator>().SetTrigger("Atacar");
         StartCoroutine(DarDanoInimigo(defensor.cartas[posicaoAtacador]));
     }
