@@ -10,4 +10,12 @@ public class botaoScript : MonoBehaviour
     {
         transform.parent.GetComponent<Hud>().Connect(Info);
     }
+    public void OnHostClick()
+    {
+        GameObject.Find("NetworkDiscovery").GetComponent<Hud>().HostConnect();
+    }
+    public void OnFindServerClick()
+    {
+        GameObject.Find("NetworkDiscovery").GetComponent<Hud>().FindServer();
+    }
 }

@@ -153,12 +153,10 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void TurnoAtaqueP1()
     {
-        print("ope");
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         if(!playerid.isplayer2)
             {
-                print("entrou");
             Player.SetRaycast(true);
             playerid.CmdCriarCartaInicio(Random.Range(0,13));
             playerid.CmdInverterTurnoPlayers();
@@ -167,7 +165,6 @@ public class EventControllerBehaviour : NetworkBehaviour
             }
             else
         {
-            print("nao entrou");
             preparado= false;
         }
     }
@@ -218,7 +215,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         turno = Turnos.TurnoEscolhaP1;
-        playerid.CmdInverterTurnoPlayers();
         playerid.CmdMudarTurno((int)turno); 
         OnClick();
         playerid.CmdTrocouTurno();  
