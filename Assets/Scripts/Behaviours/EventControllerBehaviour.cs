@@ -20,7 +20,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     CartaNaMesa passivCard;
     PlayerId playerid;
     Efeitos efeitoAtual;
-    [SerializeField] private Selectable botao;
+    public Selectable botao;
     
     public enum Turnos
     {

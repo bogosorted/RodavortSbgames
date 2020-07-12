@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 430649697}
   - component: {fileID: 430649696}
   - component: {fileID: 430649695}
+  - component: {fileID: 430649699}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -655,6 +656,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &430649699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430649694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472de965a07e80146b91ecd27f8338f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypesF:
+  - {fileID: 1283942624906729137, guid: 89ab8b51e87c5c24f8c633e7b21e4715, type: 3}
 --- !u!1 &697628552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1340,7 @@ GameObject:
   - component: {fileID: 1924383116}
   - component: {fileID: 1924383115}
   - component: {fileID: 1924383114}
+  - component: {fileID: 1924383117}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1438,6 +1454,19 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 1655626305362820864, guid: 821ef2b081c2cab468fa8fa5d1437c74, type: 3}
+--- !u!114 &1924383117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924383112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03388a3949651f499a0a0c551ec2c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
 --- !u!1 &2095160248
 GameObject:
   m_ObjectHideFlags: 0

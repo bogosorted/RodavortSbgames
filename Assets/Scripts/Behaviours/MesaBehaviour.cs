@@ -13,9 +13,9 @@
     [Header("Configurações padrões")]
     [HideInInspector]
     public float distanciamentoCartasMaximo;
-    [SerializeField] private GameObject carta;
+    public GameObject carta;
     private EventControllerBehaviour controller;
-    [SerializeField] public GameObject Dano;
+    public GameObject Dano;
     public List<GameObject> cartas = new List<GameObject>();
     
     //fazer isso de baixo aq ó. pa passiva
