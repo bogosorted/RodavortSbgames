@@ -26,7 +26,7 @@ public class PlayerId : NetworkBehaviour
     {
         canvas.GetComponent<EventControllerBehaviour>().TrocouTurno();
     }
-      [Command]
+    [Command]
     public void CmdAwake()
     {
         for(int i = 0;i < 3; i++)
@@ -39,7 +39,7 @@ public class PlayerId : NetworkBehaviour
 
     }
      [ClientRpc]
-    public void RpcAwake(int rn,int rn2)
+    void RpcAwake(int rn,int rn2)
     {
        Mao player = canvas.GetComponent<Mao>();
        PlayerAdversario player2 =  canvas.GetComponent<PlayerAdversario>();
@@ -95,7 +95,7 @@ public class PlayerId : NetworkBehaviour
         RpcAtacarPlayer(posAtacador);
     }
     [ClientRpc]
-    public void RpcAtacarPlayer(int posAtacador)
+    void RpcAtacarPlayer(int posAtacador)
     {
         if(!hasAuthority)
             canvas.GetComponent<PlayerAdversario>().AtacarPlayer(posAtacador);
@@ -106,7 +106,7 @@ public class PlayerId : NetworkBehaviour
         RpcColocarCartaBaralho(a);
     }
     [ClientRpc]
-    public void RpcColocarCartaBaralho(string a)
+     void RpcColocarCartaBaralho(string a)
     {
         if(!hasAuthority)
         canvas.GetComponent<PlayerAdversario>().ColocarCartaBaralho(a);
@@ -117,7 +117,7 @@ public class PlayerId : NetworkBehaviour
         RpcStopHost();
     }
     [ClientRpc]
-    public void RpcStopHost()
+     void RpcStopHost()
     {
          if(isServer)
         {
@@ -138,7 +138,7 @@ public class PlayerId : NetworkBehaviour
         RpcTirarCartaBaralho(a);
     }
    [ClientRpc]
-   public void RpcTirarCartaBaralho(int a)
+    void RpcTirarCartaBaralho(int a)
    {
        if(!hasAuthority)
         canvas.GetComponent<PlayerAdversario>().TirarCarta(a);
@@ -150,7 +150,7 @@ public class PlayerId : NetworkBehaviour
 
    }
    [ClientRpc]
-   public void RpcVoltarCartaBaralho()
+    void RpcVoltarCartaBaralho()
    {
        if(!hasAuthority)
         canvas.GetComponent<PlayerAdversario>().VoltarBaralho();
@@ -171,6 +171,17 @@ public class PlayerId : NetworkBehaviour
     void RpcMudarTurno(int turno)
     {
         EventControllerBehaviour.turno = (EventControllerBehaviour.Turnos)turno;
+    
+    }
+    [Command]
+    public void CmdExibirTurno()
+    {
+        RpcExibirTurno();
+    }
+    [ClientRpc]
+    void RpcExibirTurno()
+    {
+            canvas.GetComponent<EventControllerBehaviour>().ExibirTurno();
     }
     [Command]
     public void CmdCriarCartaInicio(int id)
@@ -178,7 +189,7 @@ public class PlayerId : NetworkBehaviour
         RpcCriarCartaInicio(id);
     }
     [ClientRpc]
-    public void RpcCriarCartaInicio(int id)
+    void RpcCriarCartaInicio(int id)
     {
         //funcionando
         if(hasAuthority)
@@ -194,7 +205,7 @@ public class PlayerId : NetworkBehaviour
     {
              RpcInvoke(id);
     }
-    [ClientRpc] public void RpcInvoke(int id)
+    [ClientRpc] void RpcInvoke(int id)
     {
         if(hasAuthority)
          canvas.GetComponent<EventControllerBehaviour>().InvokeLater(id);

@@ -6,7 +6,7 @@ using Mirror;
 public class NetworkNewHud : MonoBehaviour
 {
     public NetworkManager manager;
-    PlayerId playerId;
+    PlayerId playerId; 
     
     void Awake()
     {

@@ -9,8 +9,9 @@ using Mirror;
 public class EventControllerBehaviour : NetworkBehaviour
 {  
     public static Turnos turno;
-    [Header("OuroConfig")]
     public static int ouroMaximo;
+    public GameObject exibicaoTurno;
+    [Header("OuroConfig")]
     private int ouroLimite;
     bool preparado;
     PlayerAdversario Inimigo;
@@ -25,12 +26,12 @@ public class EventControllerBehaviour : NetworkBehaviour
     public enum Turnos
     {
         DecidirIniciante,
-        DecidirCartaInicial,
+        Inicio,
         TurnoEscolhaP1,
         TurnoEscolhaP2,
         TurnoAtaqueP1,
         TurnoAtaqueP2,
-        Vitoria,
+        NovoTurno,
         Derrota
     }
 
@@ -79,6 +80,13 @@ public class EventControllerBehaviour : NetworkBehaviour
         }
     }
 
+    public void ExibirTurno()
+    {
+        GameObject exibirTurnoAtual = Instantiate(exibicaoTurno);
+        exibirTurnoAtual.transform.SetParent(this.transform,false);
+        exibirTurnoAtual.transform.GetChild(0).GetComponent<Text>().text = turno.ToString();
+
+    }
     public void BotaoInteragivel(bool valor)
     {
         botao.interactable = valor;
@@ -96,6 +104,7 @@ public class EventControllerBehaviour : NetworkBehaviour
             print(turno);
             playerid.CmdMudarTurno((int)turno);
             playerid.CmdInverterTurnoPlayers();
+            playerid.CmdExibirTurno();
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
         else if (preparado && numerosPlayers.Length == 2)
@@ -115,7 +124,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void DecidirIniciante(){
     }
-    private void DecidirCartaInicial(){
+    private void Inicio(){
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         if(numerosPlayers.Length == 2)// true 
         {
@@ -137,6 +146,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void TurnoEscolhaP1()
     {
+        
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         if(!playerid.isplayer2)
@@ -179,15 +189,12 @@ public class EventControllerBehaviour : NetworkBehaviour
         }
          else
         {
-            preparado = true;
+        preparado = true;
         playerid.CmdInverterTurnoPlayers();
         Player.SetRaycast(true);
         playerid.CmdMudarTurno((int)turno);      
-        //ATUALIZAR O RANGE MAXIMO DE CARTAS NA VERSÃO FINAL       
         }
     }
-        //inimigo bot
-        //StartCoroutine(BotEscolha());
     private void TurnoAtaqueP2(){
 
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;
@@ -211,7 +218,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
        //bot ataque
        //AtaqueCartas();
-    private void Vitoria(){
+    private void NovoTurno(){
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         turno = Turnos.TurnoEscolhaP1;
