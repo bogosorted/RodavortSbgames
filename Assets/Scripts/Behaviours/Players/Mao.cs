@@ -565,6 +565,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         if (obj)
         {
             obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
+            AtaqueNoInimigo.GetComponent<CartaNaMesa>().Defesa -= obj.GetComponent<CartaNaMesa>().Ataque;
             som.PlayOneShot(audios[2]);
         }
     }

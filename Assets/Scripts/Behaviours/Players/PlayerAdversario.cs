@@ -174,6 +174,7 @@ public class PlayerAdversario : MonoBehaviour
         if (obj && obj.transform.GetChild(0))
         {
             obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
+            atacante.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= obj.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque;
         }
         player.Audio(2);
     }

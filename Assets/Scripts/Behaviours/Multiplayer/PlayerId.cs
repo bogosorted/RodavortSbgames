@@ -182,6 +182,7 @@ public class PlayerId : NetworkBehaviour
     void RpcExibirTurno()
     {
             canvas.GetComponent<EventControllerBehaviour>().ExibirTurno();
+            print("a");
     }
     [Command]
     public void CmdCriarCartaInicio(int id)
