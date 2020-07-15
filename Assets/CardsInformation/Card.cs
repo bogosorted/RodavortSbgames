@@ -53,13 +53,15 @@ public enum Efeitos
 public class Card : ScriptableObject
 {
     public Efeitos passiva;
-    public int quantidade;
     public Evento ativarPassivaQuando;
     public AlvoPassiva alvoDaPassiva; // por enquanto nem é passada
+    public int quantidadePassiva;
     // fim do teste
     public string nome;
     public string desc;
     public float dano;
     public float vida;
     public int valor;
+    public AudioClip[] SomNaEntrada;
+    public AudioClip[] SomEmMorte;
 }

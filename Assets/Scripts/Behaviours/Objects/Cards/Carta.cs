@@ -33,7 +33,7 @@ public class Carta : MonoBehaviour
         Ataque = refCard.dano; 
         Defesa =refCard.vida;
         Valor = refCard.valor;
-        passiva = new PassivaComulativa(refCard.quantidade,refCard.passiva);
+        passiva = new PassivaComulativa(refCard.quantidadePassiva,refCard.passiva);
         
     }
     #region Propiedades

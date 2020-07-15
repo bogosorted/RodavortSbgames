@@ -45,16 +45,16 @@ public class PlayerAdversario : MonoBehaviour
         {
            CartaNaMesa refCard = atacante.cartas[posicaoAtacar].transform.GetChild(0).GetComponent<CartaNaMesa>();
            refCard.QuantidadeAtaque--;
-           atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
-           StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
-           switch(refCard.AtivarPassivaQuando)
-                {
-                    
+            switch(refCard.AtivarPassivaQuando)
+                {             
                 case Evento.CartaAtaque:
-                print("foi");
-                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,atacante.cartas[posicaoAtacar].transform.parent.gameObject);
+                    print(refCard.Alvo);
+                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,atacante.cartas[posicaoAtacar].gameObject);
                  break;
                 }
+           atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");
+           StartCoroutine(DarDano(defensor.cartas[posicaoInimigo],atacante.cartas[posicaoAtacar]));
+    
         }
         
     }
@@ -73,7 +73,7 @@ public class PlayerAdversario : MonoBehaviour
         mesa.CriarCartaInicio(refCard.dano,refCard.vida,
         Resources.Load<Sprite>("CartasProntas/" + id),
         refCard.ativarPassivaQuando,
-        new PassivaComulativa(refCard.quantidade,refCard.passiva),
+        new PassivaComulativa(refCard.quantidadePassiva,refCard.passiva),
         refCard.alvoDaPassiva);
     }
     public void TirarCarta(int a)

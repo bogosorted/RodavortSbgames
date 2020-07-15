@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: 00
   m_EditorClassIdentifier: 
   passiva: 2
-  quantidade: 2
   ativarPassivaQuando: 3
-  alvoDaPassiva: 1
+  alvoDaPassiva: 6
+  quantidadePassiva: 2
   nome: TROVADOR
   desc: A carta mais bolada  que tem <color=green>10 de vida</color>
   dano: 6
   vida: 2
   valor: 0
+  SomNaEntrada: []
+  SomEmMorte: []

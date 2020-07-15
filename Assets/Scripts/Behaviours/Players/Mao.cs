@@ -275,10 +275,10 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                             case "segurado":
                                 int barra = goldPlayer.text.IndexOf('/');
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
-                                {
+                                {                      
                                       //tirar carta mao****
                                     playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
-                                    //
+                                    //exibir pro player adversario
                                     playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
