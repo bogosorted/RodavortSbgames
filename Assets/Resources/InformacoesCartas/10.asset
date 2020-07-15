@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: 10
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: PELEJADOR
   desc: 
   dano: 1
   vida: 1
   valor: 0
+  SomNaEntrada:
+  - {fileID: 8300000, guid: 6a024705767957845b8c77ed5695bde8, type: 3}
+  - {fileID: 8300000, guid: 4d14c1614b2fc4f44ae2aeca384ae2aa, type: 3}
+  - {fileID: 8300000, guid: b72c89e522376d445b85597e48892b97, type: 3}
+  - {fileID: 8300000, guid: f1d13d2c249f9364685463dd1dd174f6, type: 3}
+  SomEmMorte: []

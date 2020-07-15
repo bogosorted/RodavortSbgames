@@ -19,8 +19,7 @@ public abstract class EffectBase
 public static class Factory
 {
     public static EffectBase Criar(int id)
-    {
-    
+    {   
         var factory = cardFactories[id];
         return factory();
     }

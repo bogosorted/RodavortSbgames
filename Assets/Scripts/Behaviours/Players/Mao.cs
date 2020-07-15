@@ -181,12 +181,17 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                     //ouro
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
-                                    //
+                                    //                     
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
+                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
                                     resultados[i].gameObject.name = "Destruido";
                                     resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
                                     resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+                                    //som de entrada da carta individual
+                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length >0)
+                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
+                                    //som de entrada padrão
                                     som.PlayOneShot(audios[1]);
                                     SetRaycast(true);
                                 }
@@ -283,10 +288,15 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo);
+                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
                                     resultados[i].gameObject.name = "Destruido";
                                     resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
                                     resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+                                    //som de entrada da carta individual
+                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length > 0)
+                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
+                                    //som padrão de entrada
                                     som.PlayOneShot(audios[1]);
                                     SetRaycast(true);
                                 }

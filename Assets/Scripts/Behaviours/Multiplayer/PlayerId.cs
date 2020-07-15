@@ -13,8 +13,6 @@ public class PlayerId : NetworkBehaviour
     void Awake()
     {
         canvas = GameObject.Find("Canvas");
-        print(canvas.name);
-        print(canvas.transform.GetChild(4).name);
     }
     [Command]
     public void CmdTrocouTurno()
@@ -182,7 +180,6 @@ public class PlayerId : NetworkBehaviour
     void RpcExibirTurno()
     {
             canvas.GetComponent<EventControllerBehaviour>().ExibirTurno();
-            print("a");
     }
     [Command]
     public void CmdCriarCartaInicio(int id)

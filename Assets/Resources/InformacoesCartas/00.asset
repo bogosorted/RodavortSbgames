@@ -22,4 +22,5 @@ MonoBehaviour:
   vida: 2
   valor: 0
   SomNaEntrada: []
-  SomEmMorte: []
+  SomEmMorte:
+  - {fileID: 8300000, guid: 7b8139e77df3f744ca9f49da0ae52f73, type: 3}

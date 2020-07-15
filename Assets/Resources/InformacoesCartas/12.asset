@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: 12
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: TORRE
   desc: 
   dano: 1
   vida: 1
   valor: 0
+  SomNaEntrada:
+  - {fileID: 8300000, guid: c3a4a0845b860b24095b6f94dad92e21, type: 3}
+  SomEmMorte: []

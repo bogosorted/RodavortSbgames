@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: 01
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 4
   alvoDaPassiva: 1
+  quantidadePassiva: 0
   nome: "BOTIC\xC1RIO"
   desc: 
   dano: 3
   vida: 1
   valor: 1
+  SomNaEntrada:
+  - {fileID: 8300000, guid: 88c80b6853bd6e84d89796aaaed0796c, type: 3}
+  - {fileID: 8300000, guid: 85d9ca566373cd94fa8a660022edf478, type: 3}
+  SomEmMorte:
+  - {fileID: 8300000, guid: 08ca89d82d2f1a442b29b77454272cae, type: 3}

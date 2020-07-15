@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Reflection;
 
 
 public class CartaNaMesa : MonoBehaviour
@@ -133,6 +131,9 @@ public class CartaNaMesa : MonoBehaviour
 
                 if(_defesa <= 0)
                 {
+                   Mao player = transform.parent.transform.parent.transform.parent.GetComponent<Mao>();
+                    if(AoMorrer != null && AoMorrer.Length >0)
+                        player.som.PlayOneShot(AoMorrer[Random.Range(0,AoMorrer.Length)]);
                     switch(AtivarPassivaQuando)
                     {
                         case Evento.CartaMorreu:
@@ -154,6 +155,7 @@ public class CartaNaMesa : MonoBehaviour
             
         }
     }
+    public AudioClip[] AoMorrer{get;set;}
     public Sprite Imagem
     {
         get { return _cartaImagem; }

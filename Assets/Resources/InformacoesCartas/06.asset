@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: 06
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: ESPADACHIM
   desc: 
   dano: 1
   vida: 1
   valor: 0
+  SomNaEntrada:
+  - {fileID: 8300000, guid: a09bd2f0c7c4ec040be22781a2a85def, type: 3}
+  - {fileID: 8300000, guid: 70073faf85d13394792ef6b7fb0ed2b1, type: 3}
+  - {fileID: 8300000, guid: 5b9ef852e8b409546b4f43b983e14798, type: 3}
+  - {fileID: 8300000, guid: 0005a50e5d625b542b93f3499f0b38f6, type: 3}
+  SomEmMorte:
+  - {fileID: 8300000, guid: eb8ae0249f5df2241bdc72de71e378bc, type: 3}

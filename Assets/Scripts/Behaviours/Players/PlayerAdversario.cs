@@ -74,7 +74,9 @@ public class PlayerAdversario : MonoBehaviour
         Resources.Load<Sprite>("CartasProntas/" + id),
         refCard.ativarPassivaQuando,
         new PassivaComulativa(refCard.quantidadePassiva,refCard.passiva),
-        refCard.alvoDaPassiva);
+        refCard.alvoDaPassiva,refCard.SomEmMorte);
+        if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length >0)
+            GetComponent<Mao>().som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
     }
     public void TirarCarta(int a)
     {

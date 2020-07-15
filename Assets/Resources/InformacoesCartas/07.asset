@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: 07
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: "TR\xD3PIA"
   desc: 
   dano: 1
   vida: 1
   valor: 0
+  SomNaEntrada:
+  - {fileID: 8300000, guid: 4c0e4fc3f5963f14998281e7d29bc6ae, type: 3}
+  SomEmMorte:
+  - {fileID: 8300000, guid: 75accbc7657860d4f989159a49f9f68d, type: 3}

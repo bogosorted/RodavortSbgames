@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: 04
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: MINOTAURO
   desc: 
   dano: 1
   vida: 1
   valor: 0
+  SomNaEntrada:
+  - {fileID: 8300000, guid: 7c4f592afb977154ea6dbb3c0aeb1297, type: 3}
+  - {fileID: 8300000, guid: 4171d4d375bf26649a2a4de0bba591fe, type: 3}
+  - {fileID: 8300000, guid: 5f04ca4d4ebb8a7429b3374c98278d2a, type: 3}
+  - {fileID: 8300000, guid: 1de6cbab5a18faa4e803d0e9887da3d1, type: 3}
+  SomEmMorte:
+  - {fileID: 8300000, guid: 3b3e6ac903db6614f9365f7c1db3dc96, type: 3}

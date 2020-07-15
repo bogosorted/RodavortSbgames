@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: 03
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 3
   alvoDaPassiva: 3
+  quantidadePassiva: 0
   nome: CATAPULTA
   desc: 
   dano: 4
   vida: 8
   valor: 7
+  SomNaEntrada:
+  - {fileID: 8300000, guid: 03882fa39cffa074db1b16ad3c49c65a, type: 3}
+  SomEmMorte: []

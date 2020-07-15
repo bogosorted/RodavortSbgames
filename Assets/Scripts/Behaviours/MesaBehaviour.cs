@@ -70,7 +70,7 @@
         angularBaralho = true;
         x = 0;
     }
-     public void CriarCartaInicio(float ataq,float def,Sprite img,Evento ev,PassivaComulativa ef,AlvoPassiva alv)
+     public void CriarCartaInicio(float ataq,float def,Sprite img,Evento ev,PassivaComulativa ef,AlvoPassiva alv,AudioClip[] aoMorrer)
      {
          GameObject objCarta = Instantiate(carta);
          objCarta.transform.localPosition = new Vector2(0,-20);
@@ -78,6 +78,7 @@
         CartaNaMesa obj = objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>();
          objCarta.transform.SetParent(transform, false);
          obj.definirComeco(ataq,def,img,ef,ev,alv);
+         obj.AoMorrer = aoMorrer;
          cartas.Add(objCarta);
          distanciamentoCartasMaximo += 20;
          //dispersar cartas na mesa
