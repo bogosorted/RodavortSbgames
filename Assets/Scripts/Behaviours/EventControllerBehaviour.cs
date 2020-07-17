@@ -79,6 +79,12 @@ public class EventControllerBehaviour : NetworkBehaviour
             
         }
     }
+     public void RealizarPassivaEm(PassivaComulativa efeito, GameObject alvo,bool player1,GameObject realizador)
+    {
+        EffectBase a = Factory.Criar((int)(efeito.efeito));
+        a.quantidadeDoEfeito = efeito.quantidade;
+        a.RealizarEfeitoEm(realizador,alvo);
+    }
 
     public void ExibirTurno()
     {

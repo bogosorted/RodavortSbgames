@@ -164,218 +164,51 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         {
             switch(EventControllerBehaviour.turno)
             {
-            case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
-                if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
-                {
-                    for(int i=0;i < resultados.Count - 1;i++)
-                    {
-                        switch(resultados[i].gameObject.name)
-                        {
-                            case "segurado":
-                                int barra = goldPlayer.text.IndexOf('/');
-                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
-                                {
-                                    //tirar carta mao****
-                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
-                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
-                                    //ouro
-                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                                    playerid.CmdAtualizarGold(goldPlayer.text);
-                                    //                     
-                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
-                                    resultados[i].gameObject.name = "Destruido";
-                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
-                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
-                                    //som de entrada da carta individual
-                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length >0)
-                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
-                                    //som de entrada padrão
-                                    som.PlayOneShot(audios[1]);
-                                    SetRaycast(true);
-                                }
-                                else
-                                {
-                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
-                                    distanciamentoCartasMaximo += 20;
-                                    SetAnimacao(distanciamentoCartasMaximo);
-                                    //colocar um audio de negação
-                                    
-                                    SetRaycast(true);
-                                    resultados[i].gameObject.name = "Carta(Clone)";
-                                }
-                            break;
-                        }
-                    }
-                }
-                else if (CartaAtual != null && CartaAtual.name == "segurado")
-                {
-                mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
-                distanciamentoCartasMaximo +=20;
-                CartaAtual.name = "Carta(Clone)";
-                SetRaycast(true);
-                SetAnimacao(distanciamentoCartasMaximo);         
-                }
+                case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
+
+                    if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+                        ColocarCartaNaMesa();
+
+                    else if (CartaAtual != null && CartaAtual.name == "segurado")
+                        RejeitarCarta();      
+
                 goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
-            case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
-                if(seta != null)
-                {              
+
+                case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
+
+                    if(seta != null)
                     seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
-                
-                }
-                if(resultados.Count > 0 )
-                    {
-                        foreach(var obj in resultados)
-                        {
-                            
-                           
-                        // colocar pra verificar se o estado de ataque da carta esta pronto para atacar, se sim ele desmarca
-                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
-                            {                     
-                                CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
-                                if(refCard.QuantidadeAtaque > 0)
-                                {
-                                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
-                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                                switch(refCard.AtivarPassivaQuando)
-                                {
-                                    case Evento.CartaAtaque:
-                                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
-                                    break;
-                                }
-                                refCard.QuantidadeAtaque--;
-                                StartCoroutine(DarDano(obj.gameObject));
-                                }
-                            break;
-                            }
-                        //esse else if vai servir pra atacar o player inimigo
-                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
-                            {  
-                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
-                            if(refCard.QuantidadeAtaque > 0)
-                                {                                      
-                                    playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);             
-                                    AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                                    refCard.QuantidadeAtaque--; 
-                                    StartCoroutine(DarDanoInimigo(obj.gameObject));
-                                }
-                            }
-                        } 
-                    }
+
+                    if(resultados.Count > 0 )
+                       Atacar();
 
                 break;
-         }
+            }
         }
         else{
             switch(EventControllerBehaviour.turno)
             {
-            case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
-                if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
-                {
-                    for(int i=0;i < resultados.Count - 1;i++)
-                    {
-                        switch(resultados[i].gameObject.name)
-                        {
-                            case "segurado":
-                                int barra = goldPlayer.text.IndexOf('/');
-                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
-                                {                      
-                                      //tirar carta mao****
-                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
-                                    //exibir pro player adversario
-                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
-                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                                    playerid.CmdAtualizarGold(goldPlayer.text);
-                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
-                                    resultados[i].gameObject.name = "Destruido";
-                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
-                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
-                                    //som de entrada da carta individual
-                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length > 0)
-                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
-                                    //som padrão de entrada
-                                    som.PlayOneShot(audios[1]);
-                                    SetRaycast(true);
-                                }
-                                else
-                                {
-                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
-                                    distanciamentoCartasMaximo += 20;
-                                    SetAnimacao(distanciamentoCartasMaximo);
-                                    //colocar um audio de negação
-                                    Audio(2);
-                                    SetRaycast(true);
-                                    resultados[i].gameObject.name = "Carta(Clone)";
-                                }
-                            break;
-                        }
-                    }
-                }
-                else if (CartaAtual != null && CartaAtual.name == "segurado")
-                {
-                mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
-                distanciamentoCartasMaximo +=20;
-                CartaAtual.name = "Carta(Clone)";
-                SetRaycast(true);
-                SetAnimacao(distanciamentoCartasMaximo);         
-                }
-                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
-            case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
-                if(seta != null)
-                {              
-                    seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
-                
-                }
-                if(resultados.Count > 0 )
-                    {
-                        foreach(var obj in resultados)
-                        {
-                            
-                           
-                             //atacar carta
-                            if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
-                            {                     
-                                CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
-                                if(refCard.QuantidadeAtaque > 0)
-                                {
-                                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
-                                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                                switch(refCard.AtivarPassivaQuando)
-                                {
-                                    case Evento.CartaAtaque:
+                case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
 
-                                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
-                                    break;
-                                }
-                                refCard.QuantidadeAtaque--;
-                                StartCoroutine(DarDano(obj.gameObject));
-                                }
-                            break;
-                            }
-                        //atacar player inimigo
-                            else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
-                            {  
-                            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
-                            if(refCard.QuantidadeAtaque > 0)
-                                {                                                   
-                                    AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                                    playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);
-                                    refCard.QuantidadeAtaque--; 
-                                    StartCoroutine(DarDanoInimigo(obj.gameObject));
-                                }
-                            }
-                        } 
-                    }
+                    if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+                        ColocarCartaNaMesa();
+
+                    else if (CartaAtual != null && CartaAtual.name == "segurado")
+                        RejeitarCarta();
+
+                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
+
+                case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
+
+                    if(seta != null)     
+                        seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
+                
+                    if(resultados.Count > 0 )
+                        Atacar();
 
                 break;
-
-
-         }
-        }
-        
+             }
+        }     
     }
     
     public void Mouse()
@@ -603,4 +436,97 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         goldPlayer.text = string.Format("{0}/{1}",gold,goldMax);
        
     }
+    
+void Atacar(){
+    foreach(var obj in resultados)
+    {                                                 
+            //atacar carta
+        if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
+        {                     
+            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+            if(refCard.QuantidadeAtaque > 0)
+            {                                   
+                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
+                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                
+                switch(refCard.AtivarPassivaQuando)
+                {
+                    case Evento.CartaAtaque:
+
+                        if(!(refCard.Alvo == AlvoPassiva.CartaAtacada))
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
+                        else
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,obj.gameObject.transform.parent.gameObject,true,AtaqueNoInimigo.transform.parent.gameObject);
+
+                    break;
+                }
+                refCard.QuantidadeAtaque--;
+                StartCoroutine(DarDano(obj.gameObject));
+            }
+        break;
+        }
+    //atacar player inimigo
+        else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
+        {  
+        CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+        if(refCard.QuantidadeAtaque > 0)
+            {                                                   
+                AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
+                playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);
+                refCard.QuantidadeAtaque--; 
+                StartCoroutine(DarDanoInimigo(obj.gameObject));
+            }
+        }
+} 
+}
+void ColocarCartaNaMesa(){
+     for(int i=0;i < resultados.Count - 1;i++)
+                    {
+                        switch(resultados[i].gameObject.name)
+                        {
+                            case "segurado":
+                                int barra = goldPlayer.text.IndexOf('/');
+                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
+                                {                      
+                                      //tirar carta mao****
+                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
+                                    //exibir pro player adversario
+                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
+                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                                    playerid.CmdAtualizarGold(goldPlayer.text);
+                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
+                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
+                                    resultados[i].gameObject.name = "Destruido";
+                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
+                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+                                    //som de entrada da carta individual
+                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length > 0)
+                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
+                                    //som padrão de entrada
+                                    som.PlayOneShot(audios[1]);
+                                    SetRaycast(true);
+                                }
+                                else
+                                {
+                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
+                                    distanciamentoCartasMaximo += 20;
+                                    SetAnimacao(distanciamentoCartasMaximo);
+                                    //colocar um audio de negação
+                                    Audio(2);
+                                    SetRaycast(true);
+                                    resultados[i].gameObject.name = "Carta(Clone)";
+                                }
+                            break;
+                        }
+                    }
+}
+void RejeitarCarta(){
+    mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
+                distanciamentoCartasMaximo +=20;
+                CartaAtual.name = "Carta(Clone)";
+                SetRaycast(true);
+                SetAnimacao(distanciamentoCartasMaximo);         
+}
+
 }

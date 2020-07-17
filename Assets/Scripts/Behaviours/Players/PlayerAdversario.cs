@@ -48,8 +48,12 @@ public class PlayerAdversario : MonoBehaviour
             switch(refCard.AtivarPassivaQuando)
                 {             
                 case Evento.CartaAtaque:
-                    print(refCard.Alvo);
+                     if(!(refCard.Alvo == AlvoPassiva.CartaAtacada))
                     this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,atacante.cartas[posicaoAtacar].gameObject);
+                    else
+                    this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,defensor.cartas[posicaoInimigo].gameObject,true,atacante.cartas[posicaoAtacar].gameObject);
+                    // nao testei esse else
+
                  break;
                 }
            atacante.cartas[posicaoAtacar].transform.GetComponent<Animator>().SetTrigger("Atacar");

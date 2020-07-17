@@ -19,7 +19,7 @@ MonoBehaviour:
   nome: "BOTIC\xC1RIO"
   desc: 
   dano: 3
-  vida: 1
+  vida: 4
   valor: 1
   SomNaEntrada:
   - {fileID: 8300000, guid: 88c80b6853bd6e84d89796aaaed0796c, type: 3}

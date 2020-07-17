@@ -19,7 +19,7 @@ MonoBehaviour:
   nome: MINOTAURO
   desc: 
   dano: 1
-  vida: 1
+  vida: 4
   valor: 0
   SomNaEntrada:
   - {fileID: 8300000, guid: 7c4f592afb977154ea6dbb3c0aeb1297, type: 3}

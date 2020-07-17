@@ -10,8 +10,11 @@ public enum Efeitos
         AtaqueConsecutivo,
         // a cura pode ser negativa bobao
         Curar,
-        Executar,
+        Matar,
         AprimorarAtaque,
+        //aumenta tanto a vida quando o ataque
+        AprimoracaoTotal,
+        Executar,
        
     }
    public class PassivaComulativa
@@ -49,7 +52,7 @@ public enum Efeitos
         CartaAleatoriaAdversaria,
         Carta,
           //nao fiz essa parte aq de baixo    
-        
+        CartaAtacada,
     }
 
 [CreateAssetMenu(menuName = "atributos da carta")]

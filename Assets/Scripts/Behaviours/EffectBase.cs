@@ -27,7 +27,10 @@ public static class Factory
                      {1, ()=>new AtaqueConsecutivo()},
                      {2, ()=>new Curar()}, 
                      {3, ()=>new Matar()},
-                     {4, ()=>new AprimorarAtaque()}
+                     {4, ()=>new AprimorarAtaque()},
+                     {5, ()=>new AprimoracaoTotal()},
+                     {6, ()=>new Executar()
+                     }
     };  
 }
 
@@ -82,6 +85,36 @@ public class AprimorarAtaque:EffectBase
     public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
     {
           a.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque += quantidadeDoEfeito;
+    }
+}
+public class AprimoracaoTotal:EffectBase
+{
+    public override void RealizarEfeitoEm(List<GameObject> a ,  GameObject b)
+    {
+       for(int i = a.Count - 1 ; i >= 0;i--)
+            RealizarEfeitoEm(a[i],b);
+    }
+   
+    public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
+    {
+        a.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque += quantidadeDoEfeito;
+        a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa += quantidadeDoEfeito;
+    }
+}
+public class Executar:EffectBase
+{
+    public override void RealizarEfeitoEm(List<GameObject> a ,  GameObject b)
+    {
+       for(int i = a.Count - 1 ; i >= 0;i--)
+            RealizarEfeitoEm(a[i],b);
+    }
+   
+    public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
+    {
+        //Executa um inimigo com menor ou igual a quantidade do efeito
+        if(b.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa - (quantidadeDoEfeito + a.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque) <= 0) 
+            b.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= quantidadeDoEfeito;
+
     }
 }
 // clase temporaria e sera removida na versão final
