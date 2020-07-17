@@ -6,9 +6,12 @@ public enum Efeitos
     {
         //atacar é um efeito comum a todas ascartas
         Nenhum,
+        //se for usada quando a carta é iniciada ela ja nasce com possibilidade de atacar
         AtaqueConsecutivo,
+        // a cura pode ser negativa bobao
         Curar,
         Executar,
+        AprimorarAtaque,
        
     }
    public class PassivaComulativa

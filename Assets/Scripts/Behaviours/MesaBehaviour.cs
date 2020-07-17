@@ -83,9 +83,10 @@
          distanciamentoCartasMaximo += 20;
          //dispersar cartas na mesa
          SetAnimacao(distanciamentoCartasMaximo);
-         switch(objCarta.transform.GetChild(0).GetComponent<CartaNaMesa>().AtivarPassivaQuando)
+         switch(obj.AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:
+            print("aaaa");
                controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"),objCarta);
                 break;
          }

@@ -58,22 +58,22 @@ public class PlayerId : NetworkBehaviour
         //canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(hasAuthority);  
     }
     [Command]
-    public void CmdAtualizarGold(int valor)
+    public void CmdAtualizarGold(string valor)
     {
         RpcAtualizarGold(valor);
     }
     [ClientRpc]
-    void RpcAtualizarGold(int valor)
+    void RpcAtualizarGold(string valor)
     {
         if(hasAuthority)
         {
             Mao player =canvas.GetComponent<Mao>();
-           player.goldPlayer.text =$"{valor}/{ EventControllerBehaviour.ouroMaximo}";  
+           player.goldPlayer.text =valor;  
         }
         else
         {
            PlayerAdversario adversario = canvas.GetComponent<PlayerAdversario>();
-           adversario.goldInimigo.text = $"{valor}/{EventControllerBehaviour.ouroMaximo}";
+           adversario.goldInimigo.text = valor;
         }
     }
     [Command]

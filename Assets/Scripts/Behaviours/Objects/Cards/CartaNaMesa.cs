@@ -90,6 +90,7 @@ public class CartaNaMesa : MonoBehaviour
         set
         {
             _podeAtacar = value;
+            //icone de sono
             transform.GetChild(3).GetComponent<Image>().enabled = !_podeAtacar;
         }
         }
@@ -98,8 +99,12 @@ public class CartaNaMesa : MonoBehaviour
         get { return _ataque; }
         set 
         {
+            if(value > _ataque && _ataque != 0)
+                transform.GetChild(2).GetComponent<Text>().text = $"<color=brown>{value.ToString()}</color>";
+            else
+                transform.GetChild(2).GetComponent<Text>().text = value.ToString();
+
             _ataque = value;
-            transform.GetChild(2).GetComponent<Text>().text = _ataque.ToString();
         }
     }
       public float Defesa

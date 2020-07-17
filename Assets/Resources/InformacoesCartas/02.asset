@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passiva: 1
   ativarPassivaQuando: 2
-  alvoDaPassiva: 2
-  quantidadePassiva: 0
+  alvoDaPassiva: 6
+  quantidadePassiva: 1
   nome: GOBLIN
   desc: 
   dano: 2
-  vida: 1
+  vida: 3
   valor: 4
   SomNaEntrada:
   - {fileID: 8300000, guid: 31d49912c34a76346a9c314c06749b62, type: 3}

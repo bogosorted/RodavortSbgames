@@ -180,7 +180,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                     playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                                     //ouro
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                                    playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
+                                    playerid.CmdAtualizarGold(goldPlayer.text);
                                     //                     
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                                     Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
@@ -286,7 +286,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                                     //exibir pro player adversario
                                     playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                                    playerid.CmdAtualizarGold(int.Parse(goldPlayer.text.Substring(0, barra)));
+                                    playerid.CmdAtualizarGold(goldPlayer.text);
                                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                                     Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
                                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
