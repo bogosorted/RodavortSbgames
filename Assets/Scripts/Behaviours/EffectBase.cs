@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EffectBase:MonoBehaviour
+public abstract class EffectBase
 {
     protected Efeitos efeito {get;set;}
     protected Evento evento{get;set;}
@@ -112,8 +112,8 @@ public class Executar:EffectBase
     public override void RealizarEfeitoEm(GameObject a ,  GameObject b)
     {
         //Executa um inimigo com menor ou igual a quantidade do efeito
-        if(b.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa - (quantidadeDoEfeito + a.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque) <= 0) 
-            b.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= quantidadeDoEfeito;
+        if(a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa - (quantidadeDoEfeito + b.transform.GetChild(0).GetComponent<CartaNaMesa>().Ataque) <= 0) 
+            a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= quantidadeDoEfeito;
 
     }
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: 05
   m_EditorClassIdentifier: 
   passiva: 6
-  ativarPassivaQuando: 3
-  alvoDaPassiva: 0
-  quantidadePassiva: 0
+  ativarPassivaQuando: 2
+  alvoDaPassiva: 2
+  quantidadePassiva: 1
   nome: "CL\xCDNICO"
-  desc: 
+  desc: "CARTAS FRACAS COM 2 OU MENOS DE VIDA SER\xC3O EXECUTADAS AP\xD3S O NOVO
+    TURNO"
   dano: 1
   vida: 1
   valor: 0

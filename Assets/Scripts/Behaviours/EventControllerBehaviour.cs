@@ -83,7 +83,11 @@ public class EventControllerBehaviour : NetworkBehaviour
     {
         EffectBase a = Factory.Criar((int)(efeito.efeito));
         a.quantidadeDoEfeito = efeito.quantidade;
-        a.RealizarEfeitoEm(realizador,alvo);
+        a.RealizarEfeitoEm(alvo,realizador);
+    }
+    public void MudarNomeBotao()
+    {
+        botao.transform.GetChild(0).GetComponent<Text>().text = "PRÓXIMO TURNO";
     }
 
     public void ExibirTurno()
@@ -129,11 +133,13 @@ public class EventControllerBehaviour : NetworkBehaviour
         Inimigo.SetarGold(ouroMaximo);
     }
     private void DecidirIniciante(){
+        preparado = true;
     }
     private void Inicio(){
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         if(numerosPlayers.Length == 2)// true 
         {
+            print("foi");
             Player.SetRaycast(true);
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;
             playerid = ntwrkid.GetComponent<PlayerId>();
@@ -142,10 +148,10 @@ public class EventControllerBehaviour : NetworkBehaviour
             turno = Turnos.TurnoEscolhaP1;
             playerid.CmdMudarTurno((int)turno);
             playerid.CmdInverterTurnoPlayers();
+            playerid.CmdMudarNomeBotao();
         }
         else{
-            turno = Turnos.DecidirIniciante;
-            preparado = false;
+            turno = Turnos.DecidirIniciante; 
         }
 
  
@@ -247,21 +253,21 @@ public class EventControllerBehaviour : NetworkBehaviour
             //playerid = ntwrkid.GetComponent<PlayerId>();
             playerid.CmdMudarTurno((int)turno); 
             playerid.CmdInverterTurnoPlayers();
-            //testando pra ver se tem alguma passiva a ser rodada no novo round
-            foreach(var obj in CartasPlayer.cartas)
+            // o player 2 tem vantagem por rodar a passiva primeiro q o player 1
+            foreach(var obj in playerid.isplayer2 ?  CartasInimigo.cartas : CartasPlayer.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque =1;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,obj);
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
                 
             }
-            foreach(var obj in CartasInimigo.cartas)
+            foreach(var obj in playerid.isplayer2 ?  CartasPlayer.cartas : CartasInimigo.cartas)
             {
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque = 1 ;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,false,obj);
+                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
             }
     }
   #endregion

@@ -25,6 +25,16 @@ public class PlayerId : NetworkBehaviour
         canvas.GetComponent<EventControllerBehaviour>().TrocouTurno();
     }
     [Command]
+    public void CmdMudarNomeBotao()
+    {
+        RpcMudarNomeBotao();
+    }
+    [ClientRpc]
+    void RpcMudarNomeBotao()
+    {
+        canvas.GetComponent<EventControllerBehaviour>().MudarNomeBotao();
+    }
+    [Command]
     public void CmdAwake()
     {
         for(int i = 0;i < 3; i++)
