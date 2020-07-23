@@ -40,6 +40,7 @@ public enum Efeitos
         NovoRound,
         CartaAtaque,
         CartaMorreu,
+        CartaRecebeuDano,
     }
     public enum AlvoPassiva
     {
@@ -51,8 +52,10 @@ public enum Efeitos
         CartaAleatoriaAliada,
         CartaAleatoriaAdversaria,
         Carta,
-          //nao fiz essa parte aq de baixo    
+        //quando o player 1 ataca o player 2, a carta do player 1 ativaria a passiva.
+        //só funcionam em seus respectivos eventos :  CartaAtaque e CartaRecebeuDano
         CartaAtacada,
+        CartaQueAtacou,
     }
 
 [CreateAssetMenu(menuName = "atributos da carta")]

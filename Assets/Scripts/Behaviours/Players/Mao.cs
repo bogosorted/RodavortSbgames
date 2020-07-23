@@ -120,10 +120,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public void OnDrag(PointerEventData eventData)
     {
        if(CartaAtual != null && CartaAtual.name == "segurado" )
-        {
-        CartaAtual.transform.position = Input.mousePosition ;
-        //CartaAtual.transform.parent.SetSiblingIndex(9);
-        }      
+            CartaAtual.transform.position = Input.mousePosition ;    
     }
     public void OnPointerExit(PointerEventData eventData) 
     {
@@ -448,18 +445,30 @@ void Atacar(){
             {                                   
                 playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                
+                GameObject inimigo = obj.gameObject.transform.parent.gameObject;
+                CartaNaMesa enemyRefCard = obj.gameObject.transform.GetComponent<CartaNaMesa>();
+                // passiva do inimigo quando atacado se inicia primeiro do que quando a carta ataca primeiro
+                switch(enemyRefCard.AtivarPassivaQuando)
+                {
+                     case Evento.CartaRecebeuDano:
+                        if(enemyRefCard.Alvo != AlvoPassiva.CartaQueAtacou)
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(enemyRefCard.Passiva,enemyRefCard.Alvo,false,inimigo);
+                        else
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(enemyRefCard.Passiva,AtaqueNoInimigo.transform.parent.gameObject,false,inimigo);                              
+                     break;
+                }
                 switch(refCard.AtivarPassivaQuando)
                 {
                     case Evento.CartaAtaque:
 
-                        if(!(refCard.Alvo == AlvoPassiva.CartaAtacada))
+                        if(refCard.Alvo != AlvoPassiva.CartaAtacada)
                             this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,refCard.Alvo,true,AtaqueNoInimigo.transform.parent.gameObject);
                         else
-                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,obj.gameObject.transform.parent.gameObject,true,AtaqueNoInimigo.transform.parent.gameObject);
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(refCard.Passiva,inimigo,true,AtaqueNoInimigo.transform.parent.gameObject);
 
                     break;
                 }
+                
                 refCard.QuantidadeAtaque--;
                 StartCoroutine(DarDano(obj.gameObject));
             }

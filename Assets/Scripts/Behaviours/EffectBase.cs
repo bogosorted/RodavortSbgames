@@ -29,7 +29,7 @@ public static class Factory
                      {3, ()=>new Matar()},
                      {4, ()=>new AprimorarAtaque()},
                      {5, ()=>new AprimoracaoTotal()},
-                     {6, ()=>new Executar()
+                     {6, ()=>new Executar() 
                      }
     };  
 }

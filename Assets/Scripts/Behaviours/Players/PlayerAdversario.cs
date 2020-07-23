@@ -44,7 +44,18 @@ public class PlayerAdversario : MonoBehaviour
         if(atacante.cartas.Count > 0 && defensor.cartas.Count > 0)
         {
            CartaNaMesa refCard = atacante.cartas[posicaoAtacar].transform.GetChild(0).GetComponent<CartaNaMesa>();
+           CartaNaMesa enemyRefCard = defensor.cartas[posicaoInimigo].transform.GetChild(0).GetComponent<CartaNaMesa>();
            refCard.QuantidadeAtaque--;
+                // passiva do inimigo quando atacado se inicia primeiro do que quando a carta ataca primeiro
+            switch(enemyRefCard.AtivarPassivaQuando)
+                {
+                     case Evento.CartaRecebeuDano:
+                        if(enemyRefCard.Alvo != AlvoPassiva.CartaQueAtacou)
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(enemyRefCard.Passiva,enemyRefCard.Alvo,false,defensor.cartas[posicaoInimigo].gameObject);
+                        else
+                            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(enemyRefCard.Passiva,atacante.cartas[posicaoAtacar].gameObject,false,defensor.cartas[posicaoInimigo].gameObject);                              
+                     break;
+                }
             switch(refCard.AtivarPassivaQuando)
                 {             
                 case Evento.CartaAtaque:

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: 09
   m_EditorClassIdentifier: 
   passiva: 4
-  ativarPassivaQuando: 1
+  ativarPassivaQuando: 5
   alvoDaPassiva: 6
-  quantidadePassiva: 10
+  quantidadePassiva: 1
   nome: HYDRA
   desc: 
-  dano: 1
-  vida: 1
+  dano: 2
+  vida: 4
   valor: 0
   SomNaEntrada:
   - {fileID: 8300000, guid: 4a1bc63a2a35be243a84b808e4877cea, type: 3}

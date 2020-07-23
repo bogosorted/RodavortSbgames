@@ -15,11 +15,10 @@
     public float distanciamentoCartasMaximo;
     public GameObject carta;
     private EventControllerBehaviour controller;
+    //vida??? nao lembro mas provavelente sim k
     public GameObject Dano;
     public List<GameObject> cartas = new List<GameObject>();
     
-    //fazer isso de baixo aq ó. pa passiva
-    //public static List<GameObject> cartasEmJogo = new List<GameObject>();
     bool angularBaralho;
     void Start()
     {
@@ -86,7 +85,6 @@
          switch(obj.AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:
-            print("aaaa");
                controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"),objCarta);
                 break;
          }
