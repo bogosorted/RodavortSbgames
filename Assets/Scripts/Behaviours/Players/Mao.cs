@@ -26,6 +26,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public List<GameObject> mao = new List<GameObject>();
     float x,y;
     PlayerId playerid;
+    NetworkIdentity ntwrkid;
     [Header("VIDA")]
     public float vida;
     private int gold;
@@ -46,7 +47,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     {
         if(Input.touchCount < 2)
         {
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            ntwrkid = NetworkClient.connection.identity;
             playerid = ntwrkid.GetComponent<PlayerId>();
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
             print(playerid.isplayer2);
@@ -55,31 +56,18 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
            {
              switch(EventControllerBehaviour.turno)
                 {
-                case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
-                  if(CartaAtual.name == "Carta(Clone)")
-                        {
-                            x=1;
-                            OutPut.SetBool("MouseNaCarta",false);
-                            mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
-                            SetRaycast(false);
-                            distanciamentoCartasMaximo -=20;
-                            CartaAtual.name = "segurado";
-                            SetAnimacao(distanciamentoCartasMaximo);           
-                        }
-                    goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
-                case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
-                    if(CartaAtual.name == "CartaNaMesa")
-                    {
-                         AtaqueNoInimigo = CartaAtual;
-                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();                   
-                                if(refCard.PodeAtacar)
-                                {
-                                    seta = Instantiate(Seta);
-                                    seta.transform.SetParent(transform.GetChild(4),false);
-                                    seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
-                                }                                          
-                    }                   
-                    break;
+                    case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
+
+                        if(CartaAtual.name == "Carta(Clone)")
+                            PuxarCartaBaralho();      
+
+                        goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
+
+                    case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
+
+                        if(CartaAtual.name == "CartaNaMesa")
+                           PuxarCartaMesa();                                                        
+                        break;
                 }
            }  
            //inverti sem querer agr ja era
@@ -87,31 +75,18 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
            {
              switch(EventControllerBehaviour.turno)
                 {
-                case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
-                  if(CartaAtual.name == "Carta(Clone)")
-                        {
-                            x=1;
-                            OutPut.SetBool("MouseNaCarta",false);
-                            mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
-                            SetRaycast(false);
-                            distanciamentoCartasMaximo -=20;
-                            CartaAtual.name = "segurado";
-                            SetAnimacao(distanciamentoCartasMaximo);           
-                        }
-                    goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
-                case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
-                    if(CartaAtual.name == "CartaNaMesa")
-                    {
-                         AtaqueNoInimigo = CartaAtual;
-                         CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
-                                if(refCard.PodeAtacar)
-                                {
-                                    seta = Instantiate(Seta);
-                                    seta.transform.SetParent(transform.GetChild(4),false);
-                                    seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
-                                }                                          
-                    }                   
-                    break;
+                    case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
+                    
+                        if(CartaAtual.name == "Carta(Clone)")
+                            PuxarCartaBaralho();   
+
+                        goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
+                        
+                    case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
+
+                        if(CartaAtual.name == "CartaNaMesa")
+                            PuxarCartaMesa();                                   
+                        break;
                 }
            }      
           
@@ -149,7 +124,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
@@ -494,12 +469,13 @@ void ColocarCartaNaMesa(){
                         switch(resultados[i].gameObject.name)
                         {
                             case "segurado":
+
                                 int barra = goldPlayer.text.IndexOf('/');
                                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                                 {                      
                                       //tirar carta mao****
                                     playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
-                                    //exibir pro player adversario
+                                    //exibir pro player adversario que foi tirada uma carta
                                     playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
                                     playerid.CmdAtualizarGold(goldPlayer.text);
@@ -518,11 +494,12 @@ void ColocarCartaNaMesa(){
                                 }
                                 else
                                 {
+
                                     mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
                                     distanciamentoCartasMaximo += 20;
                                     SetAnimacao(distanciamentoCartasMaximo);
                                     //colocar um audio de negação
-                                    Audio(2);
+                                    som.PlayOneShot(audios[2]);
                                     SetRaycast(true);
                                     resultados[i].gameObject.name = "Carta(Clone)";
                                 }
@@ -536,6 +513,26 @@ void RejeitarCarta(){
                 CartaAtual.name = "Carta(Clone)";
                 SetRaycast(true);
                 SetAnimacao(distanciamentoCartasMaximo);         
+}
+void PuxarCartaBaralho()
+{
+    x=1;
+    OutPut.SetBool("MouseNaCarta",false);
+    mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+    SetRaycast(false);
+    distanciamentoCartasMaximo -=20;
+    CartaAtual.name = "segurado";
+    SetAnimacao(distanciamentoCartasMaximo);       
+}
+void PuxarCartaMesa(){
+    AtaqueNoInimigo = CartaAtual;
+    CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
+        if(refCard.PodeAtacar)
+        {
+            seta = Instantiate(Seta);
+            seta.transform.SetParent(transform.GetChild(4),false);
+            seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
+        }                                          
 }
 
 }

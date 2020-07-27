@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 02
   m_EditorClassIdentifier: 
   passiva: 1
-  ativarPassivaQuando: 2
+  ativarPassivaQuando: 1
   alvoDaPassiva: 6
   quantidadePassiva: 1
   nome: GOBLIN
