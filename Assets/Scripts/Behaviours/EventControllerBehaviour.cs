@@ -8,6 +8,9 @@ using Mirror;
 
 public class EventControllerBehaviour : NetworkBehaviour
 {  
+    // tirar essa variavel na versão final do game
+    bool testandoNoEditor;
+
     public static Turnos turno;
     public static int ouroMaximo;
     public GameObject exibicaoTurno;
@@ -36,6 +39,8 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
+        testandoNoEditor = true;
+
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
         Inimigo = GetComponent<PlayerAdversario>();
@@ -107,17 +112,18 @@ public class EventControllerBehaviour : NetworkBehaviour
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
-        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2)
+        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
         {
-            print(turno);
+ 
             turno += 1;
-            print(turno);
+
             playerid.CmdMudarTurno((int)turno);
-            playerid.CmdInverterTurnoPlayers();
+            if(!testandoNoEditor)
+                playerid.CmdInverterTurnoPlayers();
             playerid.CmdExibirTurno();
         }
         //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
-        else if (preparado && numerosPlayers.Length == 2)
+        else if (preparado && numerosPlayers.Length == 2 || testandoNoEditor)
             playerid.CmdTrocouTurno();         
         preparado = false;
         playerid.CmdInvoke((int)turno);
@@ -137,7 +143,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
     private void Inicio(){
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
-        if(numerosPlayers.Length == 2)// true 
+        if(numerosPlayers.Length == 2 || testandoNoEditor)// true 
         {
             print("foi");
             Player.SetRaycast(true);
@@ -147,7 +153,8 @@ public class EventControllerBehaviour : NetworkBehaviour
             preparado = true;
             turno = Turnos.TurnoEscolhaP1;
             playerid.CmdMudarTurno((int)turno);
-            playerid.CmdInverterTurnoPlayers();
+            if(!testandoNoEditor)
+                playerid.CmdInverterTurnoPlayers();
             playerid.CmdMudarNomeBotao();
         }
         else{
@@ -165,8 +172,9 @@ public class EventControllerBehaviour : NetworkBehaviour
         {
         Player.SetRaycast(true);
         CartasPlayer.SetRaycast(true);
-        preparado = true;         
-        playerid.CmdInverterTurnoPlayers();
+        preparado = true;       
+        if(!testandoNoEditor)
+            playerid.CmdInverterTurnoPlayers();
         }
         else
         {
@@ -181,7 +189,8 @@ public class EventControllerBehaviour : NetworkBehaviour
             {
             Player.SetRaycast(true);
             playerid.CmdCriarCartaInicio(Random.Range(0,13));
-            playerid.CmdInverterTurnoPlayers();
+             if(!testandoNoEditor)
+                 playerid.CmdInverterTurnoPlayers();
             CartasPlayer.SetRaycast(true);
             preparado = true;            
             }
@@ -202,7 +211,8 @@ public class EventControllerBehaviour : NetworkBehaviour
          else
         {
         preparado = true;
-        playerid.CmdInverterTurnoPlayers();
+        if(!testandoNoEditor)
+            playerid.CmdInverterTurnoPlayers();
         Player.SetRaycast(true);
         playerid.CmdMudarTurno((int)turno);      
         }
@@ -219,11 +229,13 @@ public class EventControllerBehaviour : NetworkBehaviour
             CartasPlayer.SetRaycast(true);
             preparado = true;
             playerid.CmdCriarCartaInicio(Random.Range(0,13));
-            playerid.CmdInverterTurnoPlayers();
+             if(!testandoNoEditor)
+                playerid.CmdInverterTurnoPlayers();
             }
              else
             {
-                playerid.CmdInverterTurnoPlayers();
+                if(!testandoNoEditor)
+                    playerid.CmdInverterTurnoPlayers();
                 playerid.CmdCriarCartaInicio(Random.Range(0,13));
                 Player.SetRaycast(true);
             }
@@ -252,7 +264,8 @@ public class EventControllerBehaviour : NetworkBehaviour
             turno = Turnos.TurnoEscolhaP1;
             //playerid = ntwrkid.GetComponent<PlayerId>();
             playerid.CmdMudarTurno((int)turno); 
-            playerid.CmdInverterTurnoPlayers();
+            if(!testandoNoEditor)
+                playerid.CmdInverterTurnoPlayers();
             // o player 2 tem vantagem por rodar a passiva primeiro q o player 1
             foreach(var obj in playerid.isplayer2 ?  CartasInimigo.cartas : CartasPlayer.cartas)
             {

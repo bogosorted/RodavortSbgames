@@ -15,6 +15,9 @@ public class OlharParaMouse : MonoBehaviour
     }
     void Update()
     {
+        
+        if(Input.GetMouseButtonUp(0))
+          GetComponent<Animator>().SetBool("SetaDestruir",true);
         mousePos =Input.mousePosition;
         Vector3 objectPos = transform.position;
         mousePos.x -= objectPos.x;
@@ -22,6 +25,6 @@ public class OlharParaMouse : MonoBehaviour
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle -75));
         rect.sizeDelta = new Vector2( Mathf.Abs(mousePos.x * 0.05f) + mousePos.y * 0.4f + 20 , Mathf.Abs(mousePos.x)* 0.3f + mousePos.y *0.8f);
-        
     }
+
 }

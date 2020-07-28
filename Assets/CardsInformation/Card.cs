@@ -41,6 +41,7 @@ public enum Efeitos
         CartaAtaque,
         CartaMorreu,
         CartaRecebeuDano,
+        CartaEfeito,
     }
     public enum AlvoPassiva
     {

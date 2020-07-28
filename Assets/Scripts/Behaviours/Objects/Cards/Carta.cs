@@ -21,7 +21,7 @@ public class Carta : MonoBehaviour
     }
     public void definirComeco(string numero)
     {
-        Id = numero;
+        Id = numero;t
         Card refCard = Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
          //TESTE
@@ -33,11 +33,14 @@ public class Carta : MonoBehaviour
         Ataque = refCard.dano; 
         Defesa =refCard.vida;
         Valor = refCard.valor;
+        //// testando //////////
+        IsAtivo = AtivarPassivaQuando == Evento.CartaEfeito;
+        ////////////////////////    
         passiva = new PassivaComulativa(refCard.quantidadePassiva,refCard.passiva);
         
     }
     #region Propiedades
-
+    public bool IsAtivo{get;set;}
     public string Id{get;set;}
     public Evento AtivarPassivaQuando
     {

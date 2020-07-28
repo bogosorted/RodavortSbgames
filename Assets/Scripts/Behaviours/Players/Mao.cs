@@ -36,10 +36,11 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     Exibicao exibir;
     Animator OutPut;
     GameObject CartaAtual,AtaqueNoInimigo,seta,dano;
+    Carta cartaEfeito;
     List<RaycastResult> resultados;
     PointerEventData cursor;
     bool animarBaralho;
-    bool entrar;
+    bool entrar,isOnEffect;
 
 
     #region ClickInput
@@ -50,8 +51,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
             ntwrkid = NetworkClient.connection.identity;
             playerid = ntwrkid.GetComponent<PlayerId>();
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-            print(playerid.isplayer2);
-            print(EventControllerBehaviour.turno);
+
            if(CartaAtual != null && playerid.isplayer2)
            {
              switch(EventControllerBehaviour.turno)
@@ -129,8 +129,6 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
-        print(playerid.isplayer2);
-        print(EventControllerBehaviour.turno);
         //CartaAtual = eventData.pointerCurrentRaycast.gameObject;
         if(playerid.isplayer2)
         {
@@ -147,9 +145,6 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                 goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
 
                 case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
-
-                    if(seta != null)
-                    seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
 
                     if(resultados.Count > 0 )
                        Atacar();
@@ -171,9 +166,6 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                 goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
 
                 case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
-
-                    if(seta != null)     
-                        seta.GetComponent<Animator>().SetBool("SetaDestruir",true);
                 
                     if(resultados.Count > 0 )
                         Atacar();
@@ -211,7 +203,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
             }
             else if (entrar && resultados[0].gameObject)
             {
-		SetAnimacao(distanciamentoCartasMaximo);
+		        SetAnimacao(distanciamentoCartasMaximo);
                 OutPut.SetBool("MouseNaCarta",false);
                 entrar = false;
             }    
@@ -382,6 +374,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
             obj.GetComponent<CartaNaMesa>().Defesa -= AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque;
             AtaqueNoInimigo.GetComponent<CartaNaMesa>().Defesa -= obj.GetComponent<CartaNaMesa>().Ataque;
             som.PlayOneShot(audios[2]);
+            AtaqueNoInimigo = null;
         }
     }
     IEnumerator DarDanoInimigo(GameObject obj) 
@@ -395,6 +388,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         dano.GetComponent<Text>().text += AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque.ToString();
         GetComponent<PlayerAdversario>().PerderVida(AtaqueNoInimigo.GetComponent<CartaNaMesa>().Ataque);
         som.PlayOneShot(audios[2]);
+        AtaqueNoInimigo = null;
     }
     
     public void TirarVidaPlayer(float dano) 
@@ -411,8 +405,27 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     
 void Atacar(){
     foreach(var obj in resultados)
-    {                                                 
-            //atacar carta
+    {                       
+                
+        // carta efeito
+        if(cartaEfeito && (obj.gameObject.name == "CartaNaMesaInimigo"|| obj.gameObject.name == "CartaNaMesa"))
+        {
+            //testar o playerid.cmdefeito
+            print(obj.gameObject.name == "CartaNaMesa");
+            print(obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);   
+            this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(cartaEfeito.Passiva,obj.gameObject.transform.parent.gameObject,true,null);
+            playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
+            playerid.CmdEfeitoRealizado(obj.gameObject.name == "CartaNaMesa",obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
+            SetRaycast(true);
+            cartaEfeito = null;
+        }
+        else if(cartaEfeito)
+        {
+            CriarCarta(int.Parse(cartaEfeito.Id));     
+            SetRaycast(true);
+            cartaEfeito = null;
+        }
+        //atacar carta
         if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
         {                     
             CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
@@ -450,9 +463,10 @@ void Atacar(){
         break;
         }
     //atacar player inimigo
-        else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 )
+        else if (obj.gameObject.name == "CampoInimigo" && obj.gameObject.GetComponent<MesaBehaviour>().cartas.Count == 0 && AtaqueNoInimigo)
         {  
-        CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
+            
+            CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
         if(refCard.QuantidadeAtaque > 0)
             {                                                   
                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
@@ -463,76 +477,99 @@ void Atacar(){
         }
 } 
 }
-void ColocarCartaNaMesa(){
-     for(int i=0;i < resultados.Count - 1;i++)
-                    {
-                        switch(resultados[i].gameObject.name)
-                        {
-                            case "segurado":
-
-                                int barra = goldPlayer.text.IndexOf('/');
-                                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
-                                {                      
-                                      //tirar carta mao****
-                                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
-                                    //exibir pro player adversario que foi tirada uma carta
-                                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
-                                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                                    playerid.CmdAtualizarGold(goldPlayer.text);
-                                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
-                                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
-                                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
-                                    resultados[i].gameObject.name = "Destruido";
-                                    resultados[i].gameObject.GetComponent<Image>().raycastTarget = false;
-                                    resultados[i].gameObject.GetComponent<Animator>().SetBool("Destruir", true);
-                                    //som de entrada da carta individual
-                                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length > 0)
-                                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
-                                    //som padrão de entrada
-                                    som.PlayOneShot(audios[1]);
-                                    SetRaycast(true);
-                                }
-                                else
-                                {
-
-                                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
-                                    distanciamentoCartasMaximo += 20;
-                                    SetAnimacao(distanciamentoCartasMaximo);
-                                    //colocar um audio de negação
-                                    som.PlayOneShot(audios[2]);
-                                    SetRaycast(true);
-                                    resultados[i].gameObject.name = "Carta(Clone)";
-                                }
-                            break;
-                        }
-                    }
-}
-void RejeitarCarta(){
-    mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
-                distanciamentoCartasMaximo +=20;
-                CartaAtual.name = "Carta(Clone)";
-                SetRaycast(true);
-                SetAnimacao(distanciamentoCartasMaximo);         
-}
-void PuxarCartaBaralho()
+void ColocarCartaNaMesa()
 {
-    x=1;
-    OutPut.SetBool("MouseNaCarta",false);
-    mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
-    SetRaycast(false);
-    distanciamentoCartasMaximo -=20;
-    CartaAtual.name = "segurado";
-    SetAnimacao(distanciamentoCartasMaximo);       
-}
-void PuxarCartaMesa(){
-    AtaqueNoInimigo = CartaAtual;
-    CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
-        if(refCard.PodeAtacar)
+     for(int i=0;i < resultados.Count - 1;i++)
+    {
+        switch(resultados[i].gameObject.name)
         {
-            seta = Instantiate(Seta);
-            seta.transform.SetParent(transform.GetChild(4),false);
-            seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
-        }                                          
-}
+            case "segurado":
 
+                int barra = goldPlayer.text.IndexOf('/');
+                if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
+                {                      
+                        //tirar carta mao****
+                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
+                    //exibir pro player adversario que foi tirada uma carta
+                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
+                    goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+                    playerid.CmdAtualizarGold(goldPlayer.text);
+                    Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
+                    Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
+                    resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
+                    DestruirCartaBaralho(resultados[i].gameObject);         
+                    //som de entrada da carta individual
+                    if(refCard.SomNaEntrada != null && refCard.SomNaEntrada.Length > 0)
+                        som.PlayOneShot(refCard.SomNaEntrada[Random.Range(0,refCard.SomNaEntrada.Length)]);
+                    //som padrão de entrada
+                    som.PlayOneShot(audios[1]);
+                    SetRaycast(true);
+                }
+                else
+                {
+
+                    mao.Insert(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho,resultados[i].gameObject);
+                    distanciamentoCartasMaximo += 20;
+                    SetAnimacao(distanciamentoCartasMaximo);
+                    //colocar um audio de negação
+                    som.PlayOneShot(audios[2]);
+                    SetRaycast(true);
+                    resultados[i].gameObject.name = "Carta(Clone)";
+                }
+            break;
+        }
+    }
+}
+    void RejeitarCarta()
+    {
+        mao.Insert(CartaAtual.GetComponent<Carta>().PosicaoBaralho,CartaAtual);
+        distanciamentoCartasMaximo +=20;
+        CartaAtual.name = "Carta(Clone)";
+        SetRaycast(true);
+        SetAnimacao(distanciamentoCartasMaximo);         
+    }
+    void PuxarCartaBaralho()
+    {       
+        x=1;
+        OutPut.SetBool("MouseNaCarta",false);
+        mao.RemoveAt(CartaAtual.GetComponent<Carta>().PosicaoBaralho);
+        SetRaycast(false);
+        distanciamentoCartasMaximo -=20;
+        CartaAtual.name = "segurado";
+        SetAnimacao(distanciamentoCartasMaximo);
+
+        if(CartaAtual.GetComponent<Carta>().IsAtivo)
+        {
+            cartaEfeito = CartaAtual.GetComponent<Carta>();
+            DestruirCartaBaralho(CartaAtual);
+            InstanciarSeta();
+            isOnEffect = true;
+        }
+    }
+
+    void PuxarCartaMesa()
+    {
+        AtaqueNoInimigo = CartaAtual;
+        CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>();
+            if(refCard.PodeAtacar)
+            {
+                seta = Instantiate(Seta);
+                seta.transform.SetParent(transform.GetChild(4),false);
+                seta.transform.localPosition = CartaAtual.transform.parent.localPosition - new Vector3(10,80);
+            }                                          
+    }
+
+    void InstanciarSeta()
+    {
+        seta = Instantiate(Seta);
+        seta.transform.SetParent(transform.GetChild(4),false);
+
+        seta.transform.localPosition = Vector2.up * -200;
+    }
+    void DestruirCartaBaralho(GameObject carta)
+    {
+        carta.name = "Destruido";
+        carta.gameObject.GetComponent<Image>().raycastTarget = false;
+        carta.gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+    }
 }

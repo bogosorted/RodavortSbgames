@@ -29,6 +29,24 @@ public class PlayerId : NetworkBehaviour
     {
         RpcMudarNomeBotao();
     }
+    [Command]
+    public void CmdEfeitoRealizado(bool AutoAlvo,int posicaoCarta,int quantidadeDoEfeito,int efeito)
+    {
+        RpcEfeitoRealizado(AutoAlvo,posicaoCarta,quantidadeDoEfeito,efeito);
+    }
+    [ClientRpc]
+    void RpcEfeitoRealizado(bool AutoAlvo,int posicaoCarta,int quantidadeDoEfeito,int efeito)
+    {
+        if(!hasAuthority)
+        {
+
+            EffectBase a = Factory.Criar(efeito);
+            a.quantidadeDoEfeito = quantidadeDoEfeito;
+            
+            a.RealizarEfeitoEm(!AutoAlvo?canvas.transform.GetChild(1).GetComponent<MesaBehaviour>().cartas[posicaoCarta]:canvas.transform.GetChild(2).GetComponent<MesaBehaviour>().cartas[posicaoCarta],null);  
+            
+        }
+    }
     [ClientRpc]
     void RpcMudarNomeBotao()
     {
