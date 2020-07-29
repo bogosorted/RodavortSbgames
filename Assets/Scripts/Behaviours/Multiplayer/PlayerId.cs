@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Telepathy;
 
 public class PlayerId : NetworkBehaviour
 {
@@ -149,12 +150,14 @@ public class PlayerId : NetworkBehaviour
         {
             GameObject ntworkManager = GameObject.Find("NetworkManager");
             ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
+            // NetworkServer.DisconnectAll();        
             ntwrk.StopHost();
         }
         else
         {
             GameObject ntworkManager = GameObject.Find("NetworkManager");
             ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
+            
             ntwrk.StopClient();
         }
     }

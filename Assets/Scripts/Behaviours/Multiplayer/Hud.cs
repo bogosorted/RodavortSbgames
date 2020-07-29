@@ -53,7 +53,7 @@ public class Hud : MonoBehaviour
         }   
     IEnumerator Descobertas()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1f);
         int children = transform.childCount;
         for (int i = 0; i < children; ++i)
             Destroy(transform.GetChild(i).gameObject);

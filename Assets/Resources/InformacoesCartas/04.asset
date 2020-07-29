@@ -15,7 +15,7 @@ MonoBehaviour:
   passiva: 4
   ativarPassivaQuando: 3
   alvoDaPassiva: 6
-  quantidadePassiva: 0
+  quantidadePassiva: 2
   nome: MINOTAURO
   desc: "Um minotauro desprevinido \xE9 uma presa f\xE1cil, minotauro ganha um de
     ataque ao iniciar um ataque a um inimigo"
