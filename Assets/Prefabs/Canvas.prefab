@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -161, y: -164}
+  m_AnchoredPosition: {x: -158.6, y: -159.8}
   m_SizeDelta: {x: 320, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1387180192180816456
@@ -235,6 +235,8 @@ MonoBehaviour:
   goldPlayer: {fileID: 7221462168804171314}
   carta: {fileID: 2557178968703050958, guid: 8ecc6deebd8cde649bf84aadb8077704, type: 3}
   Seta: {fileID: 2810661596254874059, guid: 6cff6afbf44dda14f94df93d87e89098, type: 3}
+  SetaEfeito: {fileID: 6631387228220286787, guid: 698bc433d7789b548b9386e5f9592c76,
+    type: 3}
   Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   mao: []
   vida: 40
@@ -601,7 +603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0030828982, y: 94.99042}
+  m_AnchoredPosition: {x: 0.0030828982, y: 111.49}
   m_SizeDelta: {x: 434, y: 111.808}
   m_Pivot: {x: 0.5, y: 0.55}
 --- !u!222 &8359674260462662509
@@ -625,7 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.105882354, a: 1}
+  m_Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1402,7 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.10745447, a: 1}
+  m_Color: {r: 0.12156863, g: 0.09803922, b: 0.10745447, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1805,8 +1807,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000019073, y: 0}
-  m_SizeDelta: {x: 1106.3, y: 639.3}
+  m_AnchoredPosition: {x: -0.3, y: 0}
+  m_SizeDelta: {x: 1230.9072, y: 639.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8451387282219268036
 CanvasRenderer:
@@ -1835,7 +1837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 33f430694d266ae48b6de3da5e5dc6ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5c9d6b1b42bf83149a889d00da2631ee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

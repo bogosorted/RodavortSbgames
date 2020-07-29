@@ -21,7 +21,7 @@ public class Carta : MonoBehaviour
     }
     public void definirComeco(string numero)
     {
-        Id = numero;t
+        Id = numero;
         Card refCard = Resources.Load<Card>("InformacoesCartas/" + numero);
         Imagem = Resources.Load<Sprite>("CartasProntas/" + numero);  
          //TESTE

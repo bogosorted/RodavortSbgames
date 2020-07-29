@@ -22,7 +22,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public Text goldPlayer;
     //lembrar de colocar tudo
 
-    public GameObject carta,Seta,Dano;
+    public GameObject carta,Seta,SetaEfeito,Dano;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;
     PlayerId playerid;
@@ -35,7 +35,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     EventSystem input;
     Exibicao exibir;
     Animator OutPut;
-    GameObject CartaAtual,AtaqueNoInimigo,seta,dano;
+    GameObject CartaAtual,AtaqueNoInimigo,seta,dano,setaEfeito;
     Carta cartaEfeito;
     List<RaycastResult> resultados;
     PointerEventData cursor;
@@ -405,10 +405,10 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     
 void Atacar(){
     foreach(var obj in resultados)
-    {                       
-                
+    {                                  
+
         // carta efeito
-        if(cartaEfeito && (obj.gameObject.name == "CartaNaMesaInimigo"|| obj.gameObject.name == "CartaNaMesa"))
+        if(isOnEffect && (obj.gameObject.name == "CartaNaMesaInimigo"|| obj.gameObject.name == "CartaNaMesa"))
         {
             //testar o playerid.cmdefeito
             print(obj.gameObject.name == "CartaNaMesa");
@@ -417,13 +417,8 @@ void Atacar(){
             playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
             playerid.CmdEfeitoRealizado(obj.gameObject.name == "CartaNaMesa",obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
             SetRaycast(true);
-            cartaEfeito = null;
-        }
-        else if(cartaEfeito)
-        {
-            CriarCarta(int.Parse(cartaEfeito.Id));     
-            SetRaycast(true);
-            cartaEfeito = null;
+            isOnEffect = false;
+           // cartaEfeito = null;
         }
         //atacar carta
         if (obj.gameObject.name == "CartaNaMesaInimigo" && AtaqueNoInimigo)
@@ -561,15 +556,23 @@ void ColocarCartaNaMesa()
 
     void InstanciarSeta()
     {
-        seta = Instantiate(Seta);
-        seta.transform.SetParent(transform.GetChild(4),false);
-
-        seta.transform.localPosition = Vector2.up * -200;
+        setaEfeito = Instantiate(SetaEfeito);
+        setaEfeito.transform.SetParent(transform.GetChild(4),false);
+        setaEfeito.transform.localPosition = Vector2.up * -200;
     }
     void DestruirCartaBaralho(GameObject carta)
     {
         carta.name = "Destruido";
         carta.gameObject.GetComponent<Image>().raycastTarget = false;
         carta.gameObject.GetComponent<Animator>().SetBool("Destruir", true);
+    }
+    public void EfeitoCancelado()
+    {
+        if(isOnEffect)
+        {
+            CriarCarta(int.Parse(cartaEfeito.Id));     
+            SetRaycast(true);
+            cartaEfeito = null;
+        }
     }
 }
