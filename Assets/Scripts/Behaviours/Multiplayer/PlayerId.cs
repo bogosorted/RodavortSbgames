@@ -150,14 +150,13 @@ public class PlayerId : NetworkBehaviour
         {
             GameObject ntworkManager = GameObject.Find("NetworkManager");
             ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
-            // NetworkServer.DisconnectAll();        
+            NetworkManager.singleton.StopHost();       
             ntwrk.StopHost();
         }
         else
         {
             GameObject ntworkManager = GameObject.Find("NetworkManager");
-            ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
-            
+            ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;          
             ntwrk.StopClient();
         }
     }

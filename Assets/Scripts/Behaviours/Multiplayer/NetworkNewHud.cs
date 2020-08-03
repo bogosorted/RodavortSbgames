@@ -5,6 +5,7 @@ using Mirror;
 
 public class NetworkNewHud : MonoBehaviour
 {
+    // identidade do player 
     public NetworkManager manager;
     PlayerId playerId; 
     
@@ -17,5 +18,5 @@ public class NetworkNewHud : MonoBehaviour
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerId = ntwrkid.GetComponent<PlayerId>();
         playerId.CmdStopHost();
-    }    
+    }       
 }

@@ -64,8 +64,8 @@ namespace Mirror.Discovery
         {
             // headless mode? then start advertising
             if (NetworkManager.isHeadless)
-            {
-                AdvertiseServer();
+            {  
+                AdvertiseServer();    
             }
         }
 
@@ -119,8 +119,13 @@ namespace Mirror.Discovery
                 throw new PlatformNotSupportedException("Network discovery not supported in this platform");
 
             StopDiscovery();
-
+    
             // Setup port -- may throw exception
+            if(serverUdpClient != null)
+            {
+                serverUdpClient.Close();
+                serverUdpClient = null;
+            }
             serverUdpClient = new UdpClient(serverBroadcastListenPort)
             {
                 EnableBroadcast = true,

@@ -7,8 +7,9 @@ using Mirror;
 
 
 public class Hud : MonoBehaviour
-{
-        public GameObject botao;
+{       
+       
+        public InputField ip;
         readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
         Vector2 scrollViewPos = Vector2.zero;
 
@@ -59,9 +60,8 @@ public class Hud : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         foreach (ServerResponse info in discoveredServers.Values)
         {
-            GameObject refBotao = Instantiate(botao);
-            refBotao.transform.SetParent(transform,false);
-            refBotao.GetComponent<botaoScript>().Info = info;
+          ip.text = info.uri.Host;
+          NetworkManager.singleton.networkAddress = ip.text;
         }
     }
 
