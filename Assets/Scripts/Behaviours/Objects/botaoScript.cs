@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror.Discovery;
 using Mirror;
+using UnityEngine.UI;
 
 public class botaoScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class botaoScript : MonoBehaviour
     
     public void OnClick()
     {
+        NetworkManager.singleton.networkAddress = GameObject.Find("IpAddress").GetComponent<Text>().text;
         NetworkManager.singleton.StartClient();
     }
     
