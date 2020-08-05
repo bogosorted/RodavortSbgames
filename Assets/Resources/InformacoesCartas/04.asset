@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
   m_Name: 04
   m_EditorClassIdentifier: 
-  passiva: 4
-  ativarPassivaQuando: 3
-  alvoDaPassiva: 6
-  quantidadePassiva: 2
+  passiva: 3
+  ativarPassivaQuando: 4
+  alvoDaPassiva: 5
+  quantidadePassiva: 0
   nome: MINOTAURO
-  desc: "Um minotauro desprevinido \xE9 uma presa f\xE1cil, minotauro ganha um de
-    ataque ao iniciar um ataque a um inimigo"
-  dano: 2
-  vida: 444444
-  valor: 0
+  desc: "essa carta <color=red>executa</color> uma carta <color=orange>aleat\xF3ria</color>
+    advers\xE1ria ao morrer."
+  dano: 4
+  vida: 2
+  valor: 4
   SomNaEntrada:
   - {fileID: 8300000, guid: 7c4f592afb977154ea6dbb3c0aeb1297, type: 3}
   - {fileID: 8300000, guid: 4171d4d375bf26649a2a4de0bba591fe, type: 3}

@@ -15,12 +15,12 @@ MonoBehaviour:
   passiva: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
-  quantidadePassiva: 0
+  quantidadePassiva: 1
   nome: ESPADACHIM
   desc: 
   dano: 1
   vida: 1
-  valor: 0
+  valor: 1
   SomNaEntrada:
   - {fileID: 8300000, guid: a09bd2f0c7c4ec040be22781a2a85def, type: 3}
   - {fileID: 8300000, guid: 70073faf85d13394792ef6b7fb0ed2b1, type: 3}

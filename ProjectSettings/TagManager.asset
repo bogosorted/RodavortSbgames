@@ -10,6 +10,7 @@ TagManager:
   - Canvas
   - CampoAmigo
   - PlayerId
+  - MusicaDeFundo
   layers:
   - Default
   - TransparentFX

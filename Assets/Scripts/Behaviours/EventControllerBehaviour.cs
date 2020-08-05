@@ -206,15 +206,14 @@ public class EventControllerBehaviour : NetworkBehaviour
         playerid = ntwrkid.GetComponent<PlayerId>();
         if(!playerid.isplayer2)
         {   
-
+            
         }
          else
         {
         preparado = true;
         if(!testandoNoEditor)
             playerid.CmdInverterTurnoPlayers();
-        Player.SetRaycast(true);
-        playerid.CmdMudarTurno((int)turno);      
+        Player.SetRaycast(true);   
         }
     }
     private void TurnoAtaqueP2(){
@@ -224,7 +223,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         if(playerid.isplayer2)
             {
                 //player1 em game
-            print("teoricamente player ");
             Player.SetRaycast(true);
             CartasPlayer.SetRaycast(true);
             preparado = true;
@@ -246,7 +244,7 @@ public class EventControllerBehaviour : NetworkBehaviour
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         turno = Turnos.TurnoEscolhaP1;
-        playerid.CmdMudarTurno((int)turno); 
+       // playerid.CmdMudarTurno((int)turno); 
         OnClick();
         playerid.CmdTrocouTurno();  
         preparado = true;

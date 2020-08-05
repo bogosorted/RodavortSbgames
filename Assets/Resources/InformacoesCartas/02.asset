@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: 02
   m_EditorClassIdentifier: 
   passiva: 1
-  ativarPassivaQuando: 1
+  ativarPassivaQuando: 2
   alvoDaPassiva: 6
   quantidadePassiva: 1
-  nome: GOBLIN
-  desc: 
-  dano: 2
-  vida: 4
-  valor: 5
+  nome: GOBLIN [MONSTRO]
+  desc: essa carta pode <color=teal>atacar consecutivamente 1 vez</color> a cada
+    rodada.
+  dano: 1
+  vida: 2
+  valor: 2
   SomNaEntrada:
   - {fileID: 8300000, guid: 31d49912c34a76346a9c314c06749b62, type: 3}
   - {fileID: 8300000, guid: 8b666c102386ca745a90e0bd8064df0a, type: 3}

@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
   m_Name: 00
   m_EditorClassIdentifier: 
-  passiva: 1
-  ativarPassivaQuando: 6
-  alvoDaPassiva: 0
-  quantidadePassiva: 2
-  nome: TROVADOR
-  desc: A carta mais bolada  que tem <color=green>10 de vida</color>
-  dano: 2
+  passiva: 2
+  ativarPassivaQuando: 1
+  alvoDaPassiva: 3
+  quantidadePassiva: 1
+  nome: TROVADOR [MONSTRO]
+  desc: essa carta <color=green>cura 1</color> de vida todos os aliados presentes
+    no campo no momento de sua entrada
+  dano: 3
   vida: 2
-  valor: 0
+  valor: 3
   SomNaEntrada: []
   SomEmMorte: []

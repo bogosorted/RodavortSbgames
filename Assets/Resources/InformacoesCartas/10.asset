@@ -17,10 +17,10 @@ MonoBehaviour:
   alvoDaPassiva: 0
   quantidadePassiva: 0
   nome: PELEJADOR
-  desc: 
+  desc: "Uma carta enfurecida por uma gan\xE2ncia qualquer"
   dano: 1
   vida: 1
-  valor: 0
+  valor: 1
   SomNaEntrada:
   - {fileID: 8300000, guid: 6a024705767957845b8c77ed5695bde8, type: 3}
   - {fileID: 8300000, guid: 4d14c1614b2fc4f44ae2aeca384ae2aa, type: 3}

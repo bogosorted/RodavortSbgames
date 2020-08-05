@@ -541,7 +541,10 @@ void ColocarCartaNaMesa()
             isOnEffect = true;
         }
     }
-
+    void OnApplicationQuit()
+    {
+        playerid.CmdStopHost();
+    }
     void PuxarCartaMesa()
     {
         AtaqueNoInimigo = CartaAtual;

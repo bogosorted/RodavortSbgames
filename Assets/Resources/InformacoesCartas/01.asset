@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passiva: 2
   ativarPassivaQuando: 2
-  alvoDaPassiva: 6
-  quantidadePassiva: 5
-  nome: "BOTIC\xC1RIO"
-  desc: 
-  dano: 3
-  vida: 4
-  valor: 1
+  alvoDaPassiva: 4
+  quantidadePassiva: 2
+  nome: "BOTIC\xC1RIO [MONSTRO]"
+  desc: "essa carta <color=green>cura 2</color> de vida a algum monstro aliado <color=orange>aleat\xF3rio</color>"
+  dano: 2
+  vida: 3
+  valor: 6
   SomNaEntrada:
   - {fileID: 8300000, guid: 88c80b6853bd6e84d89796aaaed0796c, type: 3}
   - {fileID: 8300000, guid: 85d9ca566373cd94fa8a660022edf478, type: 3}
