@@ -238,7 +238,7 @@ MonoBehaviour:
     type: 3}
   Dano: {fileID: 6324362863924425126, guid: a0d556e4b9212b44ab9f5748eb532918, type: 3}
   mao: []
-  vida: 40
+  vida: 15
 --- !u!114 &8170881886572929126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   goldInimigo: {fileID: 706906039620044010}
   maoAdversaria: []
   CartaSegurada: {fileID: 0}
-  vida: 40
+  vida: 15
   gold: 0
 --- !u!114 &8924290166206258646
 MonoBehaviour:

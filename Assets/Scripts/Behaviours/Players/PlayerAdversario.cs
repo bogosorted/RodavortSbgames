@@ -211,7 +211,7 @@ public class PlayerAdversario : MonoBehaviour
     public void PerderVida(float dano) 
     {
         vida -= dano;
-        vidaInimigo.text = vida + "/40";
+        vidaInimigo.text = vida + "/15";
     }
     public void SetarGold(int goldMax)
     {

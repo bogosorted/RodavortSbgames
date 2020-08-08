@@ -42,9 +42,8 @@ public class PlayerId : NetworkBehaviour
         {
 
             EffectBase a = Factory.Criar(efeito);
-            a.quantidadeDoEfeito = quantidadeDoEfeito;
-            
-            a.RealizarEfeitoEm(!AutoAlvo?canvas.transform.GetChild(1).GetComponent<MesaBehaviour>().cartas[posicaoCarta]:canvas.transform.GetChild(2).GetComponent<MesaBehaviour>().cartas[posicaoCarta],null);  
+            a.quantidadeDoEfeito = quantidadeDoEfeito;   
+            a.RealizarEfeitoEm(!AutoAlvo? canvas.transform.GetChild(1).GetComponent<MesaBehaviour>().cartas[posicaoCarta]:canvas.transform.GetChild(2).GetComponent<MesaBehaviour>().cartas[posicaoCarta],null);  
             
         }
     }

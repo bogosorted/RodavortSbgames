@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passiva: 2
   ativarPassivaQuando: 2
-  alvoDaPassiva: 3
+  alvoDaPassiva: 5
   quantidadePassiva: -1
   nome: CATAPULTA
   desc: "essa carta ataca <color=orange>aleatoriamente</color> <color=maroon>retira

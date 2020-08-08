@@ -394,7 +394,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public void TirarVidaPlayer(float dano) 
     {
         vida -= dano;
-        vidaPlayer.text = vida + "/40";
+        vidaPlayer.text = vida + "/15";
     }
     public void SetarGold(int goldMax) 
     {
@@ -415,6 +415,7 @@ void Atacar(){
             print(obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);   
             this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(cartaEfeito.Passiva,obj.gameObject.transform.parent.gameObject,true,null);
             playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
+            //carta ativo não referenciam objetos realizadores
             playerid.CmdEfeitoRealizado(obj.gameObject.name == "CartaNaMesa",obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
             SetRaycast(true);
             isOnEffect = false;

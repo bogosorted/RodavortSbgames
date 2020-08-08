@@ -17,6 +17,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     [Header("OuroConfig")]
     private int ouroLimite;
     bool preparado;
+    bool rodandoPassivasCampoProprio;
     PlayerAdversario Inimigo;
     Mao Player;
     MesaBehaviour CartasPlayer;
@@ -39,7 +40,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
-        testandoNoEditor = false;
+        testandoNoEditor = true;
 
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
@@ -67,16 +68,40 @@ public class EventControllerBehaviour : NetworkBehaviour
                  a.RealizarEfeitoEm(player1?  CartasPlayer.cartas: CartasInimigo.cartas,realizador);
                  break;
             case AlvoPassiva.TodasAsCartas:
-                    a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
-                    a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
+            //garantir que nos dois pc rodem as passivas na mesma ordem
+                    if(!playerid.isplayer2)
+                    {
+                        a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
+                        a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
+                    }
+                    else
+                    {
+                        a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
+                        a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
+                    }
                 break;
             case AlvoPassiva.CartaAleatoriaAliada:
-              if(!player1 && CartasInimigo.cartas.Count > 0 || player1 && CartasPlayer.cartas.Count > 0)
-              a.RealizarEfeitoEm(player1?  CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)] : CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)],realizador);
+              if(/*!player1 && CartasInimigo.cartas.Count > 0 ||*/CartasPlayer.cartas.Count > 0)
+              {
+                  if(rodandoPassivasCampoProprio)
+                  {
+                    var rnd = Random.Range(0,CartasPlayer.cartas.Count);
+                    a.RealizarEfeitoEm(CartasPlayer.cartas[rnd],realizador);
+                    playerid.CmdEfeitoRealizado(true,rnd,efeito.quantidade,(int)(efeito.efeito));
+                  }
+              }
+              
             break;
             case AlvoPassiva.CartaAleatoriaAdversaria:
-              if(player1 && CartasInimigo.cartas.Count > 0 || !player1 && CartasPlayer.cartas.Count > 0)
-              a.RealizarEfeitoEm(player1?  CartasInimigo.cartas[Random.Range(0,CartasInimigo.cartas.Count)]:CartasPlayer.cartas[Random.Range(0,CartasPlayer.cartas.Count)],realizador);
+              if(CartasInimigo.cartas.Count > 0 /*|| !player1 && CartasPlayer.cartas.Count > 0*/)
+              {
+                  if(rodandoPassivasCampoProprio)
+                  {
+                    var rnd = Random.Range(0,CartasInimigo.cartas.Count);
+                    a.RealizarEfeitoEm(CartasInimigo.cartas[rnd],realizador);
+                    playerid.CmdEfeitoRealizado(false,rnd,efeito.quantidade,(int)(efeito.efeito));
+                  }
+              }
             break;
             case AlvoPassiva.Carta:
             a.RealizarEfeitoEm(realizador,realizador);
@@ -112,6 +137,8 @@ public class EventControllerBehaviour : NetworkBehaviour
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
+        if(!testandoNoEditor && numerosPlayers.Length == 2)
+            botao.interactable = false;
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
         {
  
@@ -262,11 +289,10 @@ public class EventControllerBehaviour : NetworkBehaviour
             turno = Turnos.TurnoEscolhaP1;
             //playerid = ntwrkid.GetComponent<PlayerId>();
             playerid.CmdMudarTurno((int)turno); 
-            if(!testandoNoEditor)
-                playerid.CmdInverterTurnoPlayers();
             // o player 2 tem vantagem por rodar a passiva primeiro q o player 1
             foreach(var obj in playerid.isplayer2 ?  CartasInimigo.cartas : CartasPlayer.cartas)
             {
+                rodandoPassivasCampoProprio = !playerid.isplayer2;
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque =1;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
@@ -275,6 +301,7 @@ public class EventControllerBehaviour : NetworkBehaviour
             }
             foreach(var obj in playerid.isplayer2 ?  CartasPlayer.cartas : CartasInimigo.cartas)
             {
+                rodandoPassivasCampoProprio = playerid.isplayer2;
                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
                 refCard.QuantidadeAtaque = 1 ;
                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
