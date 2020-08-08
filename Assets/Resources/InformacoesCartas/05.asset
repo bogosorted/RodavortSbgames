@@ -17,10 +17,10 @@ MonoBehaviour:
   alvoDaPassiva: 2
   quantidadePassiva: 1
   nome: "CL\xCDNICO"
-  desc: "CARTAS FRACAS COM 2 OU MENOS DE VIDA SER\xC3O EXECUTADAS AP\xD3S O NOVO
-    TURNO"
+  desc: essa carta <color=red>executa</color> cartas com vida menor igual a 3 ao
+    atacar
   dano: 1
   vida: 1
-  valor: 0
+  valor: 1
   SomNaEntrada: []
   SomEmMorte: []

@@ -172,7 +172,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
         if(numerosPlayers.Length == 2 || testandoNoEditor)// true 
         {
-            print("foi");
             Player.SetRaycast(true);
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;
             playerid = ntwrkid.GetComponent<PlayerId>();

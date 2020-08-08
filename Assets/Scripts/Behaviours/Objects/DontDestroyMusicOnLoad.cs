@@ -6,6 +6,9 @@ public class DontDestroyMusicOnLoad : MonoBehaviour
 {
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if(GameObject.FindGameObjectsWithTag(this.gameObject.tag).Length > 1)
+            Destroy(this.gameObject);
+        else
+            DontDestroyOnLoad(this.gameObject);
     }
 }

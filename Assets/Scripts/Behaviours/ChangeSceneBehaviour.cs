@@ -5,14 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class ChangeSceneBehaviour : MonoBehaviour
 {
-
-    void Update()
+    public float volumeMusicTheme = 0.12f;
+    public void OnLanMultiplayerClick()
     {
-        if(Input.anyKey)
-        {
+         ConfigurationMusicTheme();
          SceneManager.LoadScene("MenuMultiplayer");
-         GameObject.FindGameObjectWithTag("MusicaDeFundo").GetComponent<AudioSource>().volume = 0.12f;
-        }
-        
+    }
+    public void OnExitClick()
+    {
+        Application.Quit();
+    }
+    void ConfigurationMusicTheme()
+    {
+        GameObject.FindGameObjectWithTag("MusicaDeFundo").GetComponent<AudioSource>().volume = volumeMusicTheme;
     }
 }

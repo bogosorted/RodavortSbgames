@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror.Discovery;
 using Mirror;
 using UnityEngine.UI;
@@ -30,5 +31,9 @@ public class botaoScript : MonoBehaviour
     {
     
         GameObject.Find("NetworkManager").GetComponent<NetworkNewHud>().OnStop();
+    }
+    public void OnBackClick()
+    {
+        SceneManager.LoadScene("MenuInicial");
     }
 }

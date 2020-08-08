@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: 08
   m_EditorClassIdentifier: 
   passiva: 3
-  quantidade: 0
   ativarPassivaQuando: 1
   alvoDaPassiva: 1
+  quantidadePassiva: 0
   nome: HIPERNOVA
   desc: 
-  dano: 2
+  dano: 0
   vida: 0
   valor: 10
+  SomNaEntrada: []
+  SomEmMorte: []

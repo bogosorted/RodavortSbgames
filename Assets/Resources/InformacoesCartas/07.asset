@@ -18,9 +18,9 @@ MonoBehaviour:
   quantidadePassiva: 0
   nome: "TR\xD3PIA"
   desc: 
-  dano: 1
-  vida: 1
-  valor: 0
+  dano: 6
+  vida: 5
+  valor: 6
   SomNaEntrada:
   - {fileID: 8300000, guid: 4c0e4fc3f5963f14998281e7d29bc6ae, type: 3}
   SomEmMorte:

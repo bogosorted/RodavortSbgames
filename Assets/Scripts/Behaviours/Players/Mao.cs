@@ -406,7 +406,6 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
 void Atacar(){
     foreach(var obj in resultados)
     {                                  
-
         // carta efeito
         if(isOnEffect && (obj.gameObject.name == "CartaNaMesaInimigo"|| obj.gameObject.name == "CartaNaMesa"))
         {

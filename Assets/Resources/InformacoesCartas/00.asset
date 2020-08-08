@@ -16,7 +16,7 @@ MonoBehaviour:
   ativarPassivaQuando: 1
   alvoDaPassiva: 3
   quantidadePassiva: 1
-  nome: TROVADOR [MONSTRO]
+  nome: TROVADOR
   desc: essa carta <color=green>cura 1</color> de vida todos os aliados presentes
     no campo no momento de sua entrada
   dano: 3

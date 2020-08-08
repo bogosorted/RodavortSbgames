@@ -16,7 +16,7 @@ MonoBehaviour:
   ativarPassivaQuando: 2
   alvoDaPassiva: 6
   quantidadePassiva: 1
-  nome: GOBLIN [MONSTRO]
+  nome: GOBLIN
   desc: essa carta pode <color=teal>atacar consecutivamente 1 vez</color> a cada
     rodada.
   dano: 1

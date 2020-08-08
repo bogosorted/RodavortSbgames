@@ -58,7 +58,7 @@ public class Matar:EffectBase
    
     public override void RealizarEfeitoEm(GameObject a, GameObject b)
     {
-      a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa;
+      a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa -= a.transform.GetChild(0).GetComponent<CartaNaMesa>().Defesa + 1;
     }
 }
 public class AtaqueConsecutivo:EffectBase

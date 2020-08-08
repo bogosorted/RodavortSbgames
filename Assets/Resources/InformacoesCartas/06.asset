@@ -19,7 +19,7 @@ MonoBehaviour:
   nome: ESPADACHIM
   desc: 
   dano: 1
-  vida: 1
+  vida: 2
   valor: 1
   SomNaEntrada:
   - {fileID: 8300000, guid: a09bd2f0c7c4ec040be22781a2a85def, type: 3}
