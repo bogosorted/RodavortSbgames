@@ -10,7 +10,8 @@ public class EventControllerBehaviour : NetworkBehaviour
 {  
     // tirar essa variavel na versão final do game
     bool testandoNoEditor;
-
+    public float buttonCd;
+    float LastClickButtonTime;
     public static Turnos turno;
     public static int ouroMaximo;
     public GameObject exibicaoTurno;
@@ -134,25 +135,28 @@ public class EventControllerBehaviour : NetworkBehaviour
     //metodo sobrecarregado para alvos especificos
      public void OnClick()
     {
-        GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
-        if(!testandoNoEditor && numerosPlayers.Length == 2)
-            botao.interactable = false;
-        if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
+        if(Time.time > LastClickButtonTime + buttonCd)
         {
- 
-            turno = turno + 1;
-            playerid.CmdMudarTurno((int)turno);
-            if(!testandoNoEditor)
-                playerid.CmdInverterTurnoPlayers();
-            playerid.CmdExibirTurno();
+            LastClickButtonTime = Time.time;
+            GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
+            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            playerid = ntwrkid.GetComponent<PlayerId>();
+            if(!testandoNoEditor && numerosPlayers.Length == 2)
+                botao.interactable = false;
+            if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
+            {
+                turno = turno + 1;
+                playerid.CmdMudarTurno((int)turno);
+                if(!testandoNoEditor)
+                    playerid.CmdInverterTurnoPlayers();
+                playerid.CmdExibirTurno();
+            }
+            //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
+            else if (preparado && numerosPlayers.Length == 2 || testandoNoEditor)
+                playerid.CmdTrocouTurno();         
+            preparado = false;
+            playerid.CmdInvoke((int)turno);
         }
-        //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
-        else if (preparado && numerosPlayers.Length == 2 || testandoNoEditor)
-            playerid.CmdTrocouTurno();         
-        preparado = false;
-        playerid.CmdInvoke((int)turno);
     }
    public void InvokeLater(int id)
    {
@@ -271,8 +275,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         turno = Turnos.TurnoEscolhaP1;
        // playerid.CmdMudarTurno((int)turno); 
         OnClick();
-        if(!testandoNoEditor)
-            playerid.CmdInverterTurnoPlayers();
         playerid.CmdTrocouTurno();  
         preparado = true;
     }

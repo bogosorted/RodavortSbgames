@@ -278,6 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  buttonCd: 1
   exibicaoTurno: {fileID: 2733572418933760229, guid: 11dc943f58e6acd40820a1945b01d4ae,
     type: 3}
   botao: {fileID: 4470336545932508916}
