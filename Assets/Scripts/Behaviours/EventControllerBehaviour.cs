@@ -40,7 +40,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
-        testandoNoEditor = true;
+        testandoNoEditor = false;
 
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
@@ -87,7 +87,7 @@ public class EventControllerBehaviour : NetworkBehaviour
                   {
                     var rnd = Random.Range(0,CartasPlayer.cartas.Count);
                     a.RealizarEfeitoEm(CartasPlayer.cartas[rnd],realizador);
-                    playerid.CmdEfeitoRealizado(true,rnd,efeito.quantidade,(int)(efeito.efeito));
+                    playerid.CmdEfeitoRealizado(false,rnd,efeito.quantidade,(int)(efeito.efeito));
                   }
               }
               
@@ -99,7 +99,7 @@ public class EventControllerBehaviour : NetworkBehaviour
                   {
                     var rnd = Random.Range(0,CartasInimigo.cartas.Count);
                     a.RealizarEfeitoEm(CartasInimigo.cartas[rnd],realizador);
-                    playerid.CmdEfeitoRealizado(false,rnd,efeito.quantidade,(int)(efeito.efeito));
+                    playerid.CmdEfeitoRealizado(true,rnd,efeito.quantidade,(int)(efeito.efeito));
                   }
               }
             break;
@@ -142,7 +142,7 @@ public class EventControllerBehaviour : NetworkBehaviour
         if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
         {
  
-            turno += 1;
+            turno = turno + 1;
 
             playerid.CmdMudarTurno((int)turno);
             if(!testandoNoEditor)
@@ -258,10 +258,10 @@ public class EventControllerBehaviour : NetworkBehaviour
             }
              else
             {
-                if(!testandoNoEditor)
-                    playerid.CmdInverterTurnoPlayers();
-                playerid.CmdCriarCartaInicio(Random.Range(0,13));
-                Player.SetRaycast(true);
+                // if(!testandoNoEditor)
+                //     playerid.CmdInverterTurnoPlayers();
+                // playerid.CmdCriarCartaInicio(Random.Range(0,13));
+                // Player.SetRaycast(true);
             }
     }
        //bot ataque
