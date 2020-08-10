@@ -143,7 +143,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         {
  
             turno = turno + 1;
-
             playerid.CmdMudarTurno((int)turno);
             if(!testandoNoEditor)
                 playerid.CmdInverterTurnoPlayers();
@@ -272,6 +271,8 @@ public class EventControllerBehaviour : NetworkBehaviour
         turno = Turnos.TurnoEscolhaP1;
        // playerid.CmdMudarTurno((int)turno); 
         OnClick();
+        if(!testandoNoEditor)
+            playerid.CmdInverterTurnoPlayers();
         playerid.CmdTrocouTurno();  
         preparado = true;
     }
