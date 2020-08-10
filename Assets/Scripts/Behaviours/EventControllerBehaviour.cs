@@ -147,8 +147,8 @@ public class EventControllerBehaviour : NetworkBehaviour
             {
                 turno = turno + 1;
                 playerid.CmdMudarTurno((int)turno);
-                if(!testandoNoEditor)
-                    playerid.CmdInverterTurnoPlayers();
+                // if(!testandoNoEditor)
+                //     playerid.CmdInverterTurnoPlayers();
                 playerid.CmdExibirTurno();
             }
             //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
@@ -270,6 +270,10 @@ public class EventControllerBehaviour : NetworkBehaviour
        //bot ataque
        //AtaqueCartas();
     private void NovoTurno(){
+        if(!playerid.isplayer2)
+        {
+            playerid.CmdInverterTurnoPlayers();
+        }
         NetworkIdentity ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
         turno = Turnos.TurnoEscolhaP1;
