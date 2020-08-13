@@ -415,7 +415,7 @@ void Atacar(){
             this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(cartaEfeito.Passiva,obj.gameObject.transform.parent.gameObject,true,null);
             playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
             //carta ativo não referenciam objetos realizadores
-            playerid.CmdEfeitoRealizado(obj.gameObject.name == "CartaNaMesa",obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
+            playerid.CmdEfeitoRealizado(!(obj.gameObject.name == "CartaNaMesa"),obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
             SetRaycast(true);
             isOnEffect = false;
            // cartaEfeito = null;
@@ -535,10 +535,14 @@ void ColocarCartaNaMesa()
 
         if(CartaAtual.GetComponent<Carta>().IsAtivo)
         {
-            cartaEfeito = CartaAtual.GetComponent<Carta>();
-            DestruirCartaBaralho(CartaAtual);
-            InstanciarSeta();
-            isOnEffect = true;
+            int barra = goldPlayer.text.IndexOf('/');
+            if (CartaAtual.gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
+                {                      
+                    cartaEfeito = CartaAtual.GetComponent<Carta>();
+                    DestruirCartaBaralho(CartaAtual);
+                    InstanciarSeta();
+                    isOnEffect = true;
+                }
         }
     }
     void OnApplicationQuit()

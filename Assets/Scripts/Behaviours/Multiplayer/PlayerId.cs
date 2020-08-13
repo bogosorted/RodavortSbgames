@@ -186,7 +186,10 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
     void RpcInverterTurnos()
     {
-          canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!hasAuthority);
+	// if(!hasAuthority)
+    //     canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(true);
+	// if(hasAuthority)
+	//     canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
     }
     [Command]
     public void CmdMudarTurno(int turno)
@@ -203,11 +206,16 @@ public class PlayerId : NetworkBehaviour
     public void CmdExibirTurno()
     {
         RpcExibirTurno();
+        
     }
     [ClientRpc]
     void RpcExibirTurno()
     {
             canvas.GetComponent<EventControllerBehaviour>().ExibirTurno();
+            if(!hasAuthority)
+            canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(true);
+            if(hasAuthority)
+             canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
     }
     [Command]
     public void CmdCriarCartaInicio(int id)

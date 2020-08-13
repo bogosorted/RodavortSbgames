@@ -400,7 +400,7 @@ PrefabInstance:
     - target: {fileID: 8924290166206258646, guid: 821ef2b081c2cab468fa8fa5d1437c74,
         type: 3}
       propertyPath: buttonCd
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 821ef2b081c2cab468fa8fa5d1437c74, type: 3}
