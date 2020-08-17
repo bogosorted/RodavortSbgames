@@ -41,7 +41,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
-        testandoNoEditor = false;
+        testandoNoEditor = true;
 
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
@@ -149,7 +149,8 @@ public class EventControllerBehaviour : NetworkBehaviour
                 playerid.CmdMudarTurno((int)turno);
                 // if(!testandoNoEditor)
                 //     playerid.CmdInverterTurnoPlayers();
-                playerid.CmdExibirTurno();
+                if(!testandoNoEditor)
+                    playerid.CmdExibirTurno();
             }
             //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
             else if (preparado && numerosPlayers.Length == 2 || testandoNoEditor)

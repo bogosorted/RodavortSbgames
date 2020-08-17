@@ -27,6 +27,6 @@ public class SetaEfeitoBehaviour : MonoBehaviour
         mousePos.y -= objectPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle -80));
-        rect.sizeDelta = new Vector2(20 + mousePos.y * 0.3f  , Mathf.Abs(mousePos.x)* 0.6f + mousePos.y *0.75f);
+        rect.sizeDelta = new Vector2(35 + mousePos.y * 0.55f  , Mathf.Abs(mousePos.x)* 0.6f + mousePos.y *0.75f);
     }
 }
