@@ -85,6 +85,7 @@
          switch(obj.AtivarPassivaQuando)
          {
             case Evento.CartaIniciada:
+               controller.rodandoPassivasCampoProprio = !(obj.name == "CartaNaMesaInimigo");
                controller.RealizarPassivaEm(obj.Passiva,obj.Alvo,(objCarta.tag == "Player"),objCarta);
                 break;
          }

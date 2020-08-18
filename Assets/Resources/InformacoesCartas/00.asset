@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 00
   m_EditorClassIdentifier: 
   passiva: 2
-  ativarPassivaQuando: 6
-  alvoDaPassiva: 0
+  ativarPassivaQuando: 1
+  alvoDaPassiva: 3
   quantidadePassiva: 1
   nome: TROVADOR
   desc: essa carta <color=green>cura 1</color> de vida todos os aliados presentes

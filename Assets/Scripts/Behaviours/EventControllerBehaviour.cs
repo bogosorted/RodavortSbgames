@@ -18,7 +18,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     [Header("OuroConfig")]
     private int ouroLimite;
     bool preparado;
-    bool rodandoPassivasCampoProprio;
+    public bool rodandoPassivasCampoProprio;
     PlayerAdversario Inimigo;
     Mao Player;
     MesaBehaviour CartasPlayer;
