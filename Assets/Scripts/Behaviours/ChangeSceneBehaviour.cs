@@ -15,6 +15,11 @@ public class ChangeSceneBehaviour : MonoBehaviour
     {
         Application.Quit();
     }
+    public void OnCreditsClick()
+    {
+        SceneManager.LoadScene("Creditos");
+        ConfigurationMusicTheme();
+    }
     void ConfigurationMusicTheme()
     {
         GameObject.FindGameObjectWithTag("MusicaDeFundo").GetComponent<AudioSource>().volume = volumeMusicTheme;

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Campo.unity
     guid: c05ad0ae240a9c941b68f8d6a49101b9
+  - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: b7392752699d94c4fbf6faf5f0d96348
   m_configObjects: {}
