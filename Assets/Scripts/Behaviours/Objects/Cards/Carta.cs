@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class Carta : MonoBehaviour
 {
     private Sprite _cartaImagem;

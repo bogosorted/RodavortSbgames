@@ -102,6 +102,7 @@
         //dado o fim da animação
         if (x >= 1)
         {
+            angularBaralho = false;
             return;
         }
         //animando todas as cartas da mão

@@ -11,6 +11,7 @@ TagManager:
   - CampoAmigo
   - PlayerId
   - MusicaDeFundo
+  - Mulligan
   layers:
   - Default
   - TransparentFX

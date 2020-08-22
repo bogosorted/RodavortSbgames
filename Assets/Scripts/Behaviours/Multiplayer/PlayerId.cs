@@ -55,34 +55,41 @@ public class PlayerId : NetworkBehaviour
     public void CmdAwake()
     {
         for(int i = 0;i < 3; i++)
-        {
+         {
             //atualizar o numero total de cartas no final do game
             int r = Random.Range(0,13);
             int r2 = Random.Range(0,13);
             RpcAwake(r,r2);
-        }
+         }
 
-    }
+
+    }   
+
      [ClientRpc]
-    void RpcAwake(int rn,int rn2)
+    void RpcAwake(int rn, int rn2)
     {
-       Mao player = canvas.GetComponent<Mao>();
-       PlayerAdversario player2 =  canvas.GetComponent<PlayerAdversario>();
-    if(hasAuthority)
-        {
-            
+        var mullig =  GameObject.Find("MulliganBackground");
+        mullig.GetComponent<Animator>().SetTrigger("Event");
+        Mao player = canvas.GetComponent<Mao>();
+        PlayerAdversario player2 =  canvas.GetComponent<PlayerAdversario>();
+        if(hasAuthority)
+            {
+            //exibir a carta no mulligan
+            mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn);
+            //
             player.CriarCartaInicio(rn);
             player2.CriarCarta(rn2);
-        }
-    else
-        {       
+            }
+        else
+            {       
             NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
-            playerid.isplayer2 = true;     
+            playerid = ntwrkid.GetComponent<PlayerId>(); 
+            playerid.isplayer2 = true; 
+            mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn2);   
             player.CriarCartaInicio(rn2);
             player2.CriarCarta(rn);
-        }        
-        //canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(hasAuthority);  
+            }        
+        canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!hasAuthority);  
     }
     [Command]
     public void CmdAtualizarGold(string valor)
@@ -217,6 +224,7 @@ public class PlayerId : NetworkBehaviour
             if(hasAuthority)
              canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
     }
+    // confirmar se é inicio
     [Command]
     public void CmdCriarCartaInicio(int id)
     {      

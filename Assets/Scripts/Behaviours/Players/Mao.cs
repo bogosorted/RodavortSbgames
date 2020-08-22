@@ -20,7 +20,6 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     [Header("Objetos")]
     public Text vidaPlayer;
     public Text goldPlayer;
-    //lembrar de colocar tudo
 
     public GameObject carta,Seta,SetaEfeito,Dano;
     public List<GameObject> mao = new List<GameObject>();
@@ -30,7 +29,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     [Header("VIDA")]
     public float vida;
     private int gold;
-    float distanciamentoCartasMaximo;
+    public float distanciamentoCartasMaximo;
     GraphicRaycaster raycast;
     EventSystem input;
     Exibicao exibir;
@@ -567,7 +566,7 @@ void ColocarCartaNaMesa()
         setaEfeito.transform.SetParent(transform.GetChild(4),false);
         setaEfeito.transform.localPosition = Vector2.up * -200;
     }
-    void DestruirCartaBaralho(GameObject carta)
+    public void DestruirCartaBaralho(GameObject carta)
     {
         carta.name = "Destruido";
         carta.gameObject.GetComponent<Image>().raycastTarget = false;

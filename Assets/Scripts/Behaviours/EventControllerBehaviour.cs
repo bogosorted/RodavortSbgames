@@ -41,7 +41,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
-        testandoNoEditor = true;
+        testandoNoEditor = false;
 
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
