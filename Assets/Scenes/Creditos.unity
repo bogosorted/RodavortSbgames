@@ -1033,7 +1033,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Gabriel Marques
+  m_Text: Gabriel Marques Taurino da Silva (Marksz)
 --- !u!222 &1020438366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1111,7 +1111,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Gabriel Marques
+  m_Text: Gabriel Marques Taurino da Silva (Marksz)
 --- !u!222 &1021257577
 CanvasRenderer:
   m_ObjectHideFlags: 0

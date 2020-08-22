@@ -9,6 +9,7 @@ using Mirror;
 public class EventControllerBehaviour : NetworkBehaviour
 {  
     // tirar essa variavel na versão final do game
+    public int numeroCartas;
     bool testandoNoEditor;
     public float buttonCd;
     float LastClickButtonTime;
@@ -218,7 +219,7 @@ public class EventControllerBehaviour : NetworkBehaviour
         if(!playerid.isplayer2)
             {
             Player.SetRaycast(true);
-            playerid.CmdCriarCartaInicio(Random.Range(0,13));
+            playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
              if(!testandoNoEditor)
                  playerid.CmdInverterTurnoPlayers();
             CartasPlayer.SetRaycast(true);
@@ -256,7 +257,7 @@ public class EventControllerBehaviour : NetworkBehaviour
             Player.SetRaycast(true);
             CartasPlayer.SetRaycast(true);
             preparado = true;
-            playerid.CmdCriarCartaInicio(Random.Range(0,13));
+            playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
              if(!testandoNoEditor)
                 playerid.CmdInverterTurnoPlayers();
             }

@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
   m_Name: 13
   m_EditorClassIdentifier: 
-  passiva: 0
-  ativarPassivaQuando: 0
-  alvoDaPassiva: 0
-  quantidadePassiva: 0
-  nome: 
+  passiva: 4
+  ativarPassivaQuando: 1
+  alvoDaPassiva: 1
+  quantidadePassiva: 1
+  nome: REI DO POVO
   desc: 
-  dano: 1
-  vida: 1
-  valor: 0
-  SomNaEntrada: []
-  SomEmMorte: []
+  dano: 4
+  vida: 3
+  valor: 4
+  SomNaEntrada:
+  - {fileID: 8300000, guid: c16a8f70558b8094098ba60fdeef9740, type: 3}
+  - {fileID: 8300000, guid: b84cc0ba1e2aa154b9e0006a616df5b5, type: 3}
+  - {fileID: 8300000, guid: 570cd214b9736ee48bee14b7fc0f8d77, type: 3}
+  SomEmMorte:
+  - {fileID: 8300000, guid: 63f1295c3fb017a48a394f43aad6a133, type: 3}

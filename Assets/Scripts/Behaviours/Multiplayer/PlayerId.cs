@@ -57,8 +57,8 @@ public class PlayerId : NetworkBehaviour
         for(int i = 0;i < 3; i++)
          {
             //atualizar o numero total de cartas no final do game
-            int r = Random.Range(0,13);
-            int r2 = Random.Range(0,13);
+            int r = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
+            int r2 = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
             RpcAwake(r,r2);
          }
 

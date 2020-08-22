@@ -88,7 +88,7 @@ public class MulliganBehaviour : NetworkBehaviour
              }
              while (rejeitados != 0)
              {
-                int rnd = Random.Range(0,13);
+                int rnd = Random.Range(0,GameObject.Find("Canvas").GetComponent<EventControllerBehaviour>().numeroCartas);
                 playerid.CmdCriarCartaInicio(rnd);    
                 CriarCarta(rnd);     
                 SetAnimacao(40);     
