@@ -422,5 +422,10 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 821ef2b081c2cab468fa8fa5d1437c74
       objectReference: {fileID: 0}
+    - target: {fileID: 8924290166206258646, guid: 821ef2b081c2cab468fa8fa5d1437c74,
+        type: 3}
+      propertyPath: numeroCartas
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 821ef2b081c2cab468fa8fa5d1437c74, type: 3}

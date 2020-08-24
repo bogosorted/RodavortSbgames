@@ -17,7 +17,8 @@ MonoBehaviour:
   alvoDaPassiva: 1
   quantidadePassiva: 1
   nome: REI DO POVO
-  desc: 
+  desc: Essa carta, quando iniciada  <color=teal>adiciona um ataque</color> a todas
+    as cartas aliadas  (incluindo ela mesma).
   dano: 4
   vida: 3
   valor: 4

@@ -977,7 +977,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "- adicionado ip direct;\n- adicionado \"notas da atualiza\xE7\xE3o\";\n-
-    To do : testar ipdirect."
+    adicionado o mulligan."
 --- !u!222 &891793892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2425,7 +2425,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "- vers\xE3o SbGames;\n- criado por alunos do ETE Cicero Dias."
+  m_Text: "- vers\xE3o SbGames;\n- criado por alunos do ETE Cicero Dias.\n Instagram\n@coebarao\n"
 --- !u!222 &1966567642
 CanvasRenderer:
   m_ObjectHideFlags: 0

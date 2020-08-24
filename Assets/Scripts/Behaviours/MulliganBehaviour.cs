@@ -70,7 +70,8 @@ public class MulliganBehaviour : NetworkBehaviour
         Mao player = GameObject.Find("Canvas").GetComponent<Mao>();
         int rejeitados = 0;
         for(int i = 0; i != cartas.Count; i++)
-        {
+        {       
+                SetAnimacao(40);
             print(i);
              if(cartas[i].transform.childCount != 1)
              {

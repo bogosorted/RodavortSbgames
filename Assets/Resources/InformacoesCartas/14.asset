@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e26537ccbbc780d43bd8d702536232b3, type: 3}
-  m_Name: 08
+  m_Name: 14
   m_EditorClassIdentifier: 
-  passiva: 3
-  ativarPassivaQuando: 1
-  alvoDaPassiva: 1
-  quantidadePassiva: 0
-  nome: HIPERNOVA
-  desc: <color=red>executa</color> todas as cartas presentes no tabuleiro.
+  passiva: 4
+  ativarPassivaQuando: 6
+  alvoDaPassiva: 0
+  quantidadePassiva: 2
+  nome: ESPADA DE JADE
+  desc: Essa carta tem o tipo <color=blue>Efeito</color> e adiciona +2 de dano ao
+    mostro especificado
   dano: 0
   vida: 0
-  valor: 10
+  valor: 3
   SomNaEntrada: []
   SomEmMorte: []
