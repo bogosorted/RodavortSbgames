@@ -16,7 +16,7 @@ MonoBehaviour:
   ativarPassivaQuando: 6
   alvoDaPassiva: 0
   quantidadePassiva: 2
-  nome: ESPADA DE JADE
+  nome: ESPADA JADE
   desc: Essa carta tem o tipo <color=blue>Efeito</color> e adiciona +2 de dano ao
     mostro especificado
   dano: 0

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: 11
   m_EditorClassIdentifier: 
   passiva: 0
-  quantidade: 0
   ativarPassivaQuando: 0
   alvoDaPassiva: 0
+  quantidadePassiva: 0
   nome: MINA DE OURO
-  desc: 
+  desc: "essa carta n\xE3o faz nada demais (cria\xE7\xE3o de passiva pendente)."
   dano: 1
   vida: 1
-  valor: 0
+  valor: 1
+  SomNaEntrada: []
+  SomEmMorte: []

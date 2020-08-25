@@ -42,7 +42,7 @@ public class EventControllerBehaviour : NetworkBehaviour
     }
 
     private void Start() {
-        testandoNoEditor = false;
+        testandoNoEditor = true;
 
         botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
@@ -285,7 +285,6 @@ public class EventControllerBehaviour : NetworkBehaviour
         preparado = true;
     }
     private void Derrota(){
-         print("Voce perdeu");
         preparado = true;
     }
    public void TrocouTurno()

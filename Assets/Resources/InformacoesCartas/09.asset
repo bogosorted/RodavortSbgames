@@ -20,7 +20,7 @@ MonoBehaviour:
   desc: 
   dano: 2
   vida: 4
-  valor: 0
+  valor: 5
   SomNaEntrada:
   - {fileID: 8300000, guid: 4a1bc63a2a35be243a84b808e4877cea, type: 3}
   SomEmMorte:

@@ -21,7 +21,7 @@ MonoBehaviour:
     advers\xE1ria ao morrer."
   dano: 4
   vida: 2
-  valor: 0
+  valor: 3
   SomNaEntrada:
   - {fileID: 8300000, guid: 7c4f592afb977154ea6dbb3c0aeb1297, type: 3}
   - {fileID: 8300000, guid: 4171d4d375bf26649a2a4de0bba591fe, type: 3}

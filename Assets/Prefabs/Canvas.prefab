@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.38, y: 10.203}
-  m_SizeDelta: {x: 86.60779, y: 86.60779}
+  m_AnchoredPosition: {x: -3.97, y: 11.61}
+  m_SizeDelta: {x: 85.42395, y: 89.41824}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &367323843279082425
 CanvasRenderer:
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  numeroCartas: 14
+  numeroCartas: 15
   buttonCd: 1
   exibicaoTurno: {fileID: 2733572418933760229, guid: 11dc943f58e6acd40820a1945b01d4ae,
     type: 3}

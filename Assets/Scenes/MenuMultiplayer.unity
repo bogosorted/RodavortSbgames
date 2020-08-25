@@ -1179,7 +1179,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Vers\xE3o ALPHA 1.0"
+  m_Text: "Vers\xE3o PRE-ALPHA 1.0"
 --- !u!222 &1083402037
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -17,7 +17,8 @@ MonoBehaviour:
   alvoDaPassiva: 6
   quantidadePassiva: -1
   nome: TORRE
-  desc: 
+  desc: "Essa carta n\xE3o possui poder de ataque e nem consegue atacar por conta
+    pr\xF3pria"
   dano: 0
   vida: 5
   valor: 4

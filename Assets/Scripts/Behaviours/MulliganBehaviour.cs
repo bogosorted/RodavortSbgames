@@ -9,6 +9,7 @@ public class MulliganBehaviour : NetworkBehaviour
 {
     public GameObject carta;
     public GameObject negacao;
+    GameObject canvas;
 
     PlayerId playerid;
     NetworkIdentity ntwrkid;
@@ -39,9 +40,11 @@ public class MulliganBehaviour : NetworkBehaviour
     }
     void Awake()
     {
+        
         resultados = new List<RaycastResult>();
-        raycast = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-        input = GameObject.Find("Canvas").GetComponent<EventSystem>();
+        canvas = GameObject.Find("Canvas");
+        raycast = canvas.GetComponent<GraphicRaycaster>();
+        input = canvas.GetComponent<EventSystem>();
         cursor = new PointerEventData(input);
         //CriarCarta(Random.Range())
 
@@ -67,7 +70,7 @@ public class MulliganBehaviour : NetworkBehaviour
         ntwrkid = NetworkClient.connection.identity;
         playerid = ntwrkid.GetComponent<PlayerId>();
 
-        Mao player = GameObject.Find("Canvas").GetComponent<Mao>();
+        Mao player = canvas.GetComponent<Mao>();
         int rejeitados = 0;
         for(int i = 0; i != cartas.Count; i++)
         {       
@@ -89,7 +92,7 @@ public class MulliganBehaviour : NetworkBehaviour
              }
              while (rejeitados != 0)
              {
-                int rnd = Random.Range(0,GameObject.Find("Canvas").GetComponent<EventControllerBehaviour>().numeroCartas);
+                int rnd = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
                 playerid.CmdCriarCartaInicio(rnd);    
                 CriarCarta(rnd);     
                 SetAnimacao(40);     
@@ -110,13 +113,19 @@ public class MulliganBehaviour : NetworkBehaviour
             raycast.Raycast(cursor, resultados);
             if (resultados.Count != 0)
             {              
-                var obj =resultados[0].gameObject;
+                var obj = resultados[0].gameObject;
                 if (obj.name == "MulliganCard" && !final)
                 {
                     if(obj.transform.childCount != 1)
+                    {
+                        canvas.GetComponent<Mao>().Audio(0);
                         Destroy(obj.transform.GetChild(1).gameObject);
+                    }
                     else
+                    {
+                        canvas.GetComponent<Mao>().Audio(2);
                         Instantiate(negacao,resultados[0].gameObject.transform);
+                    }
               
                 }
             }
