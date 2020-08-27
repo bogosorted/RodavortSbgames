@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 05
   m_EditorClassIdentifier: 
   passiva: 6
-  ativarPassivaQuando: 2
+  ativarPassivaQuando: 3
   alvoDaPassiva: 7
-  quantidadePassiva: 1
+  quantidadePassiva: 2
   nome: "CL\xCDNICO"
   desc: essa carta <color=red>executa</color> cartas com vida menor igual a 3 ao
     atacar

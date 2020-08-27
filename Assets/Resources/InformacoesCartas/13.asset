@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passiva: 4
   ativarPassivaQuando: 1
-  alvoDaPassiva: 1
+  alvoDaPassiva: 3
   quantidadePassiva: 1
   nome: REI DO POVO
   desc: Essa carta, quando iniciada  <color=teal>adiciona um ataque</color> a todas

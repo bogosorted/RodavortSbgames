@@ -171,7 +171,9 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
 
                 break;
              }
+             
         }     
+        CartaAtual = null;
     }
     
     public void Mouse()
@@ -408,9 +410,9 @@ void Atacar(){
         // carta efeito
         if(isOnEffect && (obj.gameObject.name == "CartaNaMesaInimigo"|| obj.gameObject.name == "CartaNaMesa"))
         {
-            //testar o playerid.cmdefeito
-            print(obj.gameObject.name == "CartaNaMesa");
-            print(obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);   
+            int barra = goldPlayer.text.IndexOf('/');
+            goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - cartaEfeito.Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
+            playerid.CmdAtualizarGold(goldPlayer.text);
             this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(cartaEfeito.Passiva,obj.gameObject.transform.parent.gameObject,true,null);
             playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
             //carta ativo não referenciam objetos realizadores
@@ -452,6 +454,7 @@ void Atacar(){
                 }
                 
                 refCard.QuantidadeAtaque--;
+                
                 StartCoroutine(DarDano(obj.gameObject));
             }
         break;
@@ -537,6 +540,7 @@ void ColocarCartaNaMesa()
             int barra = goldPlayer.text.IndexOf('/');
             if (CartaAtual.gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                 {                      
+                    playerid.CmdAtualizarGold(goldPlayer.text);
                     cartaEfeito = CartaAtual.GetComponent<Carta>();
                     DestruirCartaBaralho(CartaAtual);
                     InstanciarSeta();

@@ -168,7 +168,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: Rodavort
+    Android: com.Aragao.Rodavort
     Standalone: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1

@@ -18,7 +18,7 @@ MonoBehaviour:
   quantidadePassiva: 0
   nome: "TR\xD3PIA"
   desc: 
-  dano: 6
+  dano: 7
   vida: 5
   valor: 6
   SomNaEntrada:

@@ -137,12 +137,13 @@ public class CartaNaMesa : MonoBehaviour
                 if(_defesa <= 0)
                 {
                    Mao player = transform.parent.transform.parent.transform.parent.GetComponent<Mao>();
-                    if(AoMorrer != null && AoMorrer.Length >0)
+                    if(AoMorrer != null && AoMorrer.Length > 0)
                         player.som.PlayOneShot(AoMorrer[Random.Range(0,AoMorrer.Length)]);
                     switch(AtivarPassivaQuando)
                     {
                         case Evento.CartaMorreu:
-                      gameObject.transform.parent.transform.parent.transform.parent.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(this.Passiva,this.Alvo,(transform.parent.tag == "Player"),this.gameObject);
+                        gameObject.transform.parent.transform.parent.transform.parent.GetComponent<EventControllerBehaviour>().rodandoPassivasCampoProprio = transform.parent.tag == "Player";
+                        gameObject.transform.parent.transform.parent.transform.parent.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(this.Passiva,this.Alvo,(transform.parent.tag == "Player"),this.gameObject);
                         break;
                     }
                     gameObject.name = "morto";
