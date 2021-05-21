@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
-using Mirror;
 
 
-public class EventControllerBehaviour : NetworkBehaviour
+
+public class EventControllerBehaviour : MonoBehaviour
 {  
     // tirar essa variavel na versão final do game
     public int numeroCartas;
@@ -19,13 +19,14 @@ public class EventControllerBehaviour : NetworkBehaviour
     [Header("OuroConfig")]
     private int ouroLimite;
     bool preparado;
+    [HideInInspector]
     public bool rodandoPassivasCampoProprio;
     PlayerAdversario Inimigo;
     Mao Player;
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
     CartaNaMesa passivCard;
-    PlayerId playerid;
+    //PlayerId playerid;
     Efeitos efeitoAtual;
     public Selectable botao;
     
@@ -71,39 +72,39 @@ public class EventControllerBehaviour : NetworkBehaviour
                  break;
             case AlvoPassiva.TodasAsCartas:
             //garantir que nos dois pc rodem as passivas na mesma ordem
-                    if(!playerid.isplayer2)
-                    {
-                        a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
-                        a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
-                    }
-                    else
-                    {
-                        a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
-                        a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
-                    }
+                    // if(!playerid.isplayer2)
+                    // {
+                    //     a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
+                    //     a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
+                    // }
+                    // else
+                    // {
+                    //     a.RealizarEfeitoEm(CartasInimigo.cartas,realizador);
+                    //     a.RealizarEfeitoEm(CartasPlayer.cartas,realizador);
+                    // }
                 break;
             case AlvoPassiva.CartaAleatoriaAliada:
-              if(/*!player1 && CartasInimigo.cartas.Count > 0 ||*/CartasPlayer.cartas.Count > 0)
-              {
-                  if(rodandoPassivasCampoProprio)
-                  {
-                    var rnd = Random.Range(0,CartasPlayer.cartas.Count);
-                    a.RealizarEfeitoEm(CartasPlayer.cartas[rnd],realizador);
-                    playerid.CmdEfeitoRealizado(false,rnd,efeito.quantidade,(int)(efeito.efeito));
-                  }
-              }
+            //   if(/*!player1 && CartasInimigo.cartas.Count > 0 ||*/CartasPlayer.cartas.Count > 0)
+            //   {
+            //       if(rodandoPassivasCampoProprio)
+            //       {
+            //         var rnd = Random.Range(0,CartasPlayer.cartas.Count);
+            //         a.RealizarEfeitoEm(CartasPlayer.cartas[rnd],realizador);
+            //         playerid.CmdEfeitoRealizado(false,rnd,efeito.quantidade,(int)(efeito.efeito));
+            //       }
+            //   }
               
             break;
             case AlvoPassiva.CartaAleatoriaAdversaria:
-              if(CartasInimigo.cartas.Count > 0 /*|| !player1 && CartasPlayer.cartas.Count > 0*/)
-              {
-                  if(rodandoPassivasCampoProprio)
-                  {
-                    var rnd = Random.Range(0,CartasInimigo.cartas.Count);
-                    a.RealizarEfeitoEm(CartasInimigo.cartas[rnd],realizador);
-                    playerid.CmdEfeitoRealizado(true,rnd,efeito.quantidade,(int)(efeito.efeito));
-                  }
-              }
+            //   if(CartasInimigo.cartas.Count > 0 /*|| !player1 && CartasPlayer.cartas.Count > 0*/)
+            //   {
+            //       if(rodandoPassivasCampoProprio)
+            //       {
+            //         var rnd = Random.Range(0,CartasInimigo.cartas.Count);
+            //         a.RealizarEfeitoEm(CartasInimigo.cartas[rnd],realizador);
+            //         playerid.CmdEfeitoRealizado(true,rnd,efeito.quantidade,(int)(efeito.efeito));
+            //       }
+            //   }
             break;
             case AlvoPassiva.Carta:
             a.RealizarEfeitoEm(realizador,realizador);
@@ -140,24 +141,24 @@ public class EventControllerBehaviour : NetworkBehaviour
         {
             LastClickButtonTime = Time.time;
             GameObject[] numerosPlayers = GameObject.FindGameObjectsWithTag("PlayerId");
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
+            //NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            //playerid = ntwrkid.GetComponent<PlayerId>();
             if(!testandoNoEditor && numerosPlayers.Length == 2)
                 botao.interactable = false;
             if (preparado && (int)turno < System.Enum.GetNames(typeof(Turnos)).Length - 2 && numerosPlayers.Length == 2 || testandoNoEditor)
             {
                 turno = turno + 1;
-                playerid.CmdMudarTurno((int)turno);
-                // if(!testandoNoEditor)
-                //     playerid.CmdInverterTurnoPlayers();
-                if(!testandoNoEditor)
-                    playerid.CmdExibirTurno();
+                // //playerid.CmdMudarTurno((int)turno);
+                // // if(!testandoNoEditor)
+                // //     playerid.CmdInverterTurnoPlayers();
+                //if(!testandoNoEditor)
+                    //playerid.CmdExibirTurno();
             }
             //else só p testar dps tem q tirar isso aq e colocar a derrota ou vitória k
             else if (preparado && numerosPlayers.Length == 2 || testandoNoEditor)
-                playerid.CmdTrocouTurno();         
+                //playerid.CmdTrocouTurno();         
             preparado = false;
-            playerid.CmdInvoke((int)turno);
+            //playerid.CmdInvoke((int)turno);
         }
     }
    public void InvokeLater(int id)
@@ -178,15 +179,15 @@ public class EventControllerBehaviour : NetworkBehaviour
         if(numerosPlayers.Length == 2 || testandoNoEditor)// true 
         {
             Player.SetRaycast(true);
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
-            playerid.CmdAwake();
+            //NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            //playerid = ntwrkid.GetComponent<PlayerId>();
+            //playerid.CmdAwake();
             preparado = true;
             turno = Turnos.TurnoEscolhaP1;
-            playerid.CmdMudarTurno((int)turno);
-            if(!testandoNoEditor)
-                playerid.CmdInverterTurnoPlayers();
-            playerid.CmdMudarNomeBotao();
+            //playerid.CmdMudarTurno((int)turno);
+            // if(!testandoNoEditor)
+            //     playerid.CmdInverterTurnoPlayers();
+            // playerid.CmdMudarNomeBotao();
         }
         else{
             turno = Turnos.DecidirIniciante; 
@@ -197,123 +198,123 @@ public class EventControllerBehaviour : NetworkBehaviour
     private void TurnoEscolhaP1()
     {
         
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
-        if(!playerid.isplayer2)
-        {
-        Player.SetRaycast(true);
-        CartasPlayer.SetRaycast(true);
-        preparado = true;       
-        if(!testandoNoEditor)
-            playerid.CmdInverterTurnoPlayers();
-        }
-        else
-        {
-            preparado = false;
-        }
+        //NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        //playerid = ntwrkid.GetComponent<PlayerId>();
+        // if(!playerid.isplayer2)
+        // {
+        // Player.SetRaycast(true);
+        // CartasPlayer.SetRaycast(true);
+        // preparado = true;       
+        // if(!testandoNoEditor)
+        //     playerid.CmdInverterTurnoPlayers();
+        // }
+        // else
+        // {
+        //     preparado = false;
+        // }
     }
     private void TurnoAtaqueP1()
     {
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
-        if(!playerid.isplayer2)
-            {
-            Player.SetRaycast(true);
-            playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
-             if(!testandoNoEditor)
-                 playerid.CmdInverterTurnoPlayers();
-            CartasPlayer.SetRaycast(true);
-            preparado = true;            
-            }
-            else
-        {
-            preparado= false;
-        }
+        // NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        // playerid = ntwrkid.GetComponent<PlayerId>();
+        // if(!playerid.isplayer2)
+        //     {
+        //     Player.SetRaycast(true);
+        //     playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
+        //      if(!testandoNoEditor)
+        //          playerid.CmdInverterTurnoPlayers();
+        //     CartasPlayer.SetRaycast(true);
+        //     preparado = true;            
+        //     }
+        //     else
+        // {
+        //     preparado= false;
+        // }
     }
 
     private void TurnoEscolhaP2()
     {
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
-        if(!playerid.isplayer2)
-        {   
+        // NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        // playerid = ntwrkid.GetComponent<PlayerId>();
+        // if(!playerid.isplayer2)
+        // {   
             
-        }
-         else
-        {
-        preparado = true;
-        if(!testandoNoEditor)
-            playerid.CmdInverterTurnoPlayers();
-        Player.SetRaycast(true);   
-        }
+        // }
+        //  else
+        // {
+        // preparado = true;
+        // if(!testandoNoEditor)
+        //     playerid.CmdInverterTurnoPlayers();
+        // Player.SetRaycast(true);   
+        // }
     }
     private void TurnoAtaqueP2(){
 
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
-        if(playerid.isplayer2)
-            {
-                //player1 em game
-            Player.SetRaycast(true);
-            CartasPlayer.SetRaycast(true);
-            preparado = true;
-            playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
-             if(!testandoNoEditor)
-                playerid.CmdInverterTurnoPlayers();
-            }
-             else
-            {
-                // if(!testandoNoEditor)
-                //     playerid.CmdInverterTurnoPlayers();
-                // playerid.CmdCriarCartaInicio(Random.Range(0,13));
-                // Player.SetRaycast(true);
-            }
+        //     NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+        //     playerid = ntwrkid.GetComponent<PlayerId>();
+        // if(playerid.isplayer2)
+        //     {
+        //         //player1 em game
+        //     Player.SetRaycast(true);
+        //     CartasPlayer.SetRaycast(true);
+        //     preparado = true;
+        //     playerid.CmdCriarCartaInicio(Random.Range(0,numeroCartas));
+        //      if(!testandoNoEditor)
+        //         playerid.CmdInverterTurnoPlayers();
+        //     }
+        //      else
+        //     {
+        //         // if(!testandoNoEditor)
+        //         //     playerid.CmdInverterTurnoPlayers();
+        //         // playerid.CmdCriarCartaInicio(Random.Range(0,13));
+        //         // Player.SetRaycast(true);
+        //     }
     }
        //bot ataque
        //AtaqueCartas();
     private void NovoTurno(){
-        if(!playerid.isplayer2)
-        {
-            playerid.CmdInverterTurnoPlayers();
-        }
-        NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
-        turno = Turnos.TurnoEscolhaP1;
-       // playerid.CmdMudarTurno((int)turno); 
-        OnClick();
-        playerid.CmdTrocouTurno();  
-        preparado = true;
+    //     if(!playerid.isplayer2)
+    //     {
+    //         playerid.CmdInverterTurnoPlayers();
+    //     }
+    //     NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+    //     playerid = ntwrkid.GetComponent<PlayerId>();
+    //     turno = Turnos.TurnoEscolhaP1;
+    //    // playerid.CmdMudarTurno((int)turno); 
+    //     OnClick();
+    //     playerid.CmdTrocouTurno();  
+    //     preparado = true;
     }
     private void Derrota(){
         preparado = true;
     }
    public void TrocouTurno()
     {
-//quando reseta o turno 
-            ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
-            AtualizarOuro(ouroMaximo);
-            // cara ou coroa dps
-            turno = Turnos.TurnoEscolhaP1;
-            //playerid = ntwrkid.GetComponent<PlayerId>();
-            playerid.CmdMudarTurno((int)turno); 
-            // o player 2 tem vantagem por rodar a passiva primeiro q o player 1
-            foreach(var obj in playerid.isplayer2 ?  CartasInimigo.cartas : CartasPlayer.cartas)
-            {
-                rodandoPassivasCampoProprio = !playerid.isplayer2;
-                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
-                refCard.QuantidadeAtaque =1;
-                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
+// //quando reseta o turno 
+//             ouroMaximo = (ouroMaximo < ouroLimite) ? ouroMaximo + 1 : ouroLimite;
+//             AtualizarOuro(ouroMaximo);
+//             // cara ou coroa dps
+//             turno = Turnos.TurnoEscolhaP1;
+//             //playerid = ntwrkid.GetComponent<PlayerId>();
+//             //playerid.CmdMudarTurno((int)turno); 
+//             // o player 2 tem vantagem por rodar a passiva primeiro q o player 1
+//             foreach(var obj in playerid.isplayer2 ?  CartasInimigo.cartas : CartasPlayer.cartas)
+//             {
+//                 rodandoPassivasCampoProprio = !playerid.isplayer2;
+//                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+//                 refCard.QuantidadeAtaque =1;
+//                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+//                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
                 
-            }
-            foreach(var obj in playerid.isplayer2 ?  CartasPlayer.cartas : CartasInimigo.cartas)
-            {
-                rodandoPassivasCampoProprio = playerid.isplayer2;
-                CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
-                refCard.QuantidadeAtaque = 1 ;
-                if(refCard.AtivarPassivaQuando == Evento.NovoRound)
-                    RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
-            }
+//             }
+//             foreach(var obj in playerid.isplayer2 ?  CartasPlayer.cartas : CartasInimigo.cartas)
+//             {
+//                 rodandoPassivasCampoProprio = playerid.isplayer2;
+//                 CartaNaMesa refCard = obj.transform.GetChild(0).GetComponent<CartaNaMesa>();
+//                 refCard.QuantidadeAtaque = 1 ;
+//                 if(refCard.AtivarPassivaQuando == Evento.NovoRound)
+//                     RealizarPassivaEm(refCard.Passiva,refCard.Alvo,!(playerid.isplayer2),obj);
+//             }
     }
   #endregion
 

@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Runtime;
-using Mirror;
 
-public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
+public class Mao : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler ,IPointerExitHandler,IPointerEnterHandler
 {
     [Header("Animações do Baralho")]
     [SerializeField] float velocidadeAnimacao = 1f;
@@ -24,8 +23,8 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public GameObject carta,Seta,SetaEfeito,Dano;
     public List<GameObject> mao = new List<GameObject>();
     float x,y;
-    PlayerId playerid;
-    NetworkIdentity ntwrkid;
+    //PlayerId playerid;
+    //NetworkIdentity ntwrkid;
     [Header("VIDA")]
     public float vida;
     private int gold;
@@ -47,11 +46,11 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     {
         if(Input.touchCount < 2)
         {
-            ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>();
+            //ntwrkid = NetworkClient.connection.identity;
+            //playerid = ntwrkid.GetComponent<PlayerId>();
             CartaAtual = eventData.pointerCurrentRaycast.gameObject;
 
-           if(CartaAtual != null && playerid.isplayer2)
+           if(CartaAtual != null)// && playerid.isplayer2)
            {
              switch(EventControllerBehaviour.turno)
                 {
@@ -70,7 +69,7 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
                 }
            }  
            //inverti sem querer agr ja era
-           else if(CartaAtual != null && !playerid.isplayer2)
+           else if(CartaAtual != null)// && !playerid.isplayer2)
            {
              switch(EventControllerBehaviour.turno)
                 {
@@ -123,56 +122,56 @@ public class Mao : NetworkBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     } 
     public void OnEndDrag(PointerEventData eventData)
     {
-        ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
+        //ntwrkid = NetworkClient.connection.identity;
+        //playerid = ntwrkid.GetComponent<PlayerId>();
         cursor.position = Input.mousePosition;
         resultados = new List<RaycastResult>();
         raycast.Raycast(cursor, resultados);
         //CartaAtual = eventData.pointerCurrentRaycast.gameObject;
-        if(playerid.isplayer2)
-        {
-            switch(EventControllerBehaviour.turno)
-            {
-                case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
+        // if(playerid.isplayer2)
+        // {
+        //     switch(EventControllerBehaviour.turno)
+        //     {
+        //         case EventControllerBehaviour.Turnos.TurnoEscolhaP1:
 
-                    if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
-                        ColocarCartaNaMesa();
+        //             if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+        //                 ColocarCartaNaMesa();
 
-                    else if (CartaAtual != null && CartaAtual.name == "segurado")
-                        RejeitarCarta();      
+        //             else if (CartaAtual != null && CartaAtual.name == "segurado")
+        //                 RejeitarCarta();      
 
-                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
+        //         goto case EventControllerBehaviour.Turnos.TurnoAtaqueP1;
 
-                case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
+        //         case EventControllerBehaviour.Turnos.TurnoAtaqueP1:
 
-                    if(resultados.Count > 0 )
-                       Atacar();
+        //             if(resultados.Count > 0 )
+        //                Atacar();
 
-                break;
-            }
-        }
-        else{
-            switch(EventControllerBehaviour.turno)
-            {
-                case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
+        //         break;
+        //     }
+        // }
+        // else{
+        //     switch(EventControllerBehaviour.turno)
+        //     {
+        //         case EventControllerBehaviour.Turnos.TurnoEscolhaP2:
 
-                    if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
-                        ColocarCartaNaMesa();
+        //             if( resultados.Count > 1 && resultados[resultados.Count - 1].gameObject.name == "CampoAmigo")
+        //                 ColocarCartaNaMesa();
 
-                    else if (CartaAtual != null && CartaAtual.name == "segurado")
-                        RejeitarCarta();
+        //             else if (CartaAtual != null && CartaAtual.name == "segurado")
+        //                 RejeitarCarta();
 
-                goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
+        //         goto case EventControllerBehaviour.Turnos.TurnoAtaqueP2;
 
-                case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
+        //         case EventControllerBehaviour.Turnos.TurnoAtaqueP2:
                 
-                    if(resultados.Count > 0 )
-                        Atacar();
+        //             if(resultados.Count > 0 )
+        //                 Atacar();
 
-                break;
-             }
+        //         break;
+        //      }
              
-        }     
+        // }     
         CartaAtual = null;
     }
     
@@ -412,11 +411,11 @@ void Atacar(){
         {
             int barra = goldPlayer.text.IndexOf('/');
             goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - cartaEfeito.Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-            playerid.CmdAtualizarGold(goldPlayer.text);
+            //playerid.CmdAtualizarGold(goldPlayer.text);
             this.gameObject.GetComponent<EventControllerBehaviour>().RealizarPassivaEm(cartaEfeito.Passiva,obj.gameObject.transform.parent.gameObject,true,null);
-            playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
+            //playerid.CmdTirarCartaBaralho(cartaEfeito.PosicaoBaralho);
             //carta ativo não referenciam objetos realizadores
-            playerid.CmdEfeitoRealizado(!(obj.gameObject.name == "CartaNaMesa"),obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
+           // playerid.CmdEfeitoRealizado(!(obj.gameObject.name == "CartaNaMesa"),obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho,cartaEfeito.Passiva.quantidade,(int)cartaEfeito.Passiva.efeito);
             SetRaycast(true);
             isOnEffect = false;
            // cartaEfeito = null;
@@ -427,7 +426,7 @@ void Atacar(){
             CartaNaMesa refCard = AtaqueNoInimigo.GetComponent<CartaNaMesa>(); 
             if(refCard.QuantidadeAtaque > 0)
             {                                   
-                playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
+                //playerid.CmdAtacarCarta(refCard.PosicaoBaralho,obj.gameObject.GetComponent<CartaNaMesa>().PosicaoBaralho);
                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
                 GameObject inimigo = obj.gameObject.transform.parent.gameObject;
                 CartaNaMesa enemyRefCard = obj.gameObject.transform.GetComponent<CartaNaMesa>();
@@ -467,7 +466,7 @@ void Atacar(){
         if(refCard.QuantidadeAtaque > 0)
             {                                                   
                 AtaqueNoInimigo.transform.parent.GetComponent<Animator>().SetTrigger("Atacar");
-                playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);
+                //playerid.CmdAtacarPlayer(refCard.PosicaoBaralho);
                 refCard.QuantidadeAtaque--; 
                 StartCoroutine(DarDanoInimigo(obj.gameObject));
             }
@@ -486,11 +485,11 @@ void ColocarCartaNaMesa()
                 if (resultados[i].gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                 {                      
                         //tirar carta mao****
-                    playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
+                    //playerid.CmdTirarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().PosicaoBaralho);
                     //exibir pro player adversario que foi tirada uma carta
-                    playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
+                    //playerid.CmdColocarCartaBaralho(resultados[i].gameObject.GetComponent<Carta>().Id);
                     goldPlayer.text = (int.Parse(goldPlayer.text.Substring(0, barra)) - resultados[i].gameObject.GetComponent<Carta>().Valor).ToString() +"/" + EventControllerBehaviour.ouroMaximo;
-                    playerid.CmdAtualizarGold(goldPlayer.text);
+                    //playerid.CmdAtualizarGold(goldPlayer.text);
                     Carta atributos = resultados[i].gameObject.GetComponent<Carta>();
                     Card refCard =Resources.Load<Card>("InformacoesCartas/" + atributos.Id);
                     resultados[resultados.Count - 1].gameObject.GetComponent<MesaBehaviour>().CriarCartaInicio(atributos.Ataque, atributos.Defesa, atributos.Imagem,atributos.AtivarPassivaQuando,atributos.Passiva,atributos.Alvo,refCard.SomEmMorte);
@@ -540,7 +539,7 @@ void ColocarCartaNaMesa()
             int barra = goldPlayer.text.IndexOf('/');
             if (CartaAtual.gameObject.GetComponent<Carta>().Valor <= int.Parse(goldPlayer.text.Substring(0, barra)))
                 {                      
-                    playerid.CmdAtualizarGold(goldPlayer.text);
+                    //playerid.CmdAtualizarGold(goldPlayer.text);
                     cartaEfeito = CartaAtual.GetComponent<Carta>();
                     DestruirCartaBaralho(CartaAtual);
                     InstanciarSeta();
@@ -550,7 +549,7 @@ void ColocarCartaNaMesa()
     }
     void OnApplicationQuit()
     {
-        playerid.CmdStopHost();
+        //playerid.CmdStopHost();
     }
     void PuxarCartaMesa()
     {

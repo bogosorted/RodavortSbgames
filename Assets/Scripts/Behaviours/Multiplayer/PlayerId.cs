@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-using Telepathy;
+using MLAPI;
+using MLAPI.Messaging;
 
 public class PlayerId : NetworkBehaviour
 {
-    PlayerId playerid;
-    NetworkManager ntwrk;
+    //PlayerId playerid;
+    //NetworkManager ntwrk;
     public bool isplayer2; 
     private GameObject canvas;
-    
+     //isowner ver essa variavel pra coincidir com Hasautori
     void Awake()
     {
         canvas = GameObject.Find("Canvas");
     }
-    [Command]
+    [ServerRpc]
     public void CmdTrocouTurno()
     {
         RpcTrocouTurno();
@@ -25,12 +25,12 @@ public class PlayerId : NetworkBehaviour
     {
         canvas.GetComponent<EventControllerBehaviour>().TrocouTurno();
     }
-    [Command]
+    [ServerRpc]
     public void CmdMudarNomeBotao()
     {
         RpcMudarNomeBotao();
     }
-    [Command]
+    [ServerRpc]
     public void CmdEfeitoRealizado(bool AutoAlvo,int posicaoCarta,int quantidadeDoEfeito,int efeito)
     {
         RpcEfeitoRealizado(AutoAlvo,posicaoCarta,quantidadeDoEfeito,efeito);
@@ -38,7 +38,7 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
     void RpcEfeitoRealizado(bool AutoAlvo,int posicaoCarta,int quantidadeDoEfeito,int efeito)
     {
-        if(!hasAuthority)   
+        if(!IsOwner)   
         {
             EffectBase a = Factory.Criar(efeito);
             a.quantidadeDoEfeito = quantidadeDoEfeito;   
@@ -51,7 +51,7 @@ public class PlayerId : NetworkBehaviour
     {
         canvas.GetComponent<EventControllerBehaviour>().MudarNomeBotao();
     }
-    [Command]
+    [ServerRpc]
     public void CmdAwake()
     {
         for(int i = 0;i < 3; i++)
@@ -72,26 +72,26 @@ public class PlayerId : NetworkBehaviour
         mullig.GetComponent<Animator>().SetTrigger("Event");
         Mao player = canvas.GetComponent<Mao>();
         PlayerAdversario player2 =  canvas.GetComponent<PlayerAdversario>();
-        if(hasAuthority)
+        if(IsOwner)
             {
             //exibir a carta no mulligan
             mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn);
-            //
             player.CriarCartaInicio(rn);
             player2.CriarCarta(rn2);
             }
         else
             {       
-            NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-            playerid = ntwrkid.GetComponent<PlayerId>(); 
-            playerid.isplayer2 = true; 
+            // NetworkIdentity ntwrkid = NetworkClient.connection.identity;
+            // playerid = ntwrkid.GetComponent<PlayerId>(); 
+            //playerid.
+            isplayer2 = true; 
             mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn2);   
             player.CriarCartaInicio(rn2);
             player2.CriarCarta(rn);
             }        
-        canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!hasAuthority);  
+        canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!IsOwner);  
     }
-    [Command]
+    [ServerRpc]
     public void CmdAtualizarGold(string valor)
     {
         RpcAtualizarGold(valor);
@@ -99,7 +99,7 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
     void RpcAtualizarGold(string valor)
     {
-        if(hasAuthority)
+        if(IsOwner)
         {
             Mao player =canvas.GetComponent<Mao>();
            player.goldPlayer.text =valor;  
@@ -110,18 +110,18 @@ public class PlayerId : NetworkBehaviour
            adversario.goldInimigo.text = valor;
         }
     }
-    [Command]
+    [ServerRpc]
     public void CmdAtacarCarta(int posAtacador,int posDefensor)
     {
         RpcAtacarCarta(posAtacador,posDefensor);
     }
     [ClientRpc] void RpcAtacarCarta(int posAtacador,int posDefensor)
     {
-        if(!hasAuthority)
+        if(!IsOwner)
          canvas.GetComponent<PlayerAdversario>().AtacarCarta(posAtacador,posDefensor);
         
     }
-    [Command]
+    [ServerRpc]
     public void CmdAtacarPlayer(int posAtacador)
     {
         RpcAtacarPlayer(posAtacador);
@@ -129,10 +129,10 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
     void RpcAtacarPlayer(int posAtacador)
     {
-        if(!hasAuthority)
+        if(!IsOwner)
             canvas.GetComponent<PlayerAdversario>().AtacarPlayer(posAtacador);
     }
-    [Command]
+    [ServerRpc]
     public void CmdColocarCartaBaralho(string a)
     {
         RpcColocarCartaBaralho(a);
@@ -140,10 +140,10 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
      void RpcColocarCartaBaralho(string a)
     {
-        if(!hasAuthority)
+        if(!IsOwner)
         canvas.GetComponent<PlayerAdversario>().ColocarCartaBaralho(a);
     }
-    [Command]
+    [ServerRpc]
     public void CmdStopHost()
     {
         RpcStopHost();
@@ -151,21 +151,21 @@ public class PlayerId : NetworkBehaviour
     [ClientRpc]
      void RpcStopHost()
     {
-         if(isServer)
-        {
-            GameObject ntworkManager = GameObject.Find("NetworkManager");
-            ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
-            NetworkManager.singleton.StopHost();       
-            ntwrk.StopHost();
-        }
-        else
-        {
-            GameObject ntworkManager = GameObject.Find("NetworkManager");
-            ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;          
-            ntwrk.StopClient();
-        }
+        //  if(IsServer)
+        // {
+        //     GameObject ntworkManager = GameObject.Find("NetworkManager");
+        //     ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;
+        //     NetworkManager.singleton.StopHost();       
+        //     ntwrk.StopHost();
+        // }
+        // else
+        // {
+        //     GameObject ntworkManager = GameObject.Find("NetworkManager");
+        //     ntwrk = ntworkManager.GetComponent<NetworkNewHud>().manager;          
+        //     ntwrk.StopClient();
+        // }
     }
-    [Command]
+    [ServerRpc]
     public void CmdTirarCartaBaralho(int a)
     {
         RpcTirarCartaBaralho(a);
@@ -173,10 +173,10 @@ public class PlayerId : NetworkBehaviour
    [ClientRpc]
     void RpcTirarCartaBaralho(int a)
    {
-       if(!hasAuthority)
+       if(!IsOwner)
         canvas.GetComponent<PlayerAdversario>().TirarCarta(a);
    }
-   [Command]
+   [ServerRpc]
    public void CmdVoltarCartaBaralho()
    {
      RpcVoltarCartaBaralho();
@@ -185,20 +185,20 @@ public class PlayerId : NetworkBehaviour
    [ClientRpc]
     void RpcVoltarCartaBaralho()
    {
-       if(!hasAuthority)
+       if(!IsOwner)
         canvas.GetComponent<PlayerAdversario>().VoltarBaralho();
    }
-    [Command]
+    [ServerRpc]
     public void CmdInverterTurnoPlayers() { RpcInverterTurnos(); }
     [ClientRpc]
     void RpcInverterTurnos()
     {
-	// if(!hasAuthority)
+	// if(!IsOwner)
     //     canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(true);
-	// if(hasAuthority)
+	// if(IsOwner)
 	//     canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
     }
-    [Command]
+    [ServerRpc]
     public void CmdMudarTurno(int turno)
     {
         RpcMudarTurno(turno);
@@ -209,7 +209,7 @@ public class PlayerId : NetworkBehaviour
         EventControllerBehaviour.turno = (EventControllerBehaviour.Turnos)turno;
     
     }
-    [Command]
+    [ServerRpc]
     public void CmdExibirTurno()
     {
         RpcExibirTurno();
@@ -219,13 +219,13 @@ public class PlayerId : NetworkBehaviour
     void RpcExibirTurno()
     {
             canvas.GetComponent<EventControllerBehaviour>().ExibirTurno();
-            if(!hasAuthority)
+            if(!IsOwner)
             canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(true);
-            if(hasAuthority)
+            if(IsOwner)
              canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
     }
     // confirmar se é inicio
-    [Command]
+    [ServerRpc]
     public void CmdCriarCartaInicio(int id)
     {      
         RpcCriarCartaInicio(id);
@@ -234,7 +234,7 @@ public class PlayerId : NetworkBehaviour
     void RpcCriarCartaInicio(int id)
     {
         //funcionando
-        if(hasAuthority)
+        if(IsOwner)
         {
             canvas.GetComponent<Mao>().CriarCarta(id);
         }
@@ -242,14 +242,14 @@ public class PlayerId : NetworkBehaviour
             canvas.GetComponent<PlayerAdversario>().CriarCarta(id);
         }
     }  
-    [Command]
+    [ServerRpc]
     public void CmdInvoke(int id)
     {
              RpcInvoke(id);
     }
     [ClientRpc] void RpcInvoke(int id)
     {
-        if(hasAuthority)
+        if(IsOwner)
          canvas.GetComponent<EventControllerBehaviour>().InvokeLater(id);
     }
 }

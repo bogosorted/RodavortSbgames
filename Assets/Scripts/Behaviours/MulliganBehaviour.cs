@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Mirror;
+//using Mirror;
 
-public class MulliganBehaviour : NetworkBehaviour
+public class MulliganBehaviour : MonoBehaviour
 {
     public GameObject carta;
     public GameObject negacao;
     GameObject canvas;
 
-    PlayerId playerid;
-    NetworkIdentity ntwrkid;
+    //PlayerId playerid;
+    // NetworkIdentity ntwrkid;
 
     List<GameObject> cartas = new List<GameObject>();
     
@@ -67,8 +67,8 @@ public class MulliganBehaviour : NetworkBehaviour
     {
         transform.GetChild(0).GetComponent<Selectable>().interactable = false;
 
-        ntwrkid = NetworkClient.connection.identity;
-        playerid = ntwrkid.GetComponent<PlayerId>();
+        //ntwrkid = NetworkClient.connection.identity;
+        //playerid = ntwrkid.GetComponent<PlayerId>();
 
         Mao player = canvas.GetComponent<Mao>();
         int rejeitados = 0;
@@ -82,7 +82,7 @@ public class MulliganBehaviour : NetworkBehaviour
                 player.DestruirCartaBaralho(player.mao[i]);
                 player.distanciamentoCartasMaximo -= 20;
                 player.mao.RemoveAt(i);
-                playerid.CmdTirarCartaBaralho(i);
+                //playerid.CmdTirarCartaBaralho(i);
                 cartas.RemoveAt(i);
                 SetAnimacao(40);
                 player.SetAnimacaoInicial(player.distanciamentoCartasMaximo);     
@@ -93,7 +93,7 @@ public class MulliganBehaviour : NetworkBehaviour
              while (rejeitados != 0)
              {
                 int rnd = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
-                playerid.CmdCriarCartaInicio(rnd);    
+                //playerid.CmdCriarCartaInicio(rnd);    
                 CriarCarta(rnd);     
                 SetAnimacao(40);     
                 rejeitados--;
