@@ -1,11 +1,61 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using MLAPI;
 using MLAPI.Messaging;
+using UnityEngine.SceneManagement;  
 
 public class PlayerId : NetworkBehaviour
 {
+     void Start()
+    {
+        #region Handlers
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnServerStarted += OnHostConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        #endregion       
+
+         if(NetworkManager.Singleton.IsConnectedClient)
+        {
+            OnHostConnected();
+            OnClientConnected();
+            GameObject.Find("botaoC").GetComponent<Button>().interactable = true;
+            GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = false;
+        }
+    }   
+       void OnClientConnected (ulong clientId = 0) 
+    {
+         if(!(SceneManager.GetActiveScene().name == "MenuMultiplayer")) return;
+
+        GameObject signal = GameObject.Find("ClientSignal");
+        signal.GetComponent<Image>().color = new Color32(59,140,72,255);
+    }
+      void OnHostConnected () 
+    {
+        if(!(SceneManager.GetActiveScene().name == "MenuMultiplayer")) return;
+
+        GameObject signal = GameObject.Find("HostSignal");
+        signal.GetComponent<Image>().color = new Color32(59,140,72,255);
+    }
+      void OnClientDisconnect (ulong clientId) 
+    {
+         if(!(SceneManager.GetActiveScene().name == "MenuMultiplayer")) return;
+
+        GameObject signal;
+        signal = GameObject.Find("ClientSignal");
+        if(!NetworkManager.Singleton.IsHost)
+        {
+            signal.GetComponent<Image>().color = new Color32(64,64,64,255);
+            signal = GameObject.Find("HostSignal");
+            GameObject.Find("botaoC").GetComponent<Button>().interactable = false;
+              GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = true;
+        }
+        signal.GetComponent<Image>().color = new Color32(64,64,64,255);
+    }
+    
+
+
     //PlayerId playerid;
     //NetworkManager ntwrk;
     public bool isplayer2; 
