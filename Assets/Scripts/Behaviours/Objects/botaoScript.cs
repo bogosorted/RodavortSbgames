@@ -15,6 +15,15 @@ using MLAPI.Transports.Tasks;
 
 public class botaoScript : MonoBehaviour
 {
+    Button botaoHost,botaoCriarSala,botaoEntrarSala;
+    GameObject signal;
+
+    void Start()
+    {
+        botaoHost = GameObject.Find("botaoH").GetComponent<Button>();
+        botaoCriarSala = GameObject.Find("CRIAR_SALA").GetComponent<Button>();
+        botaoEntrarSala = GameObject.Find("ENTRAR_SALA").GetComponent<Button>();
+    }
     bool IsPortFree()
     {
        var isInUsed = IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners().Any(p => p.Port == 7777);
@@ -31,15 +40,9 @@ public class botaoScript : MonoBehaviour
             SocketTasks client = NetworkManager.Singleton.StartClient(); 
             if(!client.Success)
             {
-                //msg de erro de digitação do usuario no ipaddress
+                print("algo deu errado!");
             }
         }
-    }
-    
-    
-    public void FailToConnect(){
-        print ("connection error");
-      
     }
     
     public void OnHostClick()
@@ -49,15 +52,15 @@ public class botaoScript : MonoBehaviour
 
         if(!IsPortFree())
         {
-            //PRINTAR "ALGUEM JA ESTA HOSTEANDO NA REDE" PRO JOGADOR VISUALIZAR
+            print("a porta ja esta sendo usada!");
         }
         else if(!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer){
         NetworkManager.Singleton.StartHost();
-        GameObject signal = GameObject.Find("HostSignal");
+        signal = GameObject.Find("HostSignal");
         signal.GetComponent<Image>().color = new Color32(59,140,72,255);
-        GameObject.Find("botaoH").GetComponent<Button>().interactable = true;
-        GameObject.Find("CRIAR_SALA").GetComponent<Button>().interactable = false;
-        GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = false;
+        botaoHost.interactable = true;
+        botaoCriarSala.interactable = false;
+        botaoEntrarSala.interactable = false;
         }
     }
 
@@ -67,13 +70,14 @@ public class botaoScript : MonoBehaviour
          if(NetworkManager.Singleton.IsHost)
          {
             NetworkManager.Singleton.StopHost();
-            GameObject signal = GameObject.Find("HostSignal");
+            signal = GameObject.Find("HostSignal");
             signal.GetComponent<Image>().color = new Color32(64,64,64,255);
             signal = GameObject.Find("ClientSignal");
             signal.GetComponent<Image>().color = new Color32(64,64,64,255);
-            GameObject.Find("botaoH").GetComponent<Button>().interactable = false;
-            GameObject.Find("CRIAR_SALA").GetComponent<Button>().interactable = true;
-            GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = true;
+            botaoHost.interactable = false;
+            botaoCriarSala.interactable = true;
+            botaoEntrarSala.interactable = true;
+            GameObject.Find("JOGAR").GetComponent<Button>().interactable = false;
          }
     }
     public void StopClient()
@@ -81,12 +85,14 @@ public class botaoScript : MonoBehaviour
         if(NetworkManager.Singleton.IsConnectedClient)
         {
             NetworkManager.Singleton.StopClient();
-            GameObject signal = GameObject.Find("HostSignal");
+            signal = GameObject.Find("HostSignal");
             signal.GetComponent<Image>().color = new Color32(64,64,64,255);
             signal = GameObject.Find("ClientSignal");
             signal.GetComponent<Image>().color = new Color32(64,64,64,255);
             GameObject.Find("botaoC").GetComponent<Button>().interactable = false;
-            GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = true;
+            botaoEntrarSala.interactable = true;
+            GameObject.Find("JOGAR").GetComponent<Button>().interactable = false;
+            GameObject.Find("CRIAR_SALA").GetComponent<Button>().interactable = true;
         }
     }
 
@@ -98,8 +104,7 @@ public class botaoScript : MonoBehaviour
     public void ChangeIpAdress()
     {
         string ipAdress =GameObject.Find("InputField").GetComponent<InputField>().text;
-        if(ipAdress != "")
-            GameObject.Find("NetworkManager").GetComponent<UNetTransport>().ConnectAddress = ipAdress;
+        GameObject.Find("NetworkManager").GetComponent<UNetTransport>().ConnectAddress = ipAdress != "" ? ipAdress : "127.0.0.1";
     }
    
 }

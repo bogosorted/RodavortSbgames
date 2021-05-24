@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 319752467}
   - component: {fileID: 319752470}
   m_Layer: 5
-  m_Name: ENCONTRAR_SALA
+  m_Name: JOGAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
