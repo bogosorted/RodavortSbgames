@@ -8,16 +8,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayerId : NetworkBehaviour
 {
+     public bool isPlayer2;
      void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
+
         #region Handlers
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.Singleton.OnServerStarted += OnHostConnected;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
-        #endregion       
+        #endregion           
+        
+        if(!IsOwner){return;}
 
          if(NetworkManager.Singleton.IsConnectedClient)
         {
+            isPlayer2 = true;
+            print("player2 true setado");
             OnHostConnected();
             OnClientConnected();
             GameObject.Find("botaoC").GetComponent<Button>().interactable = true;
@@ -44,25 +51,43 @@ public class PlayerId : NetworkBehaviour
     }
       void OnClientDisconnect (ulong clientId) 
     {
-         if(!(SceneManager.GetActiveScene().name == "MenuMultiplayer")) return;
-
-        GameObject signal;
-        signal = GameObject.Find("ClientSignal");
-        if(!NetworkManager.Singleton.IsHost)
+        if((SceneManager.GetActiveScene().name == "Campo"))
         {
-            //caso o client saia
-            signal.GetComponent<Image>().color = new Color32(64,64,64,255);
-            signal = GameObject.Find("HostSignal");
-            GameObject.Find("botaoC").GetComponent<Button>().interactable = false;
-            GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = true;
-            GameObject.Find("CRIAR_SALA").GetComponent<Button>().interactable = true;
+             if(NetworkManager.Singleton.IsHost)
+             {
+                 NetworkManager.Singleton.StopHost();   
+             }
+            SceneManager.LoadScene("MenuMultiplayer");
         }
-        signal.GetComponent<Image>().color = new Color32(64,64,64,255);
-        GameObject.Find("JOGAR").GetComponent<Button>().interactable = false;
-        
+        else if((SceneManager.GetActiveScene().name == "MenuMultiplayer"))
+        {
+            GameObject signal;
+            signal = GameObject.Find("ClientSignal");
+            if(!NetworkManager.Singleton.IsHost)
+            {
+                //caso o client saia
+                signal.GetComponent<Image>().color = new Color32(64,64,64,255);
+                signal = GameObject.Find("HostSignal");
+                GameObject.Find("botaoC").GetComponent<Button>().interactable = false;
+                GameObject.Find("ENTRAR_SALA").GetComponent<Button>().interactable = true;
+                GameObject.Find("CRIAR_SALA").GetComponent<Button>().interactable = true;
+            }
+            signal.GetComponent<Image>().color = new Color32(64,64,64,255);
+            GameObject.Find("JOGAR").GetComponent<Button>().interactable = false;
+        } 
     }
     
- 
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeTheSceneServerRpc(string cena)
+    {
+         ChangeTheSceneClientRpc(cena);
+    }
+    [ClientRpc]
+    public void ChangeTheSceneClientRpc(string cena)
+    {
+        SceneManager.LoadScene(cena);
+    }
+    
     [ServerRpc]
     public void PlayersEstaoProntosServerRpc()
     {
@@ -119,46 +144,43 @@ public class PlayerId : NetworkBehaviour
 //     {
 //         canvas.GetComponent<EventControllerBehaviour>().MudarNomeBotao();
 //     }
-//     [ServerRpc]
-//     public void CmdAwake()
-//     {
-//         for(int i = 0;i < 3; i++)
-//          {
-//             //atualizar o numero total de cartas no final do game
-//             int r = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
-//             int r2 = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
-//             RpcAwake(r,r2);
-//          }
+//cmdAwake
 
+//host client ->host server
+  //  [ServerRpc]
+    public void PedidoMulliganHost()
+    {
+        if(NetworkManager.Singleton.IsServer)
+            for(int i = 0;i < 3; i++)
+            {                               //atualizar o numero total de cartas no final do game
+                int r = Random.Range(0,GameObject.Find("Canvas").GetComponent<EventControllerBehaviour>().numeroCartas);
+                int r2 = Random.Range(0,GameObject.Find("Canvas").GetComponent<EventControllerBehaviour>().numeroCartas);
+                ReciboMulliganClientRpc(r,r2);
+            }
+    }   
 
-//     }   
-
-//      [ClientRpc]
-//     void RpcAwake(int rn, int rn2)
-//     {
-//         var mullig =  GameObject.Find("MulliganBackground");
-//         mullig.GetComponent<Animator>().SetTrigger("Event");
-//         Mao player = canvas.GetComponent<Mao>();
-//         PlayerAdversario player2 =  canvas.GetComponent<PlayerAdversario>();
-//         if(IsOwner)
-//             {
-//             //exibir a carta no mulligan
-//             mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn);
-//             player.CriarCartaInicio(rn);
-//             player2.CriarCarta(rn2);
-//             }
-//         else
-//             {       
-//             // NetworkIdentity ntwrkid = NetworkClient.connection.identity;
-//             // playerid = ntwrkid.GetComponent<PlayerId>(); 
-//             //playerid.
-//             isplayer2 = true; 
-//             mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn2);   
-//             player.CriarCartaInicio(rn2);
-//             player2.CriarCarta(rn);
-//             }        
-//         canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(!IsOwner);  
-//     }
+//rpcawake
+    [ClientRpc]
+    void ReciboMulliganClientRpc(int rn, int rn2)
+    {
+        var mullig =  GameObject.Find("MulliganBackground");
+        mullig.GetComponent<Animator>().SetTrigger("Event");
+        Mao player = GameObject.Find("Canvas").GetComponent<Mao>();
+        PlayerAdversario player2 =  GameObject.Find("Canvas").GetComponent<PlayerAdversario>();
+        if(!IsOwner)
+            {
+            mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn);
+            player.CriarCartaInicio(rn);
+            player2.CriarCarta(rn2);
+            }
+        else
+            {       
+            mullig.GetComponent<MulliganBehaviour>().CriarCarta(rn2);   
+            player.CriarCartaInicio(rn2);
+            player2.CriarCarta(rn);
+            }        
+        GameObject.Find("Canvas").GetComponent<EventControllerBehaviour>().BotaoInteragivel(IsOwner);  
+    }
 //     [ServerRpc]
 //     public void CmdAtualizarGold(string valor)
 //     {
@@ -233,17 +255,18 @@ public class PlayerId : NetworkBehaviour
 //         //     ntwrk.StopClient();
 //         // }
 //     }
-//     [ServerRpc]
-//     public void CmdTirarCartaBaralho(int a)
-//     {
-//         RpcTirarCartaBaralho(a);
-//     }
-//    [ClientRpc]
-//     void RpcTirarCartaBaralho(int a)
-//    {
-//        if(!IsOwner)
-//         canvas.GetComponent<PlayerAdversario>().TirarCarta(a);
-//    }
+//TIRARCARTABARALHO
+    [ServerRpc]
+    public void TirarCartaBaralhoInimigoServerRpc(int PosicaoCartaInimigo)
+    {
+        AtualizarCartaRetiradaBaralhoInimigoClientRpc(PosicaoCartaInimigo);
+    }
+   [ClientRpc]
+    void AtualizarCartaRetiradaBaralhoInimigoClientRpc(int PosicaoCartaInimigo)
+    {
+       if(!IsOwner)
+            GameObject.Find("Canvas").GetComponent<PlayerAdversario>().TirarCarta(PosicaoCartaInimigo);
+    }
 //    [ServerRpc]
 //    public void CmdVoltarCartaBaralho()
 //    {
@@ -293,23 +316,24 @@ public class PlayerId : NetworkBehaviour
 //              canvas.GetComponent<EventControllerBehaviour>().BotaoInteragivel(false);
 //     }
 //     // confirmar se é inicio
-//     [ServerRpc]
-//     public void CmdCriarCartaInicio(int id)
-//     {      
-//         RpcCriarCartaInicio(id);
-//     }
-//     [ClientRpc]
-//     void RpcCriarCartaInicio(int id)
-//     {
-//         //funcionando
-//         if(IsOwner)
-//         {
-//             canvas.GetComponent<Mao>().CriarCarta(id);
-//         }
-//         else{
-//             canvas.GetComponent<PlayerAdversario>().CriarCarta(id);
-//         }
-//     }  
+// criarCaRTAiNICIO
+    [ServerRpc]
+    public void AdicionarAoBaralhoServerRpc(int id)
+    {      
+        AdicionarAoBaralhoClientRpc(id);
+    }
+    [ClientRpc]
+    void AdicionarAoBaralhoClientRpc(int id)
+    {
+        //funcionando
+        if(IsOwner)
+        {
+            GameObject.Find("Canvas").GetComponent<Mao>().CriarCarta(id);
+        }
+        else{
+            GameObject.Find("Canvas").GetComponent<PlayerAdversario>().CriarCarta(id);
+        }
+    }  
 //     [ServerRpc]
 //     public void CmdInvoke(int id)
 //     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using MLAPI;
 
 
 
@@ -26,7 +27,7 @@ public class EventControllerBehaviour : MonoBehaviour
     MesaBehaviour CartasPlayer;
     MesaBehaviour CartasInimigo;
     CartaNaMesa passivCard;
-    //PlayerId playerid;
+    public PlayerId PlayerHost,PlayerClient,PlayerAtual;
     Efeitos efeitoAtual;
     public Selectable botao;
     
@@ -43,20 +44,62 @@ public class EventControllerBehaviour : MonoBehaviour
     }
 
     private void Start() {
+
         testandoNoEditor = false;
 
-        botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
+        DefinirPlayerIdJogadores();
+
+        PlayerHost.PedidoMulliganHost();
+        //botao.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
         turno = Turnos.DecidirIniciante;
+
         Inimigo = GetComponent<PlayerAdversario>();
         Player =  GetComponent<Mao>();
+        
         ouroLimite = 10;
         ouroMaximo = 1;
+
         Player.SetarGold(ouroMaximo);
         Inimigo.SetarGold(ouroMaximo);
+
         CartasInimigo = transform.GetChild(2).GetComponent<MesaBehaviour>();
         CartasPlayer = transform.GetChild(1).GetComponent<MesaBehaviour>();
+
         preparado = true;
     }
+
+    void DefinirPlayerIdJogadores()
+    {
+        GameObject[] PlayersId = GameObject.FindGameObjectsWithTag("PlayerId");
+        foreach(GameObject P in PlayersId)
+        {         
+            PlayerId pID = P.GetComponent<PlayerId>();
+            if(NetworkManager.Singleton.IsServer && !pID.IsOwner)
+            {           
+                pID.isPlayer2 = true;
+            } 
+            if(pID.IsOwner)
+            {           
+                PlayerAtual = pID;
+            } 
+
+            SetarHostEClientId(pID);
+            
+        }
+    }
+
+    void SetarHostEClientId(PlayerId pID)
+    {    
+        if(!pID.isPlayer2)
+        {
+            PlayerHost = pID;
+        }
+        else
+        {
+            PlayerClient = pID;
+        }
+    }
+
     public void RealizarPassivaEm(PassivaComulativa efeito, AlvoPassiva alvo,bool player1,GameObject realizador)
     {
         EffectBase a = Factory.Criar((int)(efeito.efeito));
@@ -318,22 +361,22 @@ public class EventControllerBehaviour : MonoBehaviour
     }
   #endregion
 
-    void AtaqueCartas()
-    {
-        //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
-        //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
-        if(CartasPlayer.cartas.Count > 0 && CartasInimigo.cartas.Count > 0)
-        {
-            // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
-            // só pra testar.
-        Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
-        }
-        else if(CartasPlayer.cartas.Count == 0 && CartasInimigo.cartas.Count > 0)
-        {
-            Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
-        }
-        botao.interactable = true;
-        preparado = true;    
-        OnClick();   
-    }
+    // void AtaqueCartas()
+    // {
+    //     //sistema de ataque aleatorio(desconsidera se pode atacar ou n)
+    //     //colocar um sistema melhor depois//metodo Inimigo.AtacarCarta() funcionando perfeitamente.
+    //     if(CartasPlayer.cartas.Count > 0 && CartasInimigo.cartas.Count > 0)
+    //     {
+    //         // o mesmo pode atacar duas vezes em uma só animação nesse esquema aqui
+    //         // só pra testar.
+    //     Inimigo.AtacarCarta(Random.Range(0,CartasInimigo.cartas.Count),Random.Range(0,CartasPlayer.cartas.Count));
+    //     }
+    //     else if(CartasPlayer.cartas.Count == 0 && CartasInimigo.cartas.Count > 0)
+    //     {
+    //         Inimigo.AtacarPlayer(Random.Range(0, CartasInimigo.cartas.Count));
+    //     }
+    //     botao.interactable = true;
+    //     preparado = true;    
+    //     OnClick();   
+    // }
 }

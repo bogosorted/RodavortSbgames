@@ -74,7 +74,7 @@ public class MulliganBehaviour : MonoBehaviour
         int rejeitados = 0;
         for(int i = 0; i != cartas.Count; i++)
         {       
-                SetAnimacao(40);
+            SetAnimacao(40);
             print(i);
              if(cartas[i].transform.childCount != 1)
              {
@@ -82,7 +82,7 @@ public class MulliganBehaviour : MonoBehaviour
                 player.DestruirCartaBaralho(player.mao[i]);
                 player.distanciamentoCartasMaximo -= 20;
                 player.mao.RemoveAt(i);
-                //playerid.CmdTirarCartaBaralho(i);
+                canvas.GetComponent<EventControllerBehaviour>().PlayerAtual.TirarCartaBaralhoInimigoServerRpc(i);
                 cartas.RemoveAt(i);
                 SetAnimacao(40);
                 player.SetAnimacaoInicial(player.distanciamentoCartasMaximo);     
@@ -93,7 +93,7 @@ public class MulliganBehaviour : MonoBehaviour
              while (rejeitados != 0)
              {
                 int rnd = Random.Range(0,canvas.GetComponent<EventControllerBehaviour>().numeroCartas);
-                //playerid.CmdCriarCartaInicio(rnd);    
+                canvas.GetComponent<EventControllerBehaviour>().PlayerAtual.AdicionarAoBaralhoServerRpc(rnd);   
                 CriarCarta(rnd);     
                 SetAnimacao(40);     
                 rejeitados--;

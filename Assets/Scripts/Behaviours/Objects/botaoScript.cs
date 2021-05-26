@@ -103,8 +103,13 @@ public class botaoScript : MonoBehaviour
     
     public void ChangeIpAdress()
     {
-        string ipAdress =GameObject.Find("InputField").GetComponent<InputField>().text;
-        GameObject.Find("NetworkManager").GetComponent<UNetTransport>().ConnectAddress = ipAdress != "" ? ipAdress : "127.0.0.1";
+        
+        string ipAdress =GameObject.Find("InputField").GetComponent<InputField>().text;    
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress  = ipAdress != "" ? ipAdress : "127.0.0.1";
+        //NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = 12345;  
     }
-   
+    public void OnPlay()
+    {
+        GameObject.Find("PlayerId(Clone)").GetComponent<PlayerId>().ChangeTheSceneServerRpc("Campo");
+    }
 }
