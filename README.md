@@ -6,17 +6,18 @@ Lan Multiplayer cardgame for STANDALONE and ANDROID
 
 game created to participate in the SbGames event in the student category.
 
-Programming by:
+## Programming by:
 
-Gabriel Aragão
+  Gabriel Aragão
 
 
-PT-BR Dubbing by:
+## PT-BR Dubbing by:
 
-Gabriel Marques
+  Gabriel Marques
+  
+### INFOS:
 
 Officially selected to participate in the event : https://www.sbgames.org/sbgames2020/wp-content/uploads/2020/10/Sele%C3%A7%C3%A3o-Oficial-SBGames-2020.pdf .
-
 
 Game image in action:
 
