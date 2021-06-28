@@ -3,8 +3,9 @@
 
 # RodavortSbgames
 
-#### Lan Multiplayer cardgame for STANDALONE and ANDROID.
-Game created to participate in the SbGames event in the student category.
+#### Lan Multiplayer Cardgame for STANDALONE and ANDROID.
+Unity3D game created with the intention of participating in
+a global gaming event in the student category.
 
 ## Programming by:
 
